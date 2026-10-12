@@ -31,10 +31,11 @@ Raw datasets and built templates live under `data/` and are not committed. Licen
 
 ```bash
 colony data fetch                  # ~3 GB FAFB + ~6.5 GB MaleCNS, checksum-verified, resumable
-colony template build female       # female-fafb783-t1: 139,255 neurons, 15.1M edges (~5 s, ~3.5 GB RAM)
-colony template build male         # male-malecns1-t1: brain portion of MaleCNS (~5 s, ~5 GB RAM)
+colony template build female       # female-fafb783-t2: 139,255 neurons, 15.1M edges (~5 s, ~3.5 GB RAM)
+colony template build male         # male-malecns1-t2: brain portion of MaleCNS (~5 s, ~5 GB RAM)
 colony template match              # cross-sex type matching + normalization factor
-colony template verify data/templates/female-fafb783-t1
+colony template verify data/templates/female-fafb783-t2
+python tools/gen_iomap.py         # regenerate config/iomap from its cited rules (optional)
 colony registry report             # share of ASSUMPTION parameters per spec
 ```
 

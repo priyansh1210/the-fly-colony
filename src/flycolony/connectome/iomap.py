@@ -19,19 +19,25 @@ class _Strict(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
 
+KINDS = ("cell_type", "cell_class", "cell_sub_class", "source_id")
+
+
 class Selector(_Strict):
     """Exactly one way to pick neurons. Lists match any of their values."""
 
     cell_type: list[str] | None = None
     cell_class: list[str] | None = None
+    cell_sub_class: list[str] | None = None
     source_id: list[int] | None = None
-    side: list[Literal["L", "R", "C", "NA"]] | None = None  # optional extra filter
+    # Optional extra filters applied after selection.
+    side: list[Literal["L", "R", "C", "NA"]] | None = None
+    exclude_cell_sub_class: list[str] | None = None
 
     @model_validator(mode="after")
     def _one_kind(self) -> Selector:
-        kinds = [k for k in ("cell_type", "cell_class", "source_id") if getattr(self, k)]
+        kinds = [k for k in KINDS if getattr(self, k)]
         if len(kinds) != 1:
-            raise ValueError("select needs exactly one of cell_type, cell_class or source_id")
+            raise ValueError(f"select needs exactly one of {', '.join(KINDS)}")
         return self
 
 
@@ -74,12 +80,11 @@ def resolve_iomap(iomap: IoMap, neurons: pl.DataFrame) -> dict:
     resolved = []
     for e in iomap.entries:
         sel = e.select
-        if sel.cell_type:
-            col, wanted = "cell_type", sel.cell_type
-        elif sel.cell_class:
-            col, wanted = "cell_class", sel.cell_class
-        else:
-            col, wanted = "source_id", sel.source_id
+        col = next(k for k in KINDS if getattr(sel, k))
+        wanted = getattr(sel, col)
+        if col not in neurons.columns:
+            missing.append(f"{e.name}: template has no {col} column")
+            continue
         present = set(neurons.filter(pl.col(col).is_in(wanted))[col].unique().to_list())
         for value in wanted:
             if value not in present:
@@ -87,6 +92,10 @@ def resolve_iomap(iomap: IoMap, neurons: pl.DataFrame) -> dict:
         picked = neurons.filter(pl.col(col).is_in(wanted))
         if sel.side:
             picked = picked.filter(pl.col("side").is_in(sel.side))
+        if sel.exclude_cell_sub_class:
+            picked = picked.filter(
+                ~pl.col("cell_sub_class").is_in(sel.exclude_cell_sub_class).fill_null(False)
+            )
         if picked.height == 0 and not any(m.startswith(f"{e.name}:") for m in missing):
             missing.append(f"{e.name}: selector matched no neurons (side filter {sel.side})")
         resolved.append(
@@ -110,6 +119,7 @@ def coverage(resolved: list[dict], neurons: pl.DataFrame) -> dict:
     motor_ids = {i for r in resolved if r["kind"] == "motor" for i in r["neuron_ids"]}
     sensory = set(neurons.filter(pl.col("is_sensory"))["neuron_id"].to_list())
     dns = set(neurons.filter(pl.col("is_descending"))["neuron_id"].to_list())
+    mns = set(neurons.filter(pl.col("is_motor"))["neuron_id"].to_list())
 
     def share(mapped: set[int], total: set[int]) -> dict:
         n = len(total & mapped)
@@ -120,4 +130,22 @@ def coverage(resolved: list[dict], neurons: pl.DataFrame) -> dict:
             "share_mapped": round(n / len(total), 4) if total else 0.0,
         }
 
-    return {"sensory": share(sense_ids, sensory), "descending": share(motor_ids, dns)}
+    # Neurons claimed by more than one entry of the same kind would be driven/read twice.
+    overlaps = {}
+    for kind in ("sense", "motor", "interoceptive"):
+        seen: dict[int, str] = {}
+        clash = set()
+        for r in resolved:
+            if r["kind"] != kind:
+                continue
+            for i in r["neuron_ids"]:
+                if i in seen and seen[i] != r["name"]:
+                    clash.add(i)
+                seen[i] = r["name"]
+        overlaps[kind] = len(clash)
+    return {
+        "sensory": share(sense_ids, sensory),
+        "descending": share(motor_ids, dns),
+        "motor_neurons": share(motor_ids, mns),
+        "overlaps": overlaps,
+    }

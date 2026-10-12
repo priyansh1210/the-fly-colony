@@ -60,6 +60,7 @@ NEURON_COLUMNS = {  # neuPrint column -> our name
     "status:string": "status",
     "superclass:string": "superclass",
     "class:string": "cell_class",
+    "subclass:string": "cell_sub_class",
     "type:string": "cell_type",
     "somaSide:string": "soma_side",
     "rootSide:string": "root_side",
@@ -136,7 +137,8 @@ def _roi_counts(neurons: pl.DataFrame, rois: set[str]) -> pl.DataFrame:
 
 
 def malecns_inputs(raw_root: Path, registry: Registry) -> BuildInputs:
-    from flycolony.connectome.build import _provenance
+    from flycolony.connectome.build import _provenance, read_fafb_annotations
+    from flycolony.connectome.peptides import by_type, fafb_peptides, load_vocab, male_peptides
 
     d = raw_dir("malecns_v1", raw_root)
     meta = read_meta(d / "Neuprint_Meta.csv")
@@ -189,7 +191,11 @@ def malecns_inputs(raw_root: Path, registry: Registry) -> BuildInputs:
         "flywire_type",
         "dimorphism",
         "synonyms",
+        "cell_sub_class",
     )
+    # Peptides: inherited from FlyWire through the published type match (marked as inferred).
+    annotations = read_fafb_annotations(raw_root)
+    fafb_rows = fafb_peptides(annotations, load_vocab())
     primary = set(meta["primary_rois"])
     neuropils = _roi_counts(keep, primary)
     weights = pl.scan_ipc(d / "connectome-weights-male-cns-v1.0-minconf-0.5-traced-only.feather")
@@ -209,6 +215,7 @@ def malecns_inputs(raw_root: Path, registry: Registry) -> BuildInputs:
         "primary_rois": len(primary),
         "nt_source": nt_col,
         "synapse_units": "downstream/upstream synapse pairs (matches FAFB)",
+        "peptides": "inherited from FlyWire known_nt via flywireType match (inferred)",
     }
     return BuildInputs(
         sex="male",
@@ -219,9 +226,10 @@ def malecns_inputs(raw_root: Path, registry: Registry) -> BuildInputs:
             pl.col("weight").alias("syn_count"),
         ),
         neuropils=neuropils.lazy(),
-        provenance=_provenance(["malecns_v1"], raw_root),
+        provenance=_provenance(["malecns_v1", "fafb783_annotations"], raw_root),
         notes=notes,
         mb_neuropils=tuple(registry.get("conn.male.mb_neuropils")),
         cx_neuropils=tuple(registry.get("conn.male.cx_neuropils")),
-        extra_neuron_columns=("flywire_type", "dimorphism", "synonyms"),
+        extra_neuron_columns=("flywire_type", "dimorphism", "synonyms", "cell_sub_class"),
+        peptides=male_peptides(neurons, by_type(fafb_rows, annotations)).lazy(),
     )

@@ -11,5 +11,5 @@ clock:
   fly_day_neural_s: 3600   # D: neural seconds per fly day (1 real hour)
   sim_speed: 1.0
 templates:
-  female: female-fafb783-t1
-  male: male-malecns1-t1
+  female: female-fafb783-t2
+  male: male-malecns1-t2

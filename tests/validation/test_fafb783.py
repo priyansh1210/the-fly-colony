@@ -16,7 +16,8 @@ from tests.conftest import RAW, ROOT
 
 pytestmark = pytest.mark.data
 
-TEMPLATE = ROOT / load_all()["colony.yaml"].paths.templates / "female-fafb783-t1"
+_CFG = load_all()["colony.yaml"]
+TEMPLATE = ROOT / _CFG.paths.templates / _CFG.templates.female
 SHIU = RAW / "shiu2024_model" / "Connectivity_783.parquet"
 
 

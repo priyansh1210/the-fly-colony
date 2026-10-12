@@ -1,0 +1,168 @@
+{
+  "counts": {
+    "edges": 15091983,
+    "graded": 63502,
+    "in_cx": 2543,
+    "in_mb": 5213,
+    "is_ascending": 2362,
+    "is_descending": 1303,
+    "is_modulatory": 10620,
+    "is_motor": 110,
+    "is_neurosecretory": 80,
+    "is_sensory": 17516,
+    "min_synapses": 1,
+    "neurons": 139255,
+    "pairs_before_threshold": 15091983,
+    "peptidergic_neurons": 7651,
+    "peptides": 31,
+    "synapses": 54492922,
+    "synapses_before_threshold": 54492922,
+    "type_edges": 3503922,
+    "type_nodes": 19065
+  },
+  "inputs": {
+    "fafb783_annotations": {
+      "files": {
+        "Supplemental_file1_neuron_annotations.tsv": "b214970b55d2fbe0853bba536fdcb9e28730f4eb7ab06f600491df795da683cd"
+      },
+      "license": "CC BY 4.0 (assumed) (assumed)",
+      "version": "v3.2.0 (a83b2776d60d5764cef36b927f5f9679c16c47a2)"
+    },
+    "fafb783_connectome": {
+      "files": {
+        "per_neuron_neuropil_count_post_783.feather": "e2418f4794fe47984bb4bc15ffc194003ea8e349a428551f30af94947d85d712",
+        "per_neuron_neuropil_count_pre_783.feather": "35442a46f076892dff91bd6e55fa1489b3acc64fda1d35cee7dbbbbc509a3dff",
+        "proofread_connections_783.feather": "24f960ae3e7d4f8cd30db3b62e99fb5179cc3d1e76d8c155bfb441e9737d3faf",
+        "proofread_root_ids_783.npy": "7c7b7e818e9232e5ab64793d52ba20574dbe9da3a6509fbc74193b0f259a01be"
+      },
+      "license": "CC BY 4.0 (verified)",
+      "version": "783.0"
+    },
+    "shiu2024_model": {
+      "files": {
+        "Completeness_783.csv": "bbb847a4cc2caaa7a16349722d220c087317b946d148d4d592d94d250617a311",
+        "Connectivity_783.parquet": "efeb23fb99098e9c390f6869969b2a121a2ee92c833cfc45ecb2c1d8e1af0347",
+        "model.py": "fc45837d7122c6ce2a7f3f2f23c515992e4b232aadb919efabb72337fac88e4e"
+      },
+      "license": "MIT (code); data derived from FlyWire 783 (CC BY 4.0) (verified)",
+      "version": "commit 91bdd1e7dcf193f3e7ca5a8933497fcef63b7960"
+    }
+  },
+  "notes": {
+    "neuron_set": "proofread_root_ids_783.npy",
+    "nt_source": "connections",
+    "peptides": "FlyWire known_nt + known_nt_source per neuron; endocrine types by name",
+    "sign_source": "reference"
+  },
+  "outputs": {
+    "edges.safetensors": {
+      "bytes": 364436296,
+      "sha256": "9c6c5f985fe90bb94d58e270056f424002adc1db3f43209f9f1635e2f2c4c992"
+    },
+    "iomap.json": {
+      "bytes": 268305,
+      "sha256": "f596035f94e9b7fa348efaf98fbd80dc37849f33b018dcca650f69a822d9b723"
+    },
+    "modulatory.parquet": {
+      "bytes": 55672,
+      "sha256": "11f0c6abca87be8a190828959ef30fac3474b7800786e9846dd6c0754dc64367"
+    },
+    "neurons.parquet": {
+      "bytes": 2609918,
+      "sha256": "8729f28373c5f7874d8a519285b06a9661332fc83534d3cfd25fce73d2950afc"
+    },
+    "neuropil_fractions.parquet": {
+      "bytes": 5440633,
+      "sha256": "b628fc3f05c4c62db178b936d0618ac319e7f8ee794cdf03efa8bab7d1bfbcba"
+    },
+    "type_edges.parquet": {
+      "bytes": 12607206,
+      "sha256": "77a20c9d6b3d48153039ba3e7128c537a024df08ba0e990529dc1c5061fb4d28"
+    },
+    "type_membership.parquet": {
+      "bytes": 906270,
+      "sha256": "b56bd1ab52f55c2e09d0580bffafb31b227e7f3862602db8df58975c9f0e517b"
+    },
+    "type_nodes.parquet": {
+      "bytes": 153631,
+      "sha256": "cb89c47e1556ebc34930599a24f621128a3a001a084bac96052832730e6c6985"
+    }
+  },
+  "parameters": {
+    "conn.build.max_rss_gb": 6.0,
+    "conn.graded_cell_types": [
+      "R1-6",
+      "R7",
+      "R8",
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5",
+      "Lawf1",
+      "Lawf2",
+      "Am",
+      "C2",
+      "C3",
+      "CT1",
+      "Mi1",
+      "Mi2",
+      "Mi3",
+      "Mi4",
+      "Mi9",
+      "Mi10",
+      "Mi11",
+      "Mi12",
+      "Mi13",
+      "Mi14",
+      "Mi15",
+      "T1",
+      "T2",
+      "T2a",
+      "T3",
+      "T4a",
+      "T4b",
+      "T4c",
+      "T4d",
+      "T5a",
+      "T5b",
+      "T5c",
+      "T5d",
+      "Tm1",
+      "Tm2",
+      "Tm3",
+      "Tm4",
+      "Tm5Y",
+      "Tm5a",
+      "Tm5b",
+      "Tm5c",
+      "Tm9",
+      "Tm16",
+      "Tm20",
+      "Tm28",
+      "TmY3",
+      "TmY4",
+      "TmY5a",
+      "TmY9",
+      "TmY10",
+      "TmY13",
+      "TmY14",
+      "TmY15",
+      "TmY18"
+    ],
+    "conn.min_synapses": 1,
+    "conn.sign.acetylcholine": 1,
+    "conn.sign.dopamine": 1,
+    "conn.sign.gaba": -1,
+    "conn.sign.glutamate": -1,
+    "conn.sign.octopamine": 1,
+    "conn.sign.serotonin": 1,
+    "conn.sign.unknown": 1,
+    "conn.sign_exceptions": []
+  },
+  "pipeline_version": "fc3858a7ea42",
+  "registry_hash": "47bb8fdc0327a0051915457bf385a496d08887f4ff702b87d12cada79ab8f68c",
+  "schema_version": 1,
+  "sex": "female",
+  "template_id": "female-fafb783-t2"
+}
