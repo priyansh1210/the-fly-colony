@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Draft — awaiting review |
+| Status | Approved — 2026-10-12 |
 | ID prefix | `GENE` |
 | Phase | 5 (Colony) |
 | Plan refs | §4.5, §5.5 (sex ratio), §7 (babies), §10.3 (genesis, spawn, life knobs) |
@@ -121,11 +121,11 @@ Make every fly an individual and let the colony evolve. A **genome** scales biol
 
 ## 6. Assumptions and open questions
 
-| ID | Question | Proposal |
-|---|---|---|
-| GENE-OQ-01 | One allele per gene with per-gene crossover (the plan's choice) vs diploid genes with dominance (more realistic, keeps hidden variation). | Keep the plan's single-allele model for v1 (simpler, easier to read), with a diploid option noted for v2. |
-| GENE-OQ-02 | Who drafts the first gene catalog (200–400 genes)? | I draft it in `design.md` from the knob categories; you review it. |
-| GENE-OQ-03 | Genesis flies: age, maturity, mated state. | Ages spread over 2–5 fly days, sexually mature, unmated, full reserves. |
-| GENE-OQ-04 | Sperm competition model. | Last-male precedence with probability 0.8 (`ASSUMPTION`, registry). |
-| GENE-OQ-05 | In `maintain` mode, is the 70:30 target measured on adults, or on adults plus developing young? | Adults + pupae, to avoid oscillation. |
-| GENE-OQ-06 | Name list source and style (e.g. "rex", "jasmine"). | A built-in list of ~2,000 short names; you can supply your own list. |
+| ID | Question | Proposal | Decision |
+|---|---|---|---|
+| GENE-OQ-01 | One allele per gene with per-gene crossover (the plan's choice) vs diploid genes with dominance (more realistic, keeps hidden variation). | Keep the plan's single-allele model for v1 (simpler, easier to read), with a diploid option noted for v2. | Accepted (proposal), 2026-10-12 |
+| GENE-OQ-02 | Who drafts the first gene catalog (200–400 genes)? | I draft it in `design.md` from the knob categories; you review it. | Accepted (proposal), 2026-10-12 |
+| GENE-OQ-03 | Genesis flies: age, maturity, mated state. | Ages spread over 2–5 fly days, sexually mature, unmated, full reserves. | Accepted (proposal), 2026-10-12 |
+| GENE-OQ-04 | Sperm competition model. | Last-male precedence with probability 0.8 (`ASSUMPTION`, registry). | Accepted (proposal), 2026-10-12 |
+| GENE-OQ-05 | In `maintain` mode, is the 70:30 target measured on adults, or on adults plus developing young? | Adults + pupae, to avoid oscillation. | Accepted (proposal), 2026-10-12 |
+| GENE-OQ-06 | Name list source and style (e.g. "rex", "jasmine"). | A built-in list of ~2,000 short names; you can supply your own list. | Accepted (proposal), 2026-10-12 |

@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Draft — awaiting review |
+| Status | Approved — 2026-10-12 |
 | ID prefix | `BRAIN` |
 | Phase | 1 (simulator and validation). Plasticity lands in Phases 2–4. |
 | Plan refs | §4.2, §4.3, §4.4, §4.5 (the brain side), §13, §15 Phase 1, §18 |
@@ -172,12 +172,12 @@ Simulate every adult fly's brain from its sex's connectome template, batched on 
 
 ## 7. Assumptions and open questions
 
-| ID | Question | Proposal |
-|---|---|---|
-| BRAIN-OQ-01 | Reuse `annel0/flybrain` GPU kernels? | Evaluate its license and fit in Phase 1; fall back to our own Triton kernels. |
-| BRAIN-OQ-02 | Which central-brain neurons should be graded (beyond the optic lobe)? | Start with flyvis types plus a literature list in the registry, and revisit after the Phase 2 gates. |
-| BRAIN-OQ-03 | Spatial model for neuropeptides: global or regional volume transmission? | Regional by neuropil where release sites are known, otherwise global. |
-| BRAIN-OQ-04 | Homeostatic plasticity timescale: neural time or life-clock time? Under 24× compression the two differ a lot. | Life-clock time (it is a "days-long" process), flagged `ASSUMPTION`, and checked in the 72 h soak. |
-| BRAIN-OQ-05 | Exact sleep-state criterion used for downscaling. | dFB activity above threshold plus ≥ N fly minutes of quiescence, per the registry. |
-| BRAIN-OQ-06 | Deterministic event-driven kernels can be slower. What performance penalty is acceptable? | ≤ 20%; otherwise discuss a "fast nondeterministic" mode that is never used for invariant tests. |
-| BRAIN-OQ-07 | Are fp16 weights acceptable? | Only if the gate passes (R-052). |
+| ID | Question | Proposal | Decision |
+|---|---|---|---|
+| BRAIN-OQ-01 | Reuse `annel0/flybrain` GPU kernels? | Evaluate its license and fit in Phase 1; fall back to our own Triton kernels. | Accepted (proposal), 2026-10-12 |
+| BRAIN-OQ-02 | Which central-brain neurons should be graded (beyond the optic lobe)? | Start with flyvis types plus a literature list in the registry, and revisit after the Phase 2 gates. | Accepted (proposal), 2026-10-12 |
+| BRAIN-OQ-03 | Spatial model for neuropeptides: global or regional volume transmission? | Regional by neuropil where release sites are known, otherwise global. | Accepted (proposal), 2026-10-12 |
+| BRAIN-OQ-04 | Homeostatic plasticity timescale: neural time or life-clock time? Under 24× compression the two differ a lot. | Life-clock time (it is a "days-long" process), flagged `ASSUMPTION`, and checked in the 72 h soak. | Accepted (proposal), 2026-10-12 |
+| BRAIN-OQ-05 | Exact sleep-state criterion used for downscaling. | dFB activity above threshold plus ≥ N fly minutes of quiescence, per the registry. | Accepted (proposal), 2026-10-12 |
+| BRAIN-OQ-06 | Deterministic event-driven kernels can be slower. What performance penalty is acceptable? | ≤ 20%; otherwise discuss a "fast nondeterministic" mode that is never used for invariant tests. | Accepted: ≤ 20% cost; no nondeterministic mode unless discussed. 2026-10-12. |
+| BRAIN-OQ-07 | Are fp16 weights acceptable? | Only if the gate passes (R-052). | Accepted (proposal), 2026-10-12 |

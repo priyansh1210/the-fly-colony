@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Draft — awaiting review |
+| Status | Approved — 2026-10-12 |
 | ID prefix | `CONN` |
 | Phase | 0 (Foundations and data) |
 | Plan refs | §4.1, §2 (Art. 5–6), §13, §14, §15 Phase 0 |
@@ -156,12 +156,12 @@ This spec turns published connectome datasets into versioned, checksummed **Brai
 
 ## 7. Assumptions and open questions
 
-| ID | Question | Proposal |
-|---|---|---|
-| CONN-OQ-01 | **Licenses.** FlyWire data is thought to be under a non-commercial license, and the MaleCNS terms are unverified. Is this a non-commercial project? The answer affects sharing outputs such as videos and logs. | Verify both in Phase 0 and record them in `LICENSES.md` before any build. |
-| CONN-OQ-02 | Synapse threshold for FAFB and for MaleCNS. | Use the Shiu et al. 2024 reference configuration for FAFB and the same value for MaleCNS unless the matching report suggests otherwise. |
-| CONN-OQ-03 | Fast sign for dopaminergic, serotonergic, octopaminergic and peptidergic neurons. | Follow the reference model where it defines one; otherwise `ASSUMPTION` with sign 0 (modulatory only) and review after Phase 1. |
-| CONN-OQ-04 | Glutamate can be excitatory at some synapses. | Default −1, with a per-type exception list in the registry. |
-| CONN-OQ-05 | Weight-normalization method between datasets. | Decide in design: a global scale factor vs per-matched-type scaling, judged against the 002 assays. |
-| CONN-OQ-06 | Sensory and ascending fragments from the VNC in brain-only templates. | Keep and label them (R-017); 004 decides how to drive them (see SENSE-OQ-01). |
-| CONN-OQ-07 | `git init` happens in Phase 0 (plan §14). | Confirm at the start of Phase 0. |
+| ID | Question | Proposal | Decision |
+|---|---|---|---|
+| CONN-OQ-01 | **Licenses.** FlyWire data is thought to be under a non-commercial license, and the MaleCNS terms are unverified. Is this a non-commercial project? The answer affects sharing outputs such as videos and logs. | Verify both in Phase 0 and record them in `LICENSES.md` before any build. | Accepted. Project is **non-commercial** (owner, 2026-10-12). Terms still verified per dataset in Phase 0 before any build. |
+| CONN-OQ-02 | Synapse threshold for FAFB and for MaleCNS. | Use the Shiu et al. 2024 reference configuration for FAFB and the same value for MaleCNS unless the matching report suggests otherwise. | Accepted (proposal), 2026-10-12 |
+| CONN-OQ-03 | Fast sign for dopaminergic, serotonergic, octopaminergic and peptidergic neurons. | Follow the reference model where it defines one; otherwise `ASSUMPTION` with sign 0 (modulatory only) and review after Phase 1. | Accepted (proposal), 2026-10-12 |
+| CONN-OQ-04 | Glutamate can be excitatory at some synapses. | Default −1, with a per-type exception list in the registry. | Accepted (proposal), 2026-10-12 |
+| CONN-OQ-05 | Weight-normalization method between datasets. | Decide in design: a global scale factor vs per-matched-type scaling, judged against the 002 assays. | Accepted (proposal), 2026-10-12 |
+| CONN-OQ-06 | Sensory and ascending fragments from the VNC in brain-only templates. | Keep and label them (R-017); 004 decides how to drive them (see SENSE-OQ-01). | Accepted (proposal), 2026-10-12 |
+| CONN-OQ-07 | `git init` happens in Phase 0 (plan §14). | Confirm at the start of Phase 0. | Moot: the repository already exists (GitHub `priyansh1210/the-fly-colony`). Work is done on branches and merged via PRs. |

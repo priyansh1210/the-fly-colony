@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Draft — awaiting review |
+| Status | Approved — 2026-10-12 |
 | ID prefix | `MOTOR` |
 | Phase | 2 (readout and closed loop; owns the Phase-2 emergence gates) |
 | Plan refs | §5.4, §7 (mating needs two brains), §15 Phase 2 gate |
@@ -102,9 +102,9 @@ The thresholds are **proposals for your review**. Each gate uses n ≥ 50 trials
 
 ## 7. Assumptions and open questions
 
-| ID | Question | Proposal |
-|---|---|---|
-| MOTOR-OQ-01 | **No VNC in v1.** Pattern generation such as walking gait, pulse vs sine song pattern and flight power lives in the ventral nerve cord, which brain-only templates lack. Is it acceptable under the constitution for the motor layer to implement VNC-level pattern generation, driven by DN outputs? | Yes, as "muscle layer" code with one condition: *whether* and *what* to do (sing or not, which mode, toward whom) must be set by brain outputs through a documented mapping. Every such mapping is flagged `ASSUMPTION`. v2 (BANC / full MaleCNS) replaces it. |
-| MOTOR-OQ-02 | Many aggression, copulation and rejection DNs have no established functional label. | Start from MaleCNS/BANC annotations and the literature. Where a primitive has no credible mapping, report it as "not yet mappable" rather than invent one. |
-| MOTOR-OQ-03 | Gate thresholds in §5. | Please confirm or adjust. |
-| MOTOR-OQ-04 | **Phase ordering.** Gate MOTOR-AC-05 needs sleep pressure, which the plan delivers in Phase 4 (006). | Either (a) move this gate to Phase 4, or (b) bring a minimal sleep homeostat into Phase 2. Proposal: (b). |
+| ID | Question | Proposal | Decision |
+|---|---|---|---|
+| MOTOR-OQ-01 | **No VNC in v1.** Pattern generation such as walking gait, pulse vs sine song pattern and flight power lives in the ventral nerve cord, which brain-only templates lack. Is it acceptable under the constitution for the motor layer to implement VNC-level pattern generation, driven by DN outputs? | Yes, as "muscle layer" code with one condition: *whether* and *what* to do (sing or not, which mode, toward whom) must be set by brain outputs through a documented mapping. Every such mapping is flagged `ASSUMPTION`. v2 (BANC / full MaleCNS) replaces it. | Accepted (proposal), 2026-10-12 |
+| MOTOR-OQ-02 | Many aggression, copulation and rejection DNs have no established functional label. | Start from MaleCNS/BANC annotations and the literature. Where a primitive has no credible mapping, report it as "not yet mappable" rather than invent one. | Accepted (proposal), 2026-10-12 |
+| MOTOR-OQ-03 | Gate thresholds in §5. | Please confirm or adjust. | Accepted: the proposed thresholds in §5, 2026-10-12. |
+| MOTOR-OQ-04 | **Phase ordering.** Gate MOTOR-AC-05 needs sleep pressure, which the plan delivers in Phase 4 (006). | Either (a) move this gate to Phase 4, or (b) bring a minimal sleep homeostat into Phase 2. Proposal: (b). | Accepted: option **(b)**. A minimal sleep homeostat (LIFE-R-030) is brought into Phase 2. 2026-10-12. |

@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Draft — awaiting review |
+| Status | Approved — 2026-10-12 |
 | ID prefixes | `FID` (fidelity levels), `PERF` (performance, soak, hardware) |
 | Phase | COARSE early (from Phase 1, for laptop development and CI); full scope in Phase 9 (scale and hardening) |
 | Plan refs | §4.6, §13, §16, §17, §15 Phase 9, §18 (performance) |
@@ -99,10 +99,10 @@ Estimates only; Phase 1 benchmarks replace them with measurements.
 
 ## 8. Assumptions and open questions
 
-| ID | Question | Proposal |
-|---|---|---|
-| FID-OQ-01 | **Focus changes the model.** Promoting a fly to FULL when you focus on it changes how its brain is simulated. That makes focus an (audited) intervention, not pure observation. | Keep it, since it is audited and tested for neutrality (FID-R-012). Also offer **observe-only focus**: high-resolution recording at the current fidelity with no promotion. |
-| FID-OQ-02 | Rate-unit calibration method. | Fit per type against FULL recordings over a standard stimulus battery. Choose between a gradient-based and a moment-matching fit in design. |
-| FID-OQ-03 | Losing R-STDP weights on demotion. | R-STDP is off by default, so this rarely matters; warn when it does. |
-| PERF-OQ-01 | 8 GB RAM on the laptop is tight for preprocessing and development. | Streaming covers it (CONN-R-053). A 16 GB upgrade would help but is not required. |
-| PERF-OQ-02 | If the 4060 misses the target: stretch the fly day, lower the population, or use more HYBRID? | Default to stretching the fly day (honest and visible). The other options are your call at run time. |
+| ID | Question | Proposal | Decision |
+|---|---|---|---|
+| FID-OQ-01 | **Focus changes the model.** Promoting a fly to FULL when you focus on it changes how its brain is simulated. That makes focus an (audited) intervention, not pure observation. | Keep it, since it is audited and tested for neutrality (FID-R-012). Also offer **observe-only focus**: high-resolution recording at the current fidelity with no promotion. | Accepted (proposal), 2026-10-12 |
+| FID-OQ-02 | Rate-unit calibration method. | Fit per type against FULL recordings over a standard stimulus battery. Choose between a gradient-based and a moment-matching fit in design. | Accepted (proposal), 2026-10-12 |
+| FID-OQ-03 | Losing R-STDP weights on demotion. | R-STDP is off by default, so this rarely matters; warn when it does. | Accepted (proposal), 2026-10-12 |
+| PERF-OQ-01 | 8 GB RAM on the laptop is tight for preprocessing and development. | Streaming covers it (CONN-R-053). A 16 GB upgrade would help but is not required. | Accepted (proposal), 2026-10-12 |
+| PERF-OQ-02 | If the 4060 misses the target: stretch the fly day, lower the population, or use more HYBRID? | Default to stretching the fly day (honest and visible). The other options are your call at run time. | Accepted (proposal), 2026-10-12 |

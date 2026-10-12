@@ -2,9 +2,9 @@
 
 | Field | Value |
 |---|---|
-| Status | Draft — awaiting review |
+| Status | Approved — 2026-10-12 |
 | ID prefix | `LIFE` |
-| Phase | 4 (metabolism, circadian clock, sleep homeostasis, aging, death, development); 5 (reproductive physiology, population control) |
+| Phase | 2 (minimal sleep homeostat, LIFE-R-030, per MOTOR-OQ-04); 4 (metabolism, circadian clock, full sleep homeostasis, aging, death, development); 5 (reproductive physiology, population control) |
 | Plan refs | §5.5, §6 (circadian), §4.3 (body→brain), §7 (babies) |
 | Depends on | 002, 003, 004 (route catalog), 005 (effort), 009 (life clock) |
 | Used by | 007, 008, 010, 011 |
@@ -127,12 +127,12 @@ Give every fly a living body chemistry (energy, water, protein, hormones, a circ
 
 ## 7. Assumptions and open questions
 
-| ID | Question | Proposal |
-|---|---|---|
-| LIFE-OQ-01 | **Compressed-clock energy balance.** A fly day's worth of energy is burned in 1 real hour of life-clock time, but eating happens at biological speed in neural time. Unscaled, a fly could not eat enough. | Scale ingestion rate (volume per neural second of feeding) by C = 86400 / D (24× at the default), declared as a behavior-time scaling in the registry. Stomach and crop capacity stay biological. |
-| LIFE-OQ-02 | **Egg-laying time budget.** Real females lay ~50–100 eggs per day, but each egg-laying act takes real neural time, and a fly day contains only 1 real hour of behavior. | Default fecundity target of 10–20 eggs per fly day (`ASSUMPTION`) so egg-laying fits the budget. The caps make higher output unnecessary. Alternative: allow a short multi-egg bout per act. |
-| LIFE-OQ-03 | Sleep bout definition: "≥ 5 min immobility" measured in fly minutes or neural minutes? | See WATCH-OQ-01 (the proposal is fly minutes). |
-| LIFE-OQ-04 | Cap semantics (R-071). | As written; please confirm. |
-| LIFE-OQ-05 | Larvae and pupation-site rule (CONST-1.5). | As written; a v2 larval connectome would lift this. |
-| LIFE-OQ-06 | A minimal sleep homeostat is needed in Phase 2 for MOTOR-AC-05. | Bring R-030 forward into Phase 2 (MOTOR-OQ-04). |
-| LIFE-OQ-07 | Mechanism for the maturity route. | `ASSUMPTION`: a maturation factor scaling excitability of the receptivity and courtship-drive neurons. Revisit with the literature in design. |
+| ID | Question | Proposal | Decision |
+|---|---|---|---|
+| LIFE-OQ-01 | **Compressed-clock energy balance.** A fly day's worth of energy is burned in 1 real hour of life-clock time, but eating happens at biological speed in neural time. Unscaled, a fly could not eat enough. | Scale ingestion rate (volume per neural second of feeding) by C = 86400 / D (24× at the default), declared as a behavior-time scaling in the registry. Stomach and crop capacity stay biological. | Accepted (proposal), 2026-10-12 |
+| LIFE-OQ-02 | **Egg-laying time budget.** Real females lay ~50–100 eggs per day, but each egg-laying act takes real neural time, and a fly day contains only 1 real hour of behavior. | Default fecundity target of 10–20 eggs per fly day (`ASSUMPTION`) so egg-laying fits the budget. The caps make higher output unnecessary. Alternative: allow a short multi-egg bout per act. | Accepted: 10–20 eggs per fly day (`ASSUMPTION`); multi-egg bouts not adopted. 2026-10-12. |
+| LIFE-OQ-03 | Sleep bout definition: "≥ 5 min immobility" measured in fly minutes or neural minutes? | See WATCH-OQ-01 (the proposal is fly minutes). | Accepted (proposal), 2026-10-12 |
+| LIFE-OQ-04 | Cap semantics (R-071). | As written; please confirm. | Accepted as written, 2026-10-12. |
+| LIFE-OQ-05 | Larvae and pupation-site rule (CONST-1.5). | As written; a v2 larval connectome would lift this. | Accepted as written, 2026-10-12. |
+| LIFE-OQ-06 | A minimal sleep homeostat is needed in Phase 2 for MOTOR-AC-05. | Bring R-030 forward into Phase 2 (MOTOR-OQ-04). | Accepted (proposal), 2026-10-12 |
+| LIFE-OQ-07 | Mechanism for the maturity route. | `ASSUMPTION`: a maturation factor scaling excitability of the receptivity and courtship-drive neurons. Revisit with the literature in design. | Accepted (proposal), 2026-10-12 |

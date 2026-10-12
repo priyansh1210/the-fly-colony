@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Draft — awaiting review |
+| Status | Approved — 2026-10-12 |
 | ID prefix | `TASK` |
 | Phase | 7 |
 | Plan refs | §1 (DSA embodied), §9 (task spec + catalog of 70), §10.4 (chambers, image tasks, transfers) |
@@ -206,11 +206,11 @@ Give flies problems to solve without teaching them anything directly. Tasks are 
 
 ## 7. Assumptions and open questions
 
-| ID | Question | Proposal |
-|---|---|---|
-| TASK-OQ-01 | **Sleep transfers and vision.** Flies sleep with their eyes open, so moving a sleeping fly in daylight would make its scene jump. | Require darkness as well (R-031), and match the lighting between source and destination. |
-| TASK-OQ-02 | Invisibility threshold ε and sample size. | ε = 5%, n ≥ 200 per class. |
-| TASK-OQ-03 | Which first 10 tasks? | #1, #2, #6, #8, #10, #26, #27, #28, #38, #61 (covers graph search, memory, learning, vision, decisions, survival). |
-| TASK-OQ-04 | Are blink transfers back to the start acceptable as a trial reset? | Yes for chamber tasks. In the dome, only voluntary re-attempts. |
-| TASK-OQ-05 | How to convert RGB images to fly photoreceptor channels. | Documented approximation. UV has no RGB source, so it is set to a fixed ambient level unless the image supplies a UV layer. |
-| TASK-OQ-06 | Do chambers provide water and food by default? | Water yes; food only when part of the task. |
+| ID | Question | Proposal | Decision |
+|---|---|---|---|
+| TASK-OQ-01 | **Sleep transfers and vision.** Flies sleep with their eyes open, so moving a sleeping fly in daylight would make its scene jump. | Require darkness as well (R-031), and match the lighting between source and destination. | Accepted (proposal), 2026-10-12 |
+| TASK-OQ-02 | Invisibility threshold ε and sample size. | ε = 5%, n ≥ 200 per class. | Accepted (proposal), 2026-10-12 |
+| TASK-OQ-03 | Which first 10 tasks? | #1, #2, #6, #8, #10, #26, #27, #28, #38, #61 (covers graph search, memory, learning, vision, decisions, survival). | Accepted (proposal), 2026-10-12 |
+| TASK-OQ-04 | Are blink transfers back to the start acceptable as a trial reset? | Yes for chamber tasks. In the dome, only voluntary re-attempts. | Accepted (proposal), 2026-10-12 |
+| TASK-OQ-05 | How to convert RGB images to fly photoreceptor channels. | Documented approximation. UV has no RGB source, so it is set to a fixed ambient level unless the image supplies a UV layer. | Accepted (proposal), 2026-10-12 |
+| TASK-OQ-06 | Do chambers provide water and food by default? | Water yes; food only when part of the task. | Accepted (proposal), 2026-10-12 |

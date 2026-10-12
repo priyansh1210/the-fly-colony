@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Draft — awaiting review |
+| Status | Approved — 2026-10-12 |
 | ID prefixes | `CLOCK` (time), `WATCH` (Watcher core, Control API, sleep, checkpoints) |
 | Phase | 3 (Watcher core). The clock core is needed from Phase 2; checkpoints and branches are hardened in Phase 9. |
 | Plan refs | §3, §6, §10.1, §10.2, §10.3, §17, §18 (invariants) |
@@ -165,10 +165,10 @@ Command catalog (from plan §10.3; field details go in design):
 
 ## 13. Assumptions and open questions
 
-| ID | Question | Proposal |
-|---|---|---|
-| WATCH-OQ-01 | **Sleep bout time base.** The standard definition of fly sleep is "≥ 5 min immobility". Under compression, is that 5 fly minutes (12.5 s neural) or 5 neural minutes (= 2 fly hours)? | **5 fly minutes (life-clock time)**, so sleep amounts compare with real fly data per fly day; configurable. Used by 005, 006 and 010. |
-| WATCH-OQ-02 | Layout for restore archives and branches. | As in R-032/033 (`timelines/<id>/…`); please confirm. |
-| WATCH-OQ-03 | How to "naturalize" removing a fly. | Remove while it is asleep and no awake fly can see it; other flies find it simply gone. The alternative is a natural death (a corpse remains). Which do you prefer? |
-| WATCH-OQ-04 | PC-sleep integration with Windows + WSL2. | A Windows-side helper listens for power events and signals the Watcher. Even without it, a PC sleep freezes every process, so nothing happens unobserved. |
-| WATCH-OQ-05 | Allow a headless engine run with no Watcher (e.g. benchmarks)? | Only in test/benchmark mode, never on a colony timeline (CONST-3.2). |
+| ID | Question | Proposal | Decision |
+|---|---|---|---|
+| WATCH-OQ-01 | **Sleep bout time base.** The standard definition of fly sleep is "≥ 5 min immobility". Under compression, is that 5 fly minutes (12.5 s neural) or 5 neural minutes (= 2 fly hours)? | **5 fly minutes (life-clock time)**, so sleep amounts compare with real fly data per fly day; configurable. Used by 005, 006 and 010. | Accepted (proposal), 2026-10-12 |
+| WATCH-OQ-02 | Layout for restore archives and branches. | As in R-032/033 (`timelines/<id>/…`); please confirm. | Accepted: `timelines/<id>/…`, nothing deleted. 2026-10-12. |
+| WATCH-OQ-03 | How to "naturalize" removing a fly. | Remove while it is asleep and no awake fly can see it; other flies find it simply gone. The alternative is a natural death (a corpse remains). Which do you prefer? | Accepted (proposal), 2026-10-12 |
+| WATCH-OQ-04 | PC-sleep integration with Windows + WSL2. | A Windows-side helper listens for power events and signals the Watcher. Even without it, a PC sleep freezes every process, so nothing happens unobserved. | Accepted (proposal), 2026-10-12 |
+| WATCH-OQ-05 | Allow a headless engine run with no Watcher (e.g. benchmarks)? | Only in test/benchmark mode, never on a colony timeline (CONST-3.2). | Accepted (proposal), 2026-10-12 |

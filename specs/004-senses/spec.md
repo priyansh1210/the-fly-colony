@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Draft — awaiting review |
+| Status | Approved — 2026-10-12 |
 | ID prefix | `SENSE` |
 | Phase | 2 |
 | Plan refs | §5.3, §4.3 (body→brain routes), §10.4 (blink baseline) |
@@ -139,10 +139,10 @@ Initial catalog (to be completed in design, with every entry cited):
 
 ## 9. Assumptions and open questions
 
-| ID | Question | Proposal |
-|---|---|---|
-| SENSE-OQ-01 | **v1 templates are brain-only.** Leg taste (critical for courtship tapping), leg touch, proprioception and the sex-peptide pathway all start in the ventral nerve cord (VNC) and reach the brain only through ascending neurons. How do we drive them? | Drive the relevant ascending neurons from a documented, cited mapping of body state ("synthetic VNC relay"), each flagged `ASSUMPTION`, and replace the relay with the real VNC in v2. Start with the minimum set: leg pheromone taste, leg sugar taste, walking state, sex-peptide pathway. |
-| SENSE-OQ-02 | Vision frame rate (100 Hz) vs photoreceptor dynamics and the flyvis integration step. | Keep 100 Hz rendering with interpolation; validate the looming response. Raise the rate only for chambers if needed. |
-| SENSE-OQ-03 | Final odorant list. | Shared with WORLD-OQ-01. |
-| SENSE-OQ-04 | Definition of the neutral baseline for blinks. | Darkness at the current night level, still air, background odor. Verified by the 012 invisibility test. |
-| SENSE-OQ-05 | Converting uploaded RGB images to UV/blue/green photoreceptor channels. | Documented approximation (`ASSUMPTION`). See TASK-OQ-05. |
+| ID | Question | Proposal | Decision |
+|---|---|---|---|
+| SENSE-OQ-01 | **v1 templates are brain-only.** Leg taste (critical for courtship tapping), leg touch, proprioception and the sex-peptide pathway all start in the ventral nerve cord (VNC) and reach the brain only through ascending neurons. How do we drive them? | Drive the relevant ascending neurons from a documented, cited mapping of body state ("synthetic VNC relay"), each flagged `ASSUMPTION`, and replace the relay with the real VNC in v2. Start with the minimum set: leg pheromone taste, leg sugar taste, walking state, sex-peptide pathway. | Accepted (proposal), 2026-10-12 |
+| SENSE-OQ-02 | Vision frame rate (100 Hz) vs photoreceptor dynamics and the flyvis integration step. | Keep 100 Hz rendering with interpolation; validate the looming response. Raise the rate only for chambers if needed. | Accepted (proposal), 2026-10-12 |
+| SENSE-OQ-03 | Final odorant list. | Shared with WORLD-OQ-01. | Accepted (proposal), 2026-10-12 |
+| SENSE-OQ-04 | Definition of the neutral baseline for blinks. | Darkness at the current night level, still air, background odor. Verified by the 012 invisibility test. | Accepted (proposal), 2026-10-12 |
+| SENSE-OQ-05 | Converting uploaded RGB images to UV/blue/green photoreceptor channels. | Documented approximation (`ASSUMPTION`). See TASK-OQ-05. | Accepted (proposal), 2026-10-12 |

@@ -1,6 +1,6 @@
 # The Fly Colony — Specifications
 
-**Status:** Draft for review · **Created:** 2026-09-26 · **Source:** master plan `plans/fuzzy-hugging-newt.md`
+**Status:** Approved 2026-10-12 · **Created:** 2026-09-26 · **Source:** master plan `plans/fuzzy-hugging-newt.md`
 
 This folder is the spec-driven-development (SDD) source of truth. Nothing gets built until the spec that covers it is approved. A spec says **what** the system must do and **how we will know** it does it. The **how** goes into each feature's `design.md`, and the ordered work into `tasks.md`. Those two files are written only after you approve that feature's `spec.md`.
 
@@ -23,21 +23,21 @@ This folder is the spec-driven-development (SDD) source of truth. Nothing gets b
 
 | # | Spec | Prefixes | Phase | Depends on | Status |
 |---|---|---|---|---|---|
-| 000 | [Constitution](000-constitution.md): the seven non-negotiable rules | `CONST` | all | — | Draft |
-| 001 | [Connectome pipeline & foundations](001-connectome-pipeline/spec.md): BrainTemplates, I/O map, config, Parameter Registry | `CONN` | 0 | 000 | Draft |
-| 002 | [Brain engine](002-brain-engine/spec.md): hybrid LIF/graded GPU simulator, neuromodulation, plasticity, validation | `BRAIN` | 1 (+2–4) | 001 | Draft |
-| 003 | [Body & world](003-body-world/spec.md): Colony Dome, chambers, fields, ColonyBody physics | `WORLD`, `BODY` | 2 (+4, 5, 7) | 009 | Draft |
-| 004 | [Senses](004-senses/spec.md): world → sensory neurons; interoceptive routes | `SENSE` | 2 | 001–003 | Draft |
-| 005 | [Motor](005-motor/spec.md): DNs → motor primitives; **Phase-2 emergence gates** | `MOTOR` | 2 | 001–004, 006 | Draft |
-| 006 | [Physiology & life cycle](006-physiology-lifecycle/spec.md): metabolism, circadian clock, sleep, development, aging, caps | `LIFE` | 4 (+5) | 002–005, 009 | Draft |
-| 007 | [Genome, personality & reproduction](007-genome-personality-reproduction/spec.md): genes, presets, genesis, spawn, inheritance | `GENE` | 5 | 001–003, 006, 009 | Draft |
-| 008 | [Communication](008-communication/spec.md): signals, receivers, translation, social emergence | `COMM` | 5 (+6) | 003–006, 009, 010 | Draft |
-| 009 | [Watcher core, clocks & sleep](009-watcher-core-clocks-sleep/spec.md): stream, Control API, naturalization, sleep, checkpoints | `CLOCK`, `WATCH` | 3 (clock from 2) | 000, 002, 003 | Draft |
-| 010 | [Mind decoder](010-mind-decoder/spec.md): behavior, feelings, thoughts, relationships, measured personality | `MIND` | 3–6 | 002, 005, 008, 009 | Draft |
-| 011 | [`/flies` record](011-flies-logging/spec.md): layout, formats, completeness, retention | `LOG` | 3 (+later) | 008–010, 012 | Draft |
-| 012 | [Task engine & chambers](012-task-engine-chambers/spec.md): task DSL, image arena, transfers, solvers, 70 tasks | `TASK` | 7 | 003, 004, 009–011 | Draft |
-| 013 | [Console, dashboard & LLM](013-console-dashboard-llm/spec.md): CLI, web dashboard, grounded local LLM | `CLI`, `DASH`, `LLM` | 6, 8 | 009–012 | Draft |
-| 014 | [Performance & fidelity](014-performance-fidelity/spec.md): FULL/HYBRID/COARSE, RTF targets, soak test | `FID`, `PERF` | 1–9 | 001, 002, 009, 011 | Draft |
+| 000 | [Constitution](000-constitution.md): the seven non-negotiable rules | `CONST` | all | — | Approved |
+| 001 | [Connectome pipeline & foundations](001-connectome-pipeline/spec.md): BrainTemplates, I/O map, config, Parameter Registry | `CONN` | 0 | 000 | Approved |
+| 002 | [Brain engine](002-brain-engine/spec.md): hybrid LIF/graded GPU simulator, neuromodulation, plasticity, validation | `BRAIN` | 1 (+2–4) | 001 | Approved |
+| 003 | [Body & world](003-body-world/spec.md): Colony Dome, chambers, fields, ColonyBody physics | `WORLD`, `BODY` | 2 (+4, 5, 7) | 009 | Approved |
+| 004 | [Senses](004-senses/spec.md): world → sensory neurons; interoceptive routes | `SENSE` | 2 | 001–003 | Approved |
+| 005 | [Motor](005-motor/spec.md): DNs → motor primitives; **Phase-2 emergence gates** | `MOTOR` | 2 | 001–004, 006 | Approved |
+| 006 | [Physiology & life cycle](006-physiology-lifecycle/spec.md): metabolism, circadian clock, sleep, development, aging, caps | `LIFE` | 4 (+5) | 002–005, 009 | Approved |
+| 007 | [Genome, personality & reproduction](007-genome-personality-reproduction/spec.md): genes, presets, genesis, spawn, inheritance | `GENE` | 5 | 001–003, 006, 009 | Approved |
+| 008 | [Communication](008-communication/spec.md): signals, receivers, translation, social emergence | `COMM` | 5 (+6) | 003–006, 009, 010 | Approved |
+| 009 | [Watcher core, clocks & sleep](009-watcher-core-clocks-sleep/spec.md): stream, Control API, naturalization, sleep, checkpoints | `CLOCK`, `WATCH` | 3 (clock from 2) | 000, 002, 003 | Approved |
+| 010 | [Mind decoder](010-mind-decoder/spec.md): behavior, feelings, thoughts, relationships, measured personality | `MIND` | 3–6 | 002, 005, 008, 009 | Approved |
+| 011 | [`/flies` record](011-flies-logging/spec.md): layout, formats, completeness, retention | `LOG` | 3 (+later) | 008–010, 012 | Approved |
+| 012 | [Task engine & chambers](012-task-engine-chambers/spec.md): task DSL, image arena, transfers, solvers, 70 tasks | `TASK` | 7 | 003, 004, 009–011 | Approved |
+| 013 | [Console, dashboard & LLM](013-console-dashboard-llm/spec.md): CLI, web dashboard, grounded local LLM | `CLI`, `DASH`, `LLM` | 6, 8 | 009–012 | Approved |
+| 014 | [Performance & fidelity](014-performance-fidelity/spec.md): FULL/HYBRID/COARSE, RTF targets, soak test | `FID`, `PERF` | 1–9 | 001, 002, 009, 011 | Approved |
 
 ---
 
@@ -130,6 +130,8 @@ Header table → Purpose → Scope (in/out) → Requirements (grouped) → Accep
 
 Writing the specs exposed a few gaps and conflicts in the plan. The ones that matter most, each with a proposed answer:
 
+> **Decision (2026-10-12):** the project owner accepted every proposal below, and every open question in specs 001–014, as proposed. Each spec's open-question table records the decision. For #11, the project is **non-commercial**; dataset terms are still verified in Phase 0.
+
 | # | Question | Where | Proposal |
 |---|---|---|---|
 | 1 | **Sleep bout time base.** "≥ 5 min immobility" means either 5 *fly* minutes (12.5 s real) or 5 *neural* minutes (= 2 fly hours). | WATCH-OQ-01 | 5 fly minutes, configurable. |
@@ -182,6 +184,6 @@ Writing the specs exposed a few gaps and conflicts in the plan. The ones that ma
 
 ## Next steps after approval
 
-1. You mark decisions and approve the specs; I update the statuses and the constitution changelog.
-2. **Phase 0:** `git init` (after your confirmation), repository skeleton, then `design.md` and `tasks.md` for **001**.
+1. ~~You mark decisions and approve the specs; I update the statuses and the constitution changelog.~~ Done 2026-10-12.
+2. **Phase 0:** repository skeleton (the git repository already exists), then `design.md` and `tasks.md` for **001**.
 3. Continue feature by feature, in roadmap order: spec approved → design → tasks → implementation → acceptance tests green.
