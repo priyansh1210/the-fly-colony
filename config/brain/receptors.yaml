@@ -1,0 +1,47 @@
+# Receptor-expression table (BRAIN-R-032), version 1. Schema: flycolony.brain.modulation.ReceptorTable.
+#
+# Each entry says which neurons respond to a modulator or peptide trace, and how:
+#   effect: gain          -> input gain x (1 + sensitivity x concentration), bounded by brain.trace.max_gain_change
+#   effect: excitability  -> threshold lowered by sensitivity x concentration (mV)
+# `source` cites the evidence that the receptor is expressed there and the sign of the effect.
+# Magnitudes are not measured on this scale: `sensitivity` is always an ASSUMPTION, to be
+# calibrated globally in Phase 2 (CONST-1.3). Neurons not listed are unmodulated (ASSUMPTION:
+# no data), which is reported, not hidden.
+version: 1
+entries:
+  - name: snpf_orn_dm1
+    select: {cell_types: [ORN_DM1]}
+    substance: sNPF
+    effect: gain
+    sensitivity: 0.5
+    source: {authors: Root C.M. et al., year: 2011, doi: 10.1016/j.cell.2011.02.008, where: "sNPF receptor in Or42b (DM1) ORNs; sNPF signalling raises their presynaptic gain in starved flies"}
+  - name: ilp_orn_dm1
+    select: {cell_types: [ORN_DM1]}
+    substance: ILP
+    effect: gain
+    sensitivity: -0.5
+    source: {authors: Root C.M. et al., year: 2011, doi: 10.1016/j.cell.2011.02.008, where: "insulin signalling suppresses sNPFR1 in DM1 ORNs (fed state lowers facilitation)"}
+  - name: tk_orn_dm5
+    select: {cell_types: [ORN_DM5]}
+    substance: Tk
+    effect: gain
+    sensitivity: -0.5
+    source: {authors: Ko K.I. et al., year: 2015, doi: 10.7554/eLife.08298, where: "Tachykinin receptor in Or85a (DM5) ORNs suppresses their output in starved flies"}
+  - name: da_sugar_grn
+    select: {channel: taste.labellar.sugar}
+    substance: dopamine
+    effect: gain
+    sensitivity: 0.5
+    source: {authors: Inagaki H.K. et al., year: 2012, where: "Cell 148:583. DopEcR in sugar GRNs; dopamine raises sugar sensitivity with starvation"}
+  - name: oa_lptc
+    select: {cell_types: [HSE, HSN, HSS, VS1, VS2, VS3, VS4, VS5, VS6, VS7, VS8]}
+    substance: octopamine
+    effect: gain
+    sensitivity: 0.5
+    source: {authors: Suver M.P. et al., year: 2012, where: "Octopamine neurons mediate the flight-induced gain increase of lobula plate tangential cells (HS/VS)"}
+  - name: akh_oa
+    select: {cell_type_regex: "^OA-"}
+    substance: AKH
+    effect: excitability
+    sensitivity: 2.0
+    source: {authors: Yu Y. et al., year: 2016, doi: 10.7554/eLife.15693, where: "AKH receptor on octopaminergic neurons drives starvation-induced hyperactivity"}

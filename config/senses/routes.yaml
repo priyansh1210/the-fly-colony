@@ -1,0 +1,25 @@
+# Interoceptive route catalog (SENSE-R-060; owner spec 004, seeded by 002 in Phase 1).
+# Schema: flycolony.brain.modulation.RouteCatalog.
+#
+# The only way body state may change brain parameters (BRAIN-R-033, -034). Each route has a
+# source variable (published by 006 physiology), a target, a transfer function and a citation.
+# target.trace sets a body-borne global trace (hormones released outside the brain);
+# target.select + effect acts on neurons like a receptor-table entry.
+# Transfer parameters are ASSUMPTIONS until 006 defines the source variables' units.
+version: 1
+routes:
+  - id: akh_hemolymph
+    source: physiology.akh
+    target: {trace: AKH}
+    transfer: {kind: linear, gain: 1.0, offset: 0.0}
+    citation: "Kim S.K. & Rulifson E.J. (2004) Nature 431:316, AKH from the corpora cardiaca (outside the brain) signals low sugar; Yu Y. et al. (2016) eLife, AKH acts on brain octopaminergic neurons"
+  - id: sugar_dh44
+    source: physiology.hemolymph_sugar
+    target: {select: {cell_types: [DH44]}, effect: excitability}
+    transfer: {kind: sigmoid, max: 3.0, half: 0.5, slope: 0.1}
+    citation: "Dus M. et al. (2015) Neuron 87:139, DH44 neurons in the brain are activated by nutritive sugars"
+  - id: sex_peptide
+    source: physiology.sex_peptide
+    target: {trace: SP}
+    transfer: {kind: linear, gain: 1.0, offset: 0.0}
+    citation: "Yapici N. et al. (2008) Nature 451:33, sex peptide receptor; Feng K. et al. (2014) Neuron 83:135, SP silences SPSN -> SAG ascending neurons (SPSN are in the reproductive tract, outside the brain template)"

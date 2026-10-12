@@ -1,0 +1,174 @@
+{
+  "fidelities_available": [
+    "FULL"
+  ],
+  "key": {
+    "cuda_runtime": "12.8",
+    "device_name": "NVIDIA RTX 4000 SFF Ada Generation",
+    "device_type": "cuda",
+    "driver": "581.42",
+    "kernel_path": "pure-pytorch",
+    "memory_total_gb": 19.99,
+    "os": "Windows",
+    "templates": [
+      "female-fafb783-t2",
+      "male-malecns1-t2"
+    ],
+    "torch": "2.11.0+cu128"
+  },
+  "key_hash": "05078b7afccd0192",
+  "kind": "capacity-profile",
+  "registry": {
+    "hw.rtf_target": 1.0,
+    "hw.vram_reserve_frac": 0.15
+  },
+  "templates": [
+    {
+      "dt_ms": 0.5,
+      "dt_note": "gate passed (dt0.5-fp32-graded)",
+      "fidelity": "FULL",
+      "fit": {
+        "mem_fixed_bytes": 409727266.00000226,
+        "mem_per_fly_bytes": 677997402.8387098,
+        "step_fixed_s": 0.002530449004166259,
+        "step_per_fly_s": 0.001519954144489226
+      },
+      "graded": true,
+      "limits": {
+        "hard_limit": 26,
+        "note": "Below the RTF target even with one fly: every fly day is stretched (PERF-R-006).",
+        "rtf_one_fly": 0.12344450210245689,
+        "rtf_target": 1.0,
+        "soft_limit": 0
+      },
+      "rows": [
+        {
+          "flies": 1,
+          "fly_seconds_per_second": 0.11815577922602877,
+          "mean_rate_hz": 6.675968546910345,
+          "ms_per_step": 4.231701599999724,
+          "over_budget": false,
+          "peak_bytes": 589700608,
+          "reserved_bytes": 872415232,
+          "rtf_per_fly": 0.11815577922602877
+        },
+        {
+          "flies": 2,
+          "fly_seconds_per_second": 0.1747216369823988,
+          "mean_rate_hz": 6.683982621808911,
+          "ms_per_step": 5.723389599999791,
+          "over_budget": false,
+          "peak_bytes": 1042688000,
+          "reserved_bytes": 1512046592,
+          "rtf_per_fly": 0.0873608184911994
+        },
+        {
+          "flies": 4,
+          "fly_seconds_per_second": 0.23684397446077401,
+          "mean_rate_hz": 6.728020537862196,
+          "ms_per_step": 8.44437779999862,
+          "over_budget": false,
+          "peak_bytes": 1957843968,
+          "reserved_bytes": 2856321024,
+          "rtf_per_fly": 0.059210993615193504
+        },
+        {
+          "flies": 8,
+          "fly_seconds_per_second": 0.2791118412800924,
+          "mean_rate_hz": 6.717112491472479,
+          "ms_per_step": 14.331172700000025,
+          "over_budget": false,
+          "peak_bytes": 3787379712,
+          "reserved_bytes": 5563744256,
+          "rtf_per_fly": 0.03488898016001155
+        },
+        {
+          "flies": 16,
+          "fly_seconds_per_second": 0.29585599901551923,
+          "mean_rate_hz": 6.697786434957452,
+          "ms_per_step": 27.040181799999118,
+          "over_budget": false,
+          "peak_bytes": 7444636160,
+          "reserved_bytes": 11024728064,
+          "rtf_per_fly": 0.018490999938469952
+        }
+      ],
+      "template_id": "female-fafb783-t2",
+      "topology_bytes": 247460130
+    },
+    {
+      "dt_ms": 0.5,
+      "dt_note": "gate passed (dt0.5-fp32-graded)",
+      "fidelity": "FULL",
+      "fit": {
+        "mem_fixed_bytes": 522016717.33333534,
+        "mem_per_fly_bytes": 758782854.8817205,
+        "step_fixed_s": 0.0024928628000003977,
+        "step_per_fly_s": 0.0021995085225806434
+      },
+      "graded": true,
+      "limits": {
+        "hard_limit": 23,
+        "note": "Below the RTF target even with one fly: every fly day is stretched (PERF-R-006).",
+        "rtf_one_fly": 0.10655593209212923,
+        "rtf_target": 1.0,
+        "soft_limit": 0
+      },
+      "rows": [
+        {
+          "flies": 1,
+          "fly_seconds_per_second": 0.10057782361980523,
+          "mean_rate_hz": 5.610034065416678,
+          "ms_per_step": 4.971274800000174,
+          "over_budget": false,
+          "peak_bytes": 660801536,
+          "reserved_bytes": 1031798784,
+          "rtf_per_fly": 0.10057782361980523
+        },
+        {
+          "flies": 2,
+          "fly_seconds_per_second": 0.13978447833430466,
+          "mean_rate_hz": 5.641184534854737,
+          "ms_per_step": 7.153870100000859,
+          "over_budget": false,
+          "peak_bytes": 1132099072,
+          "reserved_bytes": 1725956096,
+          "rtf_per_fly": 0.06989223916715233
+        },
+        {
+          "flies": 4,
+          "fly_seconds_per_second": 0.1808021804019678,
+          "mean_rate_hz": 5.647720663583239,
+          "ms_per_step": 11.061813500000426,
+          "over_budget": false,
+          "peak_bytes": 2080662528,
+          "reserved_bytes": 3063939072,
+          "rtf_per_fly": 0.04520054510049195
+        },
+        {
+          "flies": 8,
+          "fly_seconds_per_second": 0.20564358909118666,
+          "mean_rate_hz": 5.656960561663944,
+          "ms_per_step": 19.45112909999989,
+          "over_budget": false,
+          "peak_bytes": 3975257600,
+          "reserved_bytes": 6159335424,
+          "rtf_per_fly": 0.025705448636398332
+        },
+        {
+          "flies": 16,
+          "fly_seconds_per_second": 0.21046544309090806,
+          "mean_rate_hz": 5.651240583543357,
+          "ms_per_step": 38.01099070000055,
+          "over_budget": false,
+          "peak_bytes": 7772407296,
+          "reserved_bytes": 12364808192,
+          "rtf_per_fly": 0.013154090193181754
+        }
+      ],
+      "template_id": "male-malecns1-t2",
+      "topology_bytes": 357302904
+    }
+  ],
+  "world_fixed_cost": "none yet (physics, vision and senses arrive in Phase 2)"
+}

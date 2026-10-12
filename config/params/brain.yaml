@@ -1,0 +1,379 @@
+# Parameter Registry: brain engine (owner spec 002). Schema: flycolony.registry.Entry.
+# Every entry has exactly one of `source` or `assumption` (CONST-6.1).
+# Units: mV, ms, Hz. The LIF/synapse values are the defaults of the Shiu et al. 2024 reference model
+# (model.py, commit 91bdd1e), which cites the primary source for each.
+
+entries:
+  # --- LIF neurons (BRAIN-R-010) -------------------------------------------------------------
+  - id: brain.lif.v_rest
+    value: -52.0
+    units: mV
+    valid_range: [-90, -20]
+    source: &kakaria
+      authors: Kakaria K.S., de Bivort B.L. (via Shiu P.K. et al. 2024)
+      year: 2017
+      doi: 10.3389/fnbeh.2017.00008
+      where: Shiu et al. model.py default_params v_0, v_rst, v_th
+    owner_spec: "002"
+  - id: brain.lif.v_reset
+    value: -52.0
+    units: mV
+    valid_range: [-90, -20]
+    source: *kakaria
+    owner_spec: "002"
+  - id: brain.lif.v_thresh
+    value: -45.0
+    units: mV
+    valid_range: [-80, 0]
+    source: *kakaria
+    owner_spec: "002"
+  - id: brain.lif.tau_m
+    value: 20.0
+    units: ms
+    valid_range: [1, 200]
+    source: *kakaria
+    owner_spec: "002"
+    notes: Membrane time scale t_mbr (capacitance x resistance = 0.002 uF x 10 MOhm).
+  - id: brain.lif.t_ref
+    value: 2.2
+    units: ms
+    valid_range: [0, 20]
+    source:
+      authors: Lazar A.A. et al. (via Shiu P.K. et al. 2024)
+      year: 2021
+      doi: 10.7554/eLife.62362
+      where: Shiu et al. model.py default_params t_rfc
+    owner_spec: "002"
+
+  # --- synapses (BRAIN-R-011) ----------------------------------------------------------------
+  - id: brain.syn.tau
+    value: 5.0
+    units: ms
+    valid_range: [0.5, 100]
+    source:
+      authors: Jürgensen A.-M. et al. (via Shiu P.K. et al. 2024)
+      year: 2021
+      doi: 10.1088/2634-4386/ac3ba6
+      where: Shiu et al. model.py default_params tau
+    owner_spec: "002"
+    notes: The synaptic variable g decays exponentially and is low-pass filtered by the membrane, giving an alpha-like PSP.
+  - id: brain.syn.delay
+    value: 1.8
+    units: ms
+    valid_range: [0, 20]
+    source:
+      authors: Paul A. et al. (via Shiu P.K. et al. 2024)
+      year: 2015
+      doi: 10.3389/fncel.2015.00029
+      where: Shiu et al. model.py default_params t_dly
+    owner_spec: "002"
+    notes: Uniform transmission delay. At a dt that does not divide it, the delay is rounded to whole steps (as Brian2 does).
+  - id: brain.syn.w_per_synapse
+    value: 0.275
+    units: mV
+    valid_range: [0.001, 10]
+    source: &shiu_model
+      authors: Shiu P.K. et al.
+      year: 2024
+      doi: 10.1038/s41586-024-07763-9
+      where: model.py default_params w_syn (the model's single free parameter)
+    owner_spec: "002"
+
+  # --- external input (BRAIN-R-013, BRAIN-R-016) ---------------------------------------------
+  - id: brain.input.w_poisson
+    value: 68.75
+    units: mV
+    valid_range: [0, 500]
+    source:
+      authors: Shiu P.K. et al.
+      year: 2024
+      doi: 10.1038/s41586-024-07763-9
+      where: model.py poi() weight = w_syn x f_poi (0.275 mV x 250, "sufficient to cause spiking")
+    owner_spec: "002"
+    notes: Kick added to the membrane potential of a driven sensory neuron per Poisson event.
+  - id: brain.input.driven_t_ref
+    value: 0.0
+    units: ms
+    valid_range: [0, 20]
+    source:
+      authors: Shiu P.K. et al.
+      year: 2024
+      doi: 10.1038/s41586-024-07763-9
+      where: model.py poi() sets rfc = 0 ms for Poisson targets
+    owner_spec: "002"
+    notes: Refractory period of a sensory neuron while it is driven, so its rate follows the drive rate.
+  - id: brain.noise.rate
+    value: 100.0
+    units: Hz
+    valid_range: [0, 5000]
+    assumption:
+      rationale: >-
+        Background Poisson input per neuron for production runs (BRAIN-R-013). The reference model has
+        none (only stimulated neurons receive input), so the value is chosen to give sparse spontaneous
+        activity (about 1-5 Hz mean in the central brain) without runaway. Reference mode uses 0.
+        Calibrated globally against spontaneous-rate data in Phase 2.
+      owner: "002"
+    owner_spec: "002"
+  - id: brain.noise.w
+    value: 1.5
+    units: mV
+    valid_range: [0, 100]
+    assumption:
+      rationale: >-
+        Membrane kick per background event. With brain.noise.rate the mean depolarisation is
+        rate x w x tau_m = 3 mV, below the 7 mV rest-to-threshold gap, so neurons fire on
+        fluctuations and recurrent input. Scanned 2026-10-12 on female-fafb783-t2 (production
+        model, 0.5 s): median 2 Hz over spiking neurons, 39% silent, mean 10 Hz, no runaway
+        (100 Hz x 1.0 mV gave 81% silent; 200 Hz x 1.0 mV a 12 Hz mean). Paired with brain.noise.rate.
+      owner: "002"
+    owner_spec: "002"
+
+  # --- time stepping (BRAIN-R-020..022) ------------------------------------------------------
+  - id: brain.dt.reference
+    value: 0.1
+    units: ms
+    valid_range: [0.01, 1]
+    source: *shiu_model
+    owner_spec: "002"
+    notes: Brian2 default dt used by the reference model.
+  - id: brain.dt.candidates
+    value: [0.25, 0.5]
+    units: ms
+    valid_range: [0.01, 2]
+    assumption:
+      rationale: Production timesteps tried by the timestep gate (BRAIN-R-021; target 0.25-0.5 ms). Both divide the physics, senses and vision periods (BRAIN-R-023).
+      owner: "002"
+    owner_spec: "002"
+  - id: brain.gate.min_corr
+    value: 0.9
+    units: Pearson r
+    valid_range: [0, 1]
+    source:
+      authors: Fly Colony spec 002
+      year: 2026
+      where: BRAIN-R-021 and BRAIN-R-081 (approved 2026-10-12)
+    owner_spec: "002"
+  - id: brain.gate.responsive_hz
+    value: 1.0
+    units: Hz
+    valid_range: [0, 100]
+    assumption:
+      rationale: A neuron counts as responsive in an assay when its trial-mean rate reaches this value in either the reference or the candidate run (BRAIN-R-081).
+      owner: "002"
+    owner_spec: "002"
+  - id: brain.gate.top_k
+    value: 50
+    units: neurons
+    valid_range: [1, 10000]
+    assumption:
+      rationale: Size of the top-activated set compared between engine and reference (BRAIN-R-081).
+      owner: "002"
+    owner_spec: "002"
+  - id: brain.gate.min_top_k_overlap
+    value: 0.8
+    units: fraction
+    valid_range: [0, 1]
+    assumption:
+      rationale: Tolerance for "the same top-k activated neurons" (BRAIN-R-081).
+      owner: "002"
+    owner_spec: "002"
+
+  # --- male template assays (BRAIN-R-082) ------------------------------------------------------
+  - id: brain.male.min_readout_input_frac
+    value: 0.25
+    units: fraction of the female homolog's input synapses (after conn.norm.male_scale)
+    valid_range: [0, 1]
+    assumption:
+      rationale: >-
+        A mapped male readout neuron below this is treated as a truncated reconstruction and the
+        assay is run mirror-image (stimulus and readout on the opposite side). Example: MaleCNS
+        MN9 R has 556 input synapses against 6,012 for MN9 L and about 5,700 for each FAFB MN9.
+      owner: "002"
+    owner_spec: "002"
+  - id: brain.male.min_type_side_corr
+    value: 0.3
+    units: Pearson r
+    valid_range: [-1, 1]
+    assumption:
+      rationale: >-
+        Minimum cross-sex correlation of mean rates per matched (cell type, side) over responsive
+        pairs, per assay (BRAIN-R-082). Two different individuals, reconstructed by different
+        pipelines, are not expected to match the 0.9 engine-vs-reference bar. Phase-1 values with
+        per_type normalization: sugar 0.79, sugar_bitter 0.43, water 0.40, JO-CE 0.73. The floor
+        catches a broken mapping or normalization (a side-swapped mapping gives about 0).
+      owner: "002"
+    owner_spec: "002"
+
+  # --- numerics (BRAIN-R-052, BRAIN-R-054) ---------------------------------------------------
+  - id: brain.num.fixed_point_bits
+    value: 24
+    units: bits
+    valid_range: [8, 40]
+    assumption:
+      rationale: >-
+        Synaptic input is summed as int64 fixed point (2^-24 mV resolution), because integer
+        addition is associative: the result is bit-identical whatever the order of the parallel
+        sum, and one fly's input never depends on the other flies in its batch (BRAIN-R-054/055).
+      owner: "002"
+    owner_spec: "002"
+
+  - id: brain.num.event_block_steps
+    value: 1000
+    units: steps
+    valid_range: [1, 100000]
+    assumption:
+      rationale: >-
+        Poisson drive and background events are drawn for this many steps at a time to cut GPU
+        launch overhead. Draws are counter-based (fly, stream, step, neuron), so results are
+        identical for any block size; a test checks that.
+      owner: "002"
+    owner_spec: "002"
+
+  # --- outputs (BRAIN-R-017) -----------------------------------------------------------------
+  - id: brain.out.rate_tau
+    value: 50.0
+    units: ms
+    valid_range: [1, 2000]
+    assumption:
+      rationale: Time constant of the exponential filter that turns DN, motor and neurosecretory group spikes into rates for 005/006.
+      owner: "002"
+    owner_spec: "002"
+
+  # --- graded units (BRAIN-R-014, BRAIN-R-015) -----------------------------------------------
+  - id: brain.graded.tau
+    value: 20.0
+    units: ms
+    valid_range: [1, 500]
+    assumption:
+      rationale: Membrane time constant of graded units whose type has no flyvis value. flyvis bounds time constants below at 5 ms; 20 ms equals the LIF default.
+      owner: "002"
+    owner_spec: "002"
+  - id: brain.graded.v_thresh
+    value: -45.0
+    units: mV
+    valid_range: [-80, 0]
+    assumption:
+      rationale: Output of a graded unit is gain x max(0, V - v_thresh). Using the LIF threshold makes a graded unit at a given depolarisation emit what a spiking unit would.
+      owner: "002"
+    owner_spec: "002"
+  - id: brain.graded.gain
+    value: 20.0
+    units: Hz/mV
+    valid_range: [0, 1000]
+    assumption:
+      rationale: >-
+        Converts graded depolarisation above threshold into a rate-equivalent output. A graded unit
+        at output r drives its targets like a spiking neuron firing at r Hz (BRAIN-R-015). 20 Hz/mV
+        maps the 7 mV rest-to-threshold gap to a 140 Hz range, the span of the reference drive rates.
+      owner: "002"
+    owner_spec: "002"
+  - id: brain.graded.extra_cell_types
+    value: [APL]
+    units: cell types
+    source:
+      authors: Amin H. et al.
+      year: 2020
+      doi: 10.7554/eLife.56954
+      where: APL inhibition of Kenyon cells is graded and spatially local (non-spiking signalling); BRAIN-OQ-02 literature list
+    owner_spec: "002"
+    notes: Central-brain types simulated as graded units in addition to the template's flyvis types (BRAIN-OQ-02).
+  - id: brain.graded.max_rate
+    value: 300.0
+    units: Hz
+    valid_range: [1, 2000]
+    assumption:
+      rationale: Saturation of graded output, so a graded unit cannot exceed the rate a spiking neuron can reach with the reference refractory period.
+      owner: "002"
+    owner_spec: "002"
+
+  - id: brain.graded.update_interval
+    value: 1.0
+    units: ms
+    valid_range: [0.01, 10]
+    assumption:
+      rationale: >-
+        Graded outputs are recomputed and propagated every this many ms and held in between.
+        Graded units have time constants >= 5 ms (flyvis lower bound), so 1 kHz coupling tracks them;
+        recomputing every step would cost ~4M edge updates per fly per step on FAFB.
+      owner: "002"
+    owner_spec: "002"
+
+  # --- neuromodulator and peptide traces (BRAIN-R-030..032) -----------------------------------
+  - id: brain.trace.amine.tau_rise
+    value: 50.0
+    units: ms
+    valid_range: [1, 10000]
+    assumption:
+      rationale: Rise constant for dopamine/serotonin/octopamine concentration traces; GRAB-sensor imaging shows sub-second rise of released amines.
+      owner: "002"
+    owner_spec: "002"
+  - id: brain.trace.amine.tau_decay
+    value: 1000.0
+    units: ms
+    valid_range: [10, 100000]
+    assumption:
+      rationale: Decay constant for amine traces (seconds-scale clearance seen with GRAB-DA in the mushroom body).
+      owner: "002"
+    owner_spec: "002"
+  - id: brain.trace.peptide.tau_rise
+    value: 1000.0
+    units: ms
+    valid_range: [1, 1000000]
+    assumption:
+      rationale: Peptide release and diffusion is slower than amine release (volume transmission, seconds).
+      owner: "002"
+    owner_spec: "002"
+  - id: brain.trace.peptide.tau_decay
+    value: 60000.0
+    units: ms
+    valid_range: [100, 100000000]
+    assumption:
+      rationale: Peptide traces decay over about a minute of neural time; slower hormone-like signals (ILP, AKH) take their constants from 006 routes.
+      owner: "002"
+    owner_spec: "002"
+  - id: brain.trace.unit_rate
+    value: 10.0
+    units: Hz
+    valid_range: [0.01, 1000]
+    assumption:
+      rationale: >-
+        Trace scale. Release into a compartment is normalised by the releasers' total output
+        fraction there and by the decay constant, so a steady trace of 1.0 means the neurons
+        releasing into that compartment fire at this mean rate (weighted by their output fraction).
+        Receptor sensitivities are per trace unit.
+      owner: "002"
+    owner_spec: "002"
+  - id: brain.trace.update_interval
+    value: 1.0
+    units: ms
+    valid_range: [0.01, 100]
+    assumption:
+      rationale: Traces and their gain/excitability effects are updated every this many ms; the fastest trace constant (amine rise) is 50 ms. Releases in between are summed exactly.
+      owner: "002"
+    owner_spec: "002"
+  - id: brain.trace.max_gain_change
+    value: 0.5
+    units: fraction
+    valid_range: [0, 10]
+    assumption:
+      rationale: Bound on how far receptor-mediated modulation can move a neuron's input gain (|delta gain| <= this), keeping modulation inside a safe envelope.
+      owner: "002"
+    owner_spec: "002"
+
+  # --- safety envelope (BRAIN-R-047) ---------------------------------------------------------
+  - id: brain.safety.max_population_rate
+    value: 50.0
+    units: Hz
+    valid_range: [1, 1000]
+    assumption:
+      rationale: Mean firing rate over all neurons of a fly above which a brain.runaway event is published (fly brains are sparse; the 0-stimulus reference model is silent).
+      owner: "002"
+    owner_spec: "002"
+  - id: brain.safety.window
+    value: 100.0
+    units: ms
+    valid_range: [1, 10000]
+    assumption:
+      rationale: Window over which the population rate is measured for the runaway check.
+      owner: "002"
+    owner_spec: "002"

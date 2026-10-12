@@ -1,0 +1,130 @@
+{
+  "fidelities_available": [
+    "FULL"
+  ],
+  "key": {
+    "cuda_runtime": "12.8",
+    "device_name": "Intel64 Family 6 Model 198 Stepping 2, GenuineIntel",
+    "device_type": "cpu",
+    "driver": "581.42",
+    "kernel_path": "pure-pytorch",
+    "memory_total_gb": 63.4,
+    "os": "Windows",
+    "templates": [
+      "female-fafb783-t2",
+      "male-malecns1-t2"
+    ],
+    "torch": "2.11.0+cu128"
+  },
+  "key_hash": "b5a6ec846885ccfb",
+  "kind": "capacity-profile",
+  "registry": {
+    "hw.rtf_target": 1.0,
+    "hw.vram_reserve_frac": 0.15
+  },
+  "templates": [
+    {
+      "dt_ms": 0.5,
+      "dt_note": "gate passed (dt0.5-fp32-graded)",
+      "fidelity": "FULL",
+      "fit": {
+        "mem_fixed_bytes": 247460130.0,
+        "mem_per_fly_bytes": 0.0,
+        "step_fixed_s": 0.001423190152173149,
+        "step_per_fly_s": 0.010537055546087094
+      },
+      "graded": true,
+      "limits": {
+        "hard_limit": null,
+        "note": "Below the RTF target even with one fly: every fly day is stretched (PERF-R-006).",
+        "rtf_one_fly": 0.041805161249549486,
+        "rtf_target": 1.0,
+        "soft_limit": 0
+      },
+      "rows": [
+        {
+          "flies": 1,
+          "fly_seconds_per_second": 0.0417791120132186,
+          "mean_rate_hz": 6.675968546910345,
+          "ms_per_step": 11.967702899999495,
+          "peak_bytes": 0,
+          "rtf_per_fly": 0.0417791120132186
+        },
+        {
+          "flies": 2,
+          "fly_seconds_per_second": 0.044014563785346864,
+          "mean_rate_hz": 6.683982621808911,
+          "ms_per_step": 22.719752599999993,
+          "peak_bytes": 0,
+          "rtf_per_fly": 0.022007281892673432
+        },
+        {
+          "flies": 4,
+          "fly_seconds_per_second": 0.046269856928883996,
+          "mean_rate_hz": 6.728020537862196,
+          "ms_per_step": 43.22468519999893,
+          "peak_bytes": 0,
+          "rtf_per_fly": 0.011567464232220999
+        },
+        {
+          "flies": 8,
+          "fly_seconds_per_second": 0.046600247977860235,
+          "mean_rate_hz": 6.717112491472479,
+          "ms_per_step": 85.83645310000065,
+          "peak_bytes": 0,
+          "rtf_per_fly": 0.005825030997232529
+        }
+      ],
+      "template_id": "female-fafb783-t2",
+      "topology_bytes": 247460130
+    },
+    {
+      "dt_ms": 0.5,
+      "dt_note": "gate passed (dt0.5-fp32-graded)",
+      "fidelity": "FULL",
+      "fit": {
+        "mem_fixed_bytes": 357302904.0,
+        "mem_per_fly_bytes": 0.0,
+        "step_fixed_s": 0.002593340900000831,
+        "step_per_fly_s": 0.015165182185714006
+      },
+      "graded": true,
+      "limits": {
+        "hard_limit": null,
+        "note": "Below the RTF target even with one fly: every fly day is stretched (PERF-R-006).",
+        "rtf_one_fly": 0.028155494552483694,
+        "rtf_target": 1.0,
+        "soft_limit": 0
+      },
+      "rows": [
+        {
+          "flies": 1,
+          "fly_seconds_per_second": 0.028291879580978507,
+          "mean_rate_hz": 5.610034065416678,
+          "ms_per_step": 17.672915600000124,
+          "peak_bytes": 0,
+          "rtf_per_fly": 0.028291879580978507
+        },
+        {
+          "flies": 2,
+          "fly_seconds_per_second": 0.0302552485557157,
+          "mean_rate_hz": 5.641184534854737,
+          "ms_per_step": 33.05211650000092,
+          "peak_bytes": 0,
+          "rtf_per_fly": 0.01512762427785785
+        },
+        {
+          "flies": 4,
+          "fly_seconds_per_second": 0.03163992955249479,
+          "mean_rate_hz": 5.647720663583239,
+          "ms_per_step": 63.211265899999496,
+          "peak_bytes": 0,
+          "rtf_per_fly": 0.007909982388123698
+        }
+      ],
+      "template_id": "male-malecns1-t2",
+      "topology_bytes": 357302904
+    }
+  ],
+  "world_fixed_cost": "none yet (physics, vision and senses arrive in Phase 2)"
+}

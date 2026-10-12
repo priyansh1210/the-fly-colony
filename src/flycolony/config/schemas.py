@@ -43,11 +43,36 @@ class Templates(Strict):
     male: str = "male-malecns1-t2"
 
 
+class BrainConfig(Strict):
+    """Brain engine settings (spec 002).
+
+    mode: `production` needs a passed timestep gate for dt (BRAIN-R-022); `experimental` runs an
+    ungated dt and flags it; `reference` is the Shiu et al. configuration (dt = reference dt,
+    no background noise, every neuron LIF).
+    dt_ms: null picks the largest dt that passed the gate for the loaded template.
+    """
+
+    mode: Literal["production", "experimental", "reference"] = "production"
+    dt_ms: float | None = Field(None, gt=0)
+    graded: bool = True
+    weights: Literal["fp32", "fp16"] = "fp32"
+
+
+class Schedule(Strict):
+    """Multi-rate schedule (BRAIN-R-023): each period must be a whole number of brain steps."""
+
+    physics_ms: float = Field(0.5, gt=0)
+    senses_ms: float = Field(1.0, gt=0)
+    vision_ms: float = Field(10.0, gt=0)
+
+
 class ColonyConfig(Strict):
     seed: int = Field(0, ge=0)
     paths: Paths = Paths()
     clock: Clock = Clock()
     templates: Templates = Templates()
+    brain: BrainConfig = BrainConfig()
+    schedule: Schedule = Schedule()
 
 
 # --- genesis.yaml --------------------------------------------------------------------------

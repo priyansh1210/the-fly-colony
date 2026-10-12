@@ -6,6 +6,7 @@ Generated from `config/datasets.yaml` by `colony data licenses`. Do not edit by 
 |---|---|---|---|
 | `fafb783_annotations` | [CC BY 4.0 (assumed)](https://creativecommons.org/licenses/by/4.0/) | assumed | Treated as attribution-only. Confirm with the authors before public redistribution. |
 | `fafb783_connectome` | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | verified | Attribution required. No non-commercial restriction. |
+| `flyvis_pretrained` | [MIT](https://github.com/TuragaLab/flyvis/blob/main/LICENSE) | verified | Keep the MIT notice with any copied parameters. |
 | `malecns_v1` | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | verified | Attribution required. No non-commercial restriction. |
 | `shiu2024_model` | [MIT (code); data derived from FlyWire 783 (CC BY 4.0)](https://github.com/philshiu/Drosophila_brain_model/blob/main/LICENSE) | verified | Keep the MIT notice with any copied code. FlyWire attribution applies to the data. |
 
@@ -26,6 +27,15 @@ Generated from `config/datasets.yaml` by `colony data licenses`. Do not edit by 
 - **Evidence:** Zenodo record 10676866 license field (cc-by-4.0)
 - **Restrictions:** Attribution required. No non-commercial restriction.
 - **Required attribution:** FlyWire Consortium. Dorkenwald S. et al. (2024) Neuronal wiring diagram of an adult brain, Nature 634:124-138, doi:10.1038/s41586-024-07558-y; Schlegel P. et al. (2024) Whole-brain annotation and multi-connectome cell typing of Drosophila, Nature 634:139-152, doi:10.1038/s41586-024-07686-5; synapse detection Buhmann et al. (2021), Heinrich et al. (2018); neurotransmitter prediction Eckstein, Bates et al. (2024). Data: Zenodo doi:10.5281/zenodo.10676866.
+
+## `flyvis_pretrained`: flyvis pretrained ensemble (connectome-constrained visual system model)
+
+- **Version:** results_pretrained_models.zip (sha256 pinned by the flyvis download tool)
+- **Source:** https://github.com/TuragaLab/flyvis
+- **License:** [MIT](https://github.com/TuragaLab/flyvis/blob/main/LICENSE) (verified, checked 2026-10-12)
+- **Evidence:** license.txt in the published download folder and LICENSE in the repository (MIT)
+- **Restrictions:** Keep the MIT notice with any copied parameters.
+- **Required attribution:** Lappalainen J.K. et al. (2024) Connectome-constrained networks predict neural activity across the fly visual system, Nature 634:1132-1140, doi:10.1038/s41586-024-07939-3.
 
 ## `malecns_v1`: Janelia/Google male adult nervous system (MaleCNS v1.0)
 

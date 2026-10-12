@@ -93,6 +93,35 @@ datasets:
         url: https://raw.githubusercontent.com/philshiu/Drosophila_brain_model/91bdd1e7dcf193f3e7ca5a8933497fcef63b7960/model.py
         sha256: fc45837d7122c6ce2a7f3f2f23c515992e4b232aadb919efabb72337fac88e4e   # pinned after first verified fetch, 2026-10-12
 
+  flyvis_pretrained:
+    title: flyvis pretrained ensemble (connectome-constrained visual system model)
+    version: results_pretrained_models.zip (sha256 pinned by the flyvis download tool)
+    homepage: https://github.com/TuragaLab/flyvis
+    license:
+      name: MIT
+      url: https://github.com/TuragaLab/flyvis/blob/main/LICENSE
+      status: verified
+      checked: "2026-10-12"
+      evidence: license.txt in the published download folder and LICENSE in the repository (MIT)
+      restrictions: Keep the MIT notice with any copied parameters.
+      attribution: >-
+        Lappalainen J.K. et al. (2024) Connectome-constrained networks predict neural activity
+        across the fly visual system, Nature 634:1132-1140, doi:10.1038/s41586-024-07939-3.
+    # Public Google Drive folder used by flyvis_cli/download_pretrained_models.py. The API key in the
+    # URLs is the public key published in that MIT-licensed script, not a credential of this project.
+    files:
+      - name: results_pretrained_models.zip
+        url: https://www.googleapis.com/drive/v3/files/13cJr2nMn89j-jBAd5RduYRJpBcXwoNrC?alt=media&key=AIzaSyDOy2_N7B5UjxKy5Xxeyd9WZfnDWzQ4-54
+        sha256: 71c78d4070556a536b13b23ee3139cd2788aa2a9d07d430a223b4edead281db1   # published in the flyvis download tool
+        size: 3417042
+      - name: license.txt
+        url: https://www.googleapis.com/drive/v3/files/1zSWFesiLXc2Q7uoa7O6YEpJ-iIQgj98Q?alt=media&key=AIzaSyDOy2_N7B5UjxKy5Xxeyd9WZfnDWzQ4-54
+        size: 1146
+      - name: fib25-fib19_v2.2.json
+        url: https://raw.githubusercontent.com/TuragaLab/flyvis/92b3845cc426dd309a1a0e1b3890156c42e14021/flyvis/connectome/fib25-fib19_v2.2.json
+        sha256: bfbb0766251ff09e22723d0ebbf7b14793e70b3ae8ad0eea64eac9d28223351a   # pinned after first verified fetch, 2026-10-12
+        size: 618148
+
   malecns_v1:
     title: Janelia/Google male adult nervous system (MaleCNS v1.0)
     version: "v1.0"
