@@ -52,7 +52,7 @@ Make every fly an individual and let the colony evolve. A **genome** scales biol
 
 | ID | Pri | Requirement | Verified by |
 |---|---|---|---|
-| GENE-R-030 | M | WHEN `genesis` runs, THE SYSTEM SHALL create 100 adult flies (70 male, 30 female) by default. It applies the preset mix from `genesis.yaml` (counts or proportions, including "neutral"), spreads the flies across the dome, gives them full reserves, and sets their initial age and state per GENE-OQ-03. The clock starts at Day 1, 06:00. | T-GENE-U-006 |
+| GENE-R-030 | M | WHEN `genesis` runs, THE SYSTEM SHALL create 100 adult flies (70 male, 30 female) by default, or the count you give. The count is checked against the device's hardware limits first (HW-R-013/014, spec 014): above the hard limit genesis is refused with the largest count that fits; above the soft limit it needs your confirmation. It applies the preset mix from `genesis.yaml` (counts or proportions, including "neutral"), spreads the flies across the dome, gives them full reserves, and sets their initial age and state per GENE-OQ-03. The clock starts at Day 1, 06:00. | T-GENE-U-006 |
 | GENE-R-031 | M | The sex ratio at genesis SHALL be exactly the configured one (70:30 by default). | T-GENE-I-002 |
 | GENE-R-032 | M | IF a colony already exists in the current timeline THEN `genesis` SHALL be refused, unless you confirm starting a new timeline. | T-GENE-U-006 |
 

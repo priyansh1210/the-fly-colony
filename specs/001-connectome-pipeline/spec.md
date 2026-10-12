@@ -22,7 +22,7 @@ This spec turns published connectome datasets into versioned, checksummed **Brai
 - The I/O map build and its validation. The *content* of the map is owned by 004 (senses), 005 (motor) and 006 (interoceptive routes).
 - Cross-dataset cell-type matching and weight normalization between sexes.
 - The cell-type-level graph used by the HYBRID and COARSE fidelities (014).
-- Storage, manifests, checksums, deterministic builds, a memory cap for the 8 GB laptop.
+- Storage, manifests, checksums, deterministic builds, a memory cap so the build runs on 8 GB machines.
 - Config files and schemas; the Parameter Registry.
 
 **Out of scope:** running the brain (002), what the senses and motor primitives mean (004/005), fitting rate-unit parameters (014), the larval connectome (v2).
@@ -91,7 +91,7 @@ This spec turns published connectome datasets into versioned, checksummed **Brai
 | CONN-R-050 | M | THE PIPELINE SHALL write tensors as safetensors and tables as Parquet, plus a `manifest.json` containing: template id, pipeline version (git hash), inputs and their checksums, parameters used, output checksums, and counts. | T-CONN-I-001 |
 | CONN-R-051 | M | WHEN THE ENGINE loads a template it SHALL verify the output checksums, and SHALL refuse to load it on any mismatch. | T-CONN-I-001 |
 | CONN-R-052 | M | THE PIPELINE SHALL be deterministic: the same inputs and pipeline version give byte-identical outputs. | T-CONN-I-002 |
-| CONN-R-053 | M | THE PIPELINE SHALL stay under 6 GB of peak RAM (the laptop has 8 GB) by using streaming processing (Polars lazy / DuckDB). | T-CONN-P-001 |
+| CONN-R-053 | M | THE PIPELINE SHALL stay under a configurable peak-RAM cap, default 6 GB so it runs on 8 GB machines, by using streaming processing (Polars lazy / DuckDB). Machines with more RAM may raise the cap; outputs SHALL be byte-identical either way (R-052). | T-CONN-P-001 |
 | CONN-R-054 | M | Published templates SHALL be immutable. Any change produces a new template version, and checkpoints record the template version they use. | T-CONN-I-001 |
 | CONN-R-055 | S | THE PIPELINE SHALL write templates to a configurable path, by default on the WSL2 ext4 filesystem (§13). | review |
 
@@ -128,7 +128,7 @@ This spec turns published connectome datasets into versioned, checksummed **Brai
 | CONN-AC-02 | The MaleCNS brain-portion male template builds. Its counts are recorded, and every male-specific type in the matching table (e.g. P1) is present. | R-016, R-030, R-060 |
 | CONN-AC-03 | Changing one byte of a template makes the engine refuse to load it. | R-050, R-051 |
 | CONN-AC-04 | Two builds from the same inputs are byte-identical. | R-052 |
-| CONN-AC-05 | The full build runs on the dev laptop with peak RSS ≤ 6 GB. | R-053 |
+| CONN-AC-05 | The full build runs with peak RSS ≤ 6 GB at the default cap, and gives byte-identical output with a raised cap. | R-053 |
 | CONN-AC-06 | An I/O map with a bad reference fails the build with a clear report; a valid map prints a coverage report. | R-020..022 |
 | CONN-AC-07 | `data/LICENSES.md` covers every dataset, and a build without a license entry fails. | R-002, R-003 |
 | CONN-AC-08 | The registry lint passes on the codebase, and the engine refuses to start when a parameter is missing. | R-080..085 |
@@ -152,7 +152,7 @@ This spec turns published connectome datasets into versioned, checksummed **Brai
 | T-CONN-I-001 | invariant | Manifest checksums; tamper detection; version pinning. |
 | T-CONN-I-002 | invariant | Byte-identical rebuild. |
 | T-CONN-I-003 | invariant | No-magic-number lint over model packages. |
-| T-CONN-P-001 | perf | Peak RAM of a full build on 8 GB. |
+| T-CONN-P-001 | perf | Peak RAM of a full build at the default 6 GB cap; identical output with a raised cap. |
 
 ## 7. Assumptions and open questions
 

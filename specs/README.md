@@ -37,7 +37,7 @@ This folder is the spec-driven-development (SDD) source of truth. Nothing gets b
 | 011 | [`/flies` record](011-flies-logging/spec.md): layout, formats, completeness, retention | `LOG` | 3 (+later) | 008–010, 012 | Approved |
 | 012 | [Task engine & chambers](012-task-engine-chambers/spec.md): task DSL, image arena, transfers, solvers, 70 tasks | `TASK` | 7 | 003, 004, 009–011 | Approved |
 | 013 | [Console, dashboard & LLM](013-console-dashboard-llm/spec.md): CLI, web dashboard, grounded local LLM | `CLI`, `DASH`, `LLM` | 6, 8 | 009–012 | Approved |
-| 014 | [Performance & fidelity](014-performance-fidelity/spec.md): FULL/HYBRID/COARSE, RTF targets, soak test | `FID`, `PERF` | 1–9 | 001, 002, 009, 011 | Approved |
+| 014 | [Performance & fidelity](014-performance-fidelity/spec.md): FULL/HYBRID/COARSE, multi-GPU portability and per-device fly limits, RTF targets, soak test | `FID`, `PERF`, `HW` | 1–9 | 001, 002, 009, 011 | Approved |
 
 ---
 
@@ -83,7 +83,7 @@ Header table → Purpose → Scope (in/out) → Requirements (grouped) → Accep
 |---|---|---|
 | S | You approve the specs | this folder |
 | 0 | Neuron and synapse counts match published figures; checksums pass | CONN-AC-01..08 |
-| 1 | Matches the Shiu/Brian2 reference (corr ≥ 0.9); RTF measured on the 4060 and 1650 | BRAIN-AC-01..09 |
+| 1 | Matches the Shiu/Brian2 reference (corr ≥ 0.9); RTF measured on CPU and on at least two GPUs from different tiers | BRAIN-AC-01..09 |
 | 2 | Sugar → feeding, bitter → rejection, looming → escape, plume → approach, dark + pressure → sleep | MOTOR-AC-01..07 |
 | 3 | Attached ≡ detached; completeness; lossless suspend/resume | WATCH-AC-01..08, LOG-AC-01 |
 | 4 | Day/night activity profile emerges; starvation and aging curves | LIFE-AC-01..08 |
@@ -91,7 +91,7 @@ Header table → Purpose → Scope (in/out) → Requirements (grouped) → Accep
 | 6 | Decoder calibration; LLM 100% faithful (or fallback); ≥ 95% command parsing | MIND-AC-02, LLM-AC-01 |
 | 7 | Transfer invisibility; reproducible scores | TASK-AC-01..06 |
 | 8 | Every §10.3 power works end to end | DASH-AC-01..03 |
-| 9 | 100 flies HYBRID at ≥ 1.0 RTF on the 4060; 72 h soak | PERF-AC-01..03, FID-AC-01..02 |
+| 9 | 100 flies HYBRID at ≥ 1.0 RTF on a mid-tier (RTX 4060 class) GPU; runs on CPU + ≥ 2 GPUs with measured per-device limits; 72 h soak | PERF-AC-01..03, FID-AC-01..02, HW-AC-01..05 |
 
 ## Plan → spec traceability
 
@@ -120,7 +120,7 @@ Header table → Purpose → Scope (in/out) → Requirements (grouped) → Accep
 | §13 Tech stack | 001, 002, 009, 013, 014 (as constraints) |
 | §14 Repo layout | this README, 001 |
 | §15 Roadmap | "Phase gates" table above |
-| §16 Hardware | 014 |
+| §16 Hardware | 014 (§5: portability, tiers, per-device limits) |
 | §17 Risks | Spread across specs; see open questions |
 | §18 Verification | Test tables in every spec |
 
@@ -131,6 +131,8 @@ Header table → Purpose → Scope (in/out) → Requirements (grouped) → Accep
 Writing the specs exposed a few gaps and conflicts in the plan. The ones that matter most, each with a proposed answer:
 
 > **Decision (2026-10-12):** the project owner accepted every proposal below, and every open question in specs 001–014, as proposed. Each spec's open-question table records the decision. For #11, the project is **non-commercial**; dataset terms are still verified in Phase 0.
+>
+> **Amendment (2026-10-12), hardware portability:** at the owner's request, the colony must run on different GPUs (and on CPU). Spec 014 gains §5 and the `HW` prefix: one device layer, a hardware probe, a per-device capacity benchmark, and per-device fly limits. A hard limit (VRAM) is never exceeded; a soft limit (speed) needs confirmation and stretches the fly day. Checkpoints and trained flies move between machines. Hardware never changes the model itself. Gates in 001, 002 and 014 no longer name a single GPU.
 
 | # | Question | Where | Proposal |
 |---|---|---|---|
