@@ -159,7 +159,7 @@ Example diary lines (format draft):
 | ID | Question | Proposal | Decision |
 |---|---|---|---|
 | LOG-OQ-01 | "Brain summaries older than 7 days": fly days or real days? | **Real days**, since the rule exists to manage disk space. | Accepted (proposal), 2026-10-12 |
-| LOG-OQ-02 | Flight-recorder scope and RAM budget. | Default: all flies, 10 s pre + 10 s post window, ≤ 8 GB RAM on the 56 GB rig (less on the laptop). | Accepted (proposal), 2026-10-12 |
+| LOG-OQ-02 | Flight-recorder scope and RAM budget. | Default: all flies, 10 s pre + 10 s post window, ≤ 8 GB RAM on the 56 GB rig (less on the laptop). | Accepted (proposal), 2026-10-12. The RAM budget is scaled to the machine's RAM by the hardware profile (014 §5). |
 | LOG-OQ-03 | Do day files start at fly midnight or at dawn? | Midnight (a calendar day); dawn is still visible in the diary. | Accepted (proposal), 2026-10-12 |
 | LOG-OQ-04 | Sampling rate for health data. | Every fly minute (2.5 s real). | Accepted (proposal), 2026-10-12 |
 | LOG-OQ-05 | Recording file format. | Parquet (neuron_id, t) per dump, with a small JSON header; NWB export later if wanted. | Accepted (proposal), 2026-10-12 |

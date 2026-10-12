@@ -120,7 +120,7 @@ Simulate every adult fly's brain from its sex's connectome template, batched on 
 | BRAIN-R-080 | M | THE SYSTEM SHALL include a reference harness that runs Brian2 with `philshiu/Drosophila_brain_model` on FAFB, plus a validation assay set of at least: sugar GRN activation → proboscis motor neuron (MN9) activation; bitter GRN activation inhibiting that response; water GRN activation; and a mechanosensory (Johnston's organ) → grooming-DN pathway, following Shiu et al. 2024. | T-BRAIN-V-001 |
 | BRAIN-R-081 | M | The engine's agreement with the reference SHALL be ≥ 0.9 Pearson correlation of per-neuron firing rates over responsive neurons, with the same top-k activated neurons within tolerance. | T-BRAIN-V-001 |
 | BRAIN-R-082 | M | THE SYSTEM SHALL run the same assays on the male template and report cross-sex comparability (CONN-R-031). | T-BRAIN-V-003 |
-| BRAIN-R-083 | M | THE SYSTEM SHALL benchmark RTF and VRAM on the GTX 1650 and the RTX 4060 for batch sizes 1, 4, 16 and more, per fidelity (targets are in 014). | T-BRAIN-P-001 |
+| BRAIN-R-083 | M | THE SYSTEM SHALL benchmark RTF and VRAM on CPU and on every available GPU (at least two from different tiers, e.g. a GTX 1650 / RTX 4060 class card and the RTX 4000 Ada dev machine) for batch sizes 1, 4, 16 and more, per fidelity. These runs feed the capacity profile (HW-R-011); targets are in 014. | T-BRAIN-P-001 |
 
 ## 5. Acceptance criteria
 
@@ -134,7 +134,7 @@ Simulate every adult fly's brain from its sex's connectome template, batched on 
 | BRAIN-AC-06 | The CPU fallback matches the GPU path within tolerance. |
 | BRAIN-AC-07 | In silico, pairing an odor with a punishment-DAN burst lowers that odor's response at the paired MBON and not at unpaired MBONs. Ring→EPG mapping stabilizes in a fixed visual scene. |
 | BRAIN-AC-08 | 24 neural hours of spontaneous activity show no runaway, and an induced runaway (in a test) is detected and checkpointed. |
-| BRAIN-AC-09 | RTF and VRAM benchmarks are recorded for both GPUs. |
+| BRAIN-AC-09 | RTF and VRAM benchmarks are recorded for CPU and for at least two GPUs from different tiers (HW-AC-01). |
 
 ## 6. Tests
 
