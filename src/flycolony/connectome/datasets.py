@@ -232,7 +232,7 @@ def fetch(
             }
     record["retrieved_at"] = datetime.now(UTC).isoformat(timespec="seconds")
     (out / "_source.json").write_text(
-        json.dumps(record, indent=2, sort_keys=True), encoding="utf-8"
+        json.dumps(record, indent=2, sort_keys=True), encoding="utf-8", newline="\n"
     )
     return out
 

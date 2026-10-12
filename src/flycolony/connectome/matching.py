@@ -150,6 +150,6 @@ def build_matching(
     write_parquet(joined.sort("male_type"), tmp / "type_stats.parquet")
     write_parquet(discrepancies, tmp / "discrepancies.parquet")
     summary["outputs"] = {name: sha256_file(tmp / name) for name in MATCH_FILES}
-    (tmp / "manifest.json").write_text(_json(summary), encoding="utf-8")
+    (tmp / "manifest.json").write_text(_json(summary), encoding="utf-8", newline="\n")
     tmp.rename(out)
     return json.loads((out / "manifest.json").read_text(encoding="utf-8"))

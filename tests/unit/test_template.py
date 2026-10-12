@@ -226,3 +226,9 @@ def test_sign_precedence_reference_then_transmitter(tmp_path, registry):  # T-CO
     assert set(covered["sign_source"].to_list()) == {"reference"}
     rest = n.filter(~pl.col("source_id").is_in(ids[:20]) & (pl.col("cell_type") != "MBON01"))
     assert set(rest["sign_source"].to_list()) == {"transmitter"}
+
+
+def test_text_outputs_use_lf_on_every_os(built):  # portability: same bytes on Windows and Linux
+    tpl, _ = built
+    for name in ("iomap.json", "manifest.json"):
+        assert b"\r" not in (tpl.path / name).read_bytes(), name

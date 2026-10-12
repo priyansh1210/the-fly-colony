@@ -422,7 +422,7 @@ def build_template(
         write_parquet(type_nodes, tmp / "type_nodes.parquet")
         write_parquet(type_edges, tmp / "type_edges.parquet")
         write_parquet(membership, tmp / "type_membership.parquet")
-        (tmp / "iomap.json").write_text(_json(resolved), encoding="utf-8")
+        (tmp / "iomap.json").write_text(_json(resolved), encoding="utf-8", newline="\n")
 
         params = {pid: registry.get(pid) for pid in sorted(REGISTRY_IDS)}
         manifest = {
@@ -440,7 +440,7 @@ def build_template(
                 for name in OUTPUT_FILES
             },
         }
-        (tmp / "manifest.json").write_text(_json(manifest), encoding="utf-8")
+        (tmp / "manifest.json").write_text(_json(manifest), encoding="utf-8", newline="\n")
 
     # Publish only if the build stayed within the memory cap (CONN-R-053).
     max_rss = float(registry.get("conn.build.max_rss_gb"))
@@ -461,7 +461,7 @@ def build_template(
         "max_rss_gb": max_rss,
         "seconds": round(time.perf_counter() - t0, 1),
     }
-    Path(str(out) + ".report.json").write_text(_json(report), encoding="utf-8")
+    Path(str(out) + ".report.json").write_text(_json(report), encoding="utf-8", newline="\n")
     if over:
         raise TemplateError(
             f"peak RSS {rss.peak_gb:.2f} GiB exceeded conn.build.max_rss_gb={max_rss}"
