@@ -1,0 +1,158 @@
+{
+  "counts": {
+    "edges": 21872410,
+    "graded": 62854,
+    "in_cx": 2540,
+    "in_mb": 4392,
+    "is_ascending": 2393,
+    "is_descending": 1318,
+    "is_modulatory": 4932,
+    "is_motor": 107,
+    "is_neurosecretory": 72,
+    "is_sensory": 9457,
+    "min_synapses": 1,
+    "neurons": 144428,
+    "pairs_before_threshold": 21872410,
+    "synapses": 101094177,
+    "synapses_before_threshold": 101094177,
+    "type_edges": 4851886,
+    "type_nodes": 18378
+  },
+  "inputs": {
+    "malecns_v1": {
+      "files": {
+        "Neuprint_Meta.csv": "227ff1e873881a1ab124b10aa51ada94012773ddb9c4ad986e5cc83df8d360f7",
+        "Neuprint_Neurons.feather": "1142e5d09ed5599d96988c7dcea255d6532c6a83f7b9ec46a0656885d5bd40b3",
+        "body-annotations-male-cns-v1.0-minconf-0.5.feather": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+        "body-neurotransmitters-male-cns-v1.0.feather": "95c9289220663abeb3409f3ad9e5a7f8a53f8093f5139d15502cd08da8879621",
+        "connectome-weights-male-cns-v1.0-minconf-0.5-traced-only.feather": "9b3beab17bad5f618be3f2c02d3139a8d07b822565919c013f1e5506d93e604b"
+      },
+      "license": "CC BY 4.0 (verified)",
+      "version": "v1.0"
+    }
+  },
+  "notes": {
+    "brain_portion_rule": "keep if share of synapses (downstream+upstream) in ['CentralBrain', 'Optic(L)', 'Optic(R)'] > 0.5, or super_class in ['descending', 'ascending', 'sensory_ascending'], or sensory with brain synapses",
+    "full_cns_neurons_published": 166700,
+    "kept": 144428,
+    "kept_as_interface_only": 2034,
+    "kept_as_sensory_only": 5,
+    "kept_by_share": 142389,
+    "neuron_set": "status == Traced, brain portion",
+    "nt_source": "predicted_nt",
+    "primary_rois": 144,
+    "synapse_units": "downstream/upstream synapse pairs (matches FAFB)",
+    "traced_bodies": 165122
+  },
+  "outputs": {
+    "edges.safetensors": {
+      "bytes": 527249312,
+      "sha256": "96001ce551317b46e8a39fa44f7f9821538be9b9ab7a62379906d97891941da5"
+    },
+    "iomap.json": {
+      "bytes": 1434,
+      "sha256": "66c5bb134c947721554080f1f0490ce74e4a82f29100a2a4836b9ff8a4dbb822"
+    },
+    "modulatory.parquet": {
+      "bytes": 22659,
+      "sha256": "431dd26b845ce3de2bd6f16fa508ea60822bfcd29a60f4df3ec0a90a26c28295"
+    },
+    "neurons.parquet": {
+      "bytes": 2488791,
+      "sha256": "c5673071dc162faf4bc46ffa40129522d4bd57bfcfff0c7812ee55092699ba95"
+    },
+    "neuropil_fractions.parquet": {
+      "bytes": 7396078,
+      "sha256": "0917b1a2670e9e9f352c69061cb6127bd21f1f3872ee50b388e0b695324f9444"
+    },
+    "type_edges.parquet": {
+      "bytes": 18110701,
+      "sha256": "ef724c37695086f318b47d7a811a670299150e6815f82c8274f6847652a5caa3"
+    },
+    "type_membership.parquet": {
+      "bytes": 960600,
+      "sha256": "21dc815b8346f7c4b102b18f43e775871f88c73256c5226644af3c3c7fbc2b8b"
+    },
+    "type_nodes.parquet": {
+      "bytes": 147173,
+      "sha256": "e64ac747b7b924f8c08f58d3545fd20a5524507fc78becb21f5d532d0df011d5"
+    }
+  },
+  "parameters": {
+    "conn.build.max_rss_gb": 6.0,
+    "conn.graded_cell_types": [
+      "R1-6",
+      "R7",
+      "R8",
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5",
+      "Lawf1",
+      "Lawf2",
+      "Am",
+      "C2",
+      "C3",
+      "CT1",
+      "Mi1",
+      "Mi2",
+      "Mi3",
+      "Mi4",
+      "Mi9",
+      "Mi10",
+      "Mi11",
+      "Mi12",
+      "Mi13",
+      "Mi14",
+      "Mi15",
+      "T1",
+      "T2",
+      "T2a",
+      "T3",
+      "T4a",
+      "T4b",
+      "T4c",
+      "T4d",
+      "T5a",
+      "T5b",
+      "T5c",
+      "T5d",
+      "Tm1",
+      "Tm2",
+      "Tm3",
+      "Tm4",
+      "Tm5Y",
+      "Tm5a",
+      "Tm5b",
+      "Tm5c",
+      "Tm9",
+      "Tm16",
+      "Tm20",
+      "Tm28",
+      "TmY3",
+      "TmY4",
+      "TmY5a",
+      "TmY9",
+      "TmY10",
+      "TmY13",
+      "TmY14",
+      "TmY15",
+      "TmY18"
+    ],
+    "conn.min_synapses": 1,
+    "conn.sign.acetylcholine": 1,
+    "conn.sign.dopamine": 1,
+    "conn.sign.gaba": -1,
+    "conn.sign.glutamate": -1,
+    "conn.sign.octopamine": 1,
+    "conn.sign.serotonin": 1,
+    "conn.sign.unknown": 1,
+    "conn.sign_exceptions": []
+  },
+  "pipeline_version": "0dcdf970549a",
+  "registry_hash": "1ce27da3e9c094446904bba3baf0c1cce45eedc8c8a1e01f58d899bf89e8f251",
+  "schema_version": 1,
+  "sex": "male",
+  "template_id": "male-malecns1-t1"
+}

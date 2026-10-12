@@ -1,0 +1,41 @@
+{
+  "counts": {
+    "edges": 21872410,
+    "graded": 62854,
+    "in_cx": 2540,
+    "in_mb": 4392,
+    "is_ascending": 2393,
+    "is_descending": 1318,
+    "is_modulatory": 4932,
+    "is_motor": 107,
+    "is_neurosecretory": 72,
+    "is_sensory": 9457,
+    "min_synapses": 1,
+    "neurons": 144428,
+    "pairs_before_threshold": 21872410,
+    "synapses": 101094177,
+    "synapses_before_threshold": 101094177,
+    "type_edges": 4851886,
+    "type_nodes": 18378
+  },
+  "coverage": {
+    "descending": {
+      "mapped": 12,
+      "share_mapped": 0.0091,
+      "total": 1318,
+      "unmapped": 1306
+    },
+    "sensory": {
+      "mapped": 0,
+      "share_mapped": 0.0,
+      "total": 9457,
+      "unmapped": 9457
+    }
+  },
+  "max_rss_gb": 6.0,
+  "path": "C:\\Users\\FITT\\the-fly-colony\\data\\templates\\male-malecns1-t1",
+  "peak_rss_gb": 4.796,
+  "published": true,
+  "seconds": 4.6,
+  "template_id": "male-malecns1-t1"
+}
