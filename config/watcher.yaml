@@ -1,0 +1,7 @@
+# Watcher (specs 009, 013). The LLM model is picked by the Phase-6 eval harness.
+verbosity: normal
+llm:
+  runtime: none
+  endpoint: http://127.0.0.1:8080/v1
+  model: null
+  device: cpu

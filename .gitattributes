@@ -1,0 +1,6 @@
+# Same line endings on every OS (Windows and Linux runs must produce identical artifacts).
+* text=auto eol=lf
+*.parquet binary
+*.feather binary
+*.safetensors binary
+*.npy binary

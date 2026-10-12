@@ -1,0 +1,8 @@
+# Hardware (spec 014 §5). Defaults detect everything automatically.
+device: auto          # auto | cpu | cuda | cuda:N
+tier: auto            # auto | cpu | low | mid | high | ultra
+tiers:                # VRAM thresholds (GiB) for the default tier before a capacity benchmark
+  low_below_gb: 6
+  mid_below_gb: 12
+  high_up_to_gb: 24
+max_flies_override: null   # may only lower the measured hard limit, never raise it

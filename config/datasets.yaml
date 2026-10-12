@@ -1,0 +1,132 @@
+# Source datasets (spec 001 §4.1). data/LICENSES.md is generated from this file:
+#   colony data licenses
+# A template build refuses any dataset without a license block (CONN-R-003).
+# Checksums: md5 is what the publisher states; sha256 is pinned after the first verified fetch.
+
+datasets:
+  fafb783_connectome:
+    title: FlyWire whole-brain connectome, connectivity data (FAFB v783)
+    version: "783.0"
+    homepage: https://doi.org/10.5281/zenodo.10676866
+    license:
+      name: CC BY 4.0
+      url: https://creativecommons.org/licenses/by/4.0/
+      status: verified
+      checked: "2026-10-12"
+      evidence: Zenodo record 10676866 license field (cc-by-4.0)
+      restrictions: Attribution required. No non-commercial restriction.
+      attribution: >-
+        FlyWire Consortium. Dorkenwald S. et al. (2024) Neuronal wiring diagram of an adult brain,
+        Nature 634:124-138, doi:10.1038/s41586-024-07558-y; Schlegel P. et al. (2024) Whole-brain
+        annotation and multi-connectome cell typing of Drosophila, Nature 634:139-152,
+        doi:10.1038/s41586-024-07686-5; synapse detection Buhmann et al. (2021), Heinrich et al.
+        (2018); neurotransmitter prediction Eckstein, Bates et al. (2024). Data: Zenodo
+        doi:10.5281/zenodo.10676866.
+    files:
+      - name: proofread_root_ids_783.npy
+        url: https://zenodo.org/api/records/10676866/files/proofread_root_ids_783.npy/content
+        size: 1114168
+        md5: e0e6c19732fd8c7a4e39a2d170105421
+      - name: proofread_connections_783.feather
+        url: https://zenodo.org/api/records/10676866/files/proofread_connections_783.feather/content
+        size: 852022274
+        md5: f48f972d262323a102aed49af1396b8a
+      - name: per_neuron_neuropil_count_pre_783.feather
+        url: https://zenodo.org/api/records/10676866/files/per_neuron_neuropil_count_pre_783.feather/content
+        size: 16853770
+        md5: 90fcdb42c1ba05ed92820840fa1e6ba0
+      - name: per_neuron_neuropil_count_post_783.feather
+        url: https://zenodo.org/api/records/10676866/files/per_neuron_neuropil_count_post_783.feather/content
+        size: 233843050
+        md5: bb5999f10920ade803d9f37097a43a56
+      - name: flywire_synapses_783.feather
+        url: https://zenodo.org/api/records/10676866/files/flywire_synapses_783.feather/content
+        size: 9492998242
+        md5: f8f1b97c9d4b0ea9b4c8b287f6b99091
+        optional: true   # per-synapse table; not needed in v1 (design §1)
+
+  fafb783_annotations:
+    title: FlyWire neuron annotations (flywire_annotations v3.2.0, materialization 783)
+    version: v3.2.0 (a83b2776d60d5764cef36b927f5f9679c16c47a2)
+    homepage: https://github.com/flyconnectome/flywire_annotations
+    license:
+      name: CC BY 4.0 (assumed)
+      url: https://creativecommons.org/licenses/by/4.0/
+      status: assumed
+      checked: "2026-10-12"
+      evidence: >-
+        The repository has no LICENSE file. Its files are the supplementary data of Schlegel et al.
+        2024 (Nature 634:139-152), an open-access article published under CC BY 4.0.
+      restrictions: Treated as attribution-only. Confirm with the authors before public redistribution.
+      attribution: >-
+        Schlegel P. et al. (2024) Whole-brain annotation and multi-connectome cell typing of
+        Drosophila, Nature 634:139-152, doi:10.1038/s41586-024-07686-5.
+    files:
+      - name: Supplemental_file1_neuron_annotations.tsv
+        url: https://raw.githubusercontent.com/flyconnectome/flywire_annotations/a83b2776d60d5764cef36b927f5f9679c16c47a2/supplemental_files/Supplemental_file1_neuron_annotations.tsv
+        sha256: b214970b55d2fbe0853bba536fdcb9e28730f4eb7ab06f600491df795da683cd   # pinned after first verified fetch, 2026-10-12
+
+  shiu2024_model:
+    title: Shiu et al. 2024 Drosophila whole-brain LIF model, inputs for FlyWire 783
+    version: commit 91bdd1e7dcf193f3e7ca5a8933497fcef63b7960
+    homepage: https://github.com/philshiu/Drosophila_brain_model
+    license:
+      name: MIT (code); data derived from FlyWire 783 (CC BY 4.0)
+      url: https://github.com/philshiu/Drosophila_brain_model/blob/main/LICENSE
+      status: verified
+      checked: "2026-10-12"
+      evidence: LICENSE file in the repository (MIT)
+      restrictions: Keep the MIT notice with any copied code. FlyWire attribution applies to the data.
+      attribution: >-
+        Shiu P.K. et al. (2024) A Drosophila computational brain model reveals sensorimotor
+        processing, Nature 634:210-219, doi:10.1038/s41586-024-07763-9.
+    files:
+      - name: Completeness_783.csv
+        url: https://raw.githubusercontent.com/philshiu/Drosophila_brain_model/91bdd1e7dcf193f3e7ca5a8933497fcef63b7960/Completeness_783.csv
+        sha256: bbb847a4cc2caaa7a16349722d220c087317b946d148d4d592d94d250617a311   # pinned after first verified fetch, 2026-10-12
+        size: 3327347
+      - name: Connectivity_783.parquet
+        url: https://raw.githubusercontent.com/philshiu/Drosophila_brain_model/91bdd1e7dcf193f3e7ca5a8933497fcef63b7960/Connectivity_783.parquet
+        sha256: efeb23fb99098e9c390f6869969b2a121a2ee92c833cfc45ecb2c1d8e1af0347   # pinned after first verified fetch, 2026-10-12
+        size: 100804642
+      - name: model.py
+        url: https://raw.githubusercontent.com/philshiu/Drosophila_brain_model/91bdd1e7dcf193f3e7ca5a8933497fcef63b7960/model.py
+        sha256: fc45837d7122c6ce2a7f3f2f23c515992e4b232aadb919efabb72337fac88e4e   # pinned after first verified fetch, 2026-10-12
+
+  malecns_v1:
+    title: Janelia/Google male adult nervous system (MaleCNS v1.0)
+    version: "v1.0"
+    homepage: https://male-cns.janelia.org/download/
+    license:
+      name: CC BY 4.0
+      url: https://creativecommons.org/licenses/by/4.0/
+      status: verified
+      checked: "2026-10-12"
+      evidence: male-cns.janelia.org states "The Male CNS dataset is licensed under CC-BY"
+      restrictions: Attribution required. No non-commercial restriction.
+      attribution: >-
+        Janelia FlyEM and Google, MaleCNS v1.0, male-cns.janelia.org, CC BY 4.0. Paper: Berg S. et
+        al. (2026), Cell 189:5504-5526, doi:10.1016/j.cell.2026.08.015 (TO CONFIRM: this citation
+        comes from a third-party listing; the official site gives no citation text).
+    files:
+      - name: body-annotations-male-cns-v1.0-minconf-0.5.feather
+        url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-annotations-male-cns-v1.0-minconf-0.5.feather
+        sha256: 2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2   # pinned after first verified fetch, 2026-10-12
+      - name: body-neurotransmitters-male-cns-v1.0.feather
+        url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-neurotransmitters-male-cns-v1.0.feather
+        sha256: 95c9289220663abeb3409f3ad9e5a7f8a53f8093f5139d15502cd08da8879621   # pinned after first verified fetch, 2026-10-12
+      - name: body-stats-male-cns-v1.0-minconf-0.5.feather
+        url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-stats-male-cns-v1.0-minconf-0.5.feather
+        optional: true   # not used by the v1 build (traced-only weights + roiInfo instead)
+      - name: connectome-weights-male-cns-v1.0-minconf-0.5.feather
+        url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+        optional: true   # not used by the v1 build (traced-only weights + roiInfo instead)
+      - name: connectome-weights-male-cns-v1.0-minconf-0.5-traced-only.feather
+        url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5-traced-only.feather
+        sha256: 9b3beab17bad5f618be3f2c02d3139a8d07b822565919c013f1e5506d93e604b   # pinned after first verified fetch, 2026-10-12
+      - name: Neuprint_Neurons.feather   # per-body roiInfo (synapse counts per neuropil)
+        url: https://storage.googleapis.com/flyem-male-cns/v1.0/database/neuprint-inputs/Neuprint_Neurons.feather
+        sha256: 1142e5d09ed5599d96988c7dcea255d6532c6a83f7b9ec46a0656885d5bd40b3   # pinned after first verified fetch, 2026-10-12
+      - name: Neuprint_Meta.csv   # ROI hierarchy and primaryRois (non-overlapping neuropil set)
+        url: https://storage.googleapis.com/flyem-male-cns/v1.0/database/neuprint-inputs/Neuprint_Meta.csv
+        sha256: 227ff1e873881a1ab124b10aa51ada94012773ddb9c4ad986e5cc83df8d360f7   # pinned after first verified fetch, 2026-10-12

@@ -1,0 +1,51 @@
+# 001 — Connectome Pipeline & Foundations: Tasks
+
+| Field | Value |
+|---|---|
+| Status | In progress (Phase 0) |
+| Design | [design.md](design.md) |
+
+Ordered work. Each task names the requirements it implements and the tests that prove it. `[x]` = done and its tests pass.
+
+## A. Repository foundations
+
+- [x] **A1** Repo skeleton: `pyproject.toml` (uv, Python 3.12, CUDA PyTorch wheels with CPU fallback), `src/flycolony/*` packages, `tests/{unit,validation,emergence,invariants,perf,manual}`, `.gitignore` (raw data, templates and run output never committed).
+- [x] **A2** Config loader with `file:line` errors, and schemas for `colony.yaml`, `genesis.yaml`, `watcher.yaml` and `hardware.yaml`; config snapshot + hash. *CONN-R-070, -071* · T-CONN-U-007
+- [x] **A3** Parameter Registry: schema (exactly one of source/assumption, scope grammar, ranges), loader, `require`, content hash, assumption report, `apply_calibration`. *CONN-R-080, -082..085* · T-CONN-U-006
+- [x] **A4** Lints: no magic numbers in model packages; no hard-coded devices outside `flycolony.hardware`; import contracts (pure-Python checker, because import-linter's native extension is blocked by Windows Application Control on the dev PC). *CONN-R-081, HW-R-002, CONST-2/1.4* · T-CONN-I-003, T-HW-U-005
+- [x] **A5** Device layer and hardware probe; tier defaults; `colony hardware probe`. *HW-R-001, -002, -005, -010* · T-HW-U-001
+- [x] **A6** `colony` CLI: `data list|fetch|licenses`, `template build|verify`, `registry report`, `hardware probe`.
+
+## B. Data acquisition and licenses
+
+- [x] **B1** Verify licenses (2026-10-12): FAFB v783 CC BY 4.0, MaleCNS v1.0 CC BY 4.0, Shiu model MIT, flywire_annotations assumed CC BY 4.0. Record them in `config/datasets.yaml` and generate `data/LICENSES.md`. *CONN-R-002, CONN-OQ-01* · T-CONN-U-005
+- [x] **B2** License gate: refuse to build from a dataset without a license entry. *CONN-R-003* · T-CONN-U-005
+- [x] **B3** Fetcher: size + MD5/SHA-256 verification, retries with resume, `_source.json` with retrieval time. *CONN-R-001, -004* · T-CONN-I-001
+- [x] **B4** Credential redaction helper. *CONN-R-005* · T-CONN-U-009
+- [x] **B5** Fetch all v1 datasets on the dev PC; pin SHA-256 for the files that have no published checksum. MaleCNS per-neuropil counts come from `Neuprint_Neurons.feather` (`roiInfo`), because the flat files have none.
+
+## C. BrainTemplate core (dataset-independent)
+
+- [x] **C1** Normalized build inputs (`BuildInputs`).
+- [x] **C2** Neuron table: dense ids, flags, sign by transmitter with registry exceptions, graded/spiking flag. *CONN-R-010, -012, -013* · T-CONN-U-001, -002
+- [x] **C3** CSR edges + transposed index, threshold from the registry. *CONN-R-011* · T-CONN-U-001, -003
+- [x] **C4** Neuropil fractions and primary neuropil. *CONN-R-014* · T-CONN-U-001
+- [x] **C5** Modulatory list: amines from predictions + cited peptidergic lists. *CONN-R-015* · T-CONN-U-006 (mechanism)
+- [x] **C6** Type graph with neuron-level-set flags; weight conservation. *CONN-R-040, -041* · T-CONN-U-008
+- [x] **C7** I/O map schema, resolution, missing-reference report, coverage. *CONN-R-020..022* · T-CONN-U-004
+- [x] **C8** Storage, manifest (no timestamps), checksum verification on load, immutability, peak-RSS cap, count validation. *CONN-R-050..054, -060* · T-CONN-I-001, -002, T-CONN-P-001
+
+## D. Real templates
+
+- [x] **D1** FAFB v783 adapter: proofread ids, annotations, connections, and neuropil counts (filtered to proofread ids while scanning). No transmitter rule reproduces the reference signs (best 95.9%), so signs come from the reference model per neuron (CONN-OQ-03), with the transmitter rule as fallback for 1,250 neurons. *CONN-R-010..017*
+- [x] **D2** Build `female-fafb783-t1`: 139,255 neurons, and 15,091,983 edges / 54,492,922 synapses identical to the Shiu et al. reference, edge by edge. *CONN-AC-01* · T-CONN-V-001
+- [x] **D3** MaleCNS v1.0 adapter with the brain-portion rule; keep all DNs and ANs. Counts use downstream/upstream synapse pairs to match FAFB units. *CONN-R-016, -017*
+- [x] **D4** Build `male-malecns1-t1`: 144,428 of 165,122 traced bodies; 289 male-specific types, including the P1/pC1 cluster (148 neurons) and pIP10. *CONN-AC-02* · T-CONN-V-002
+- [x] **D5** Cross-dataset type match (7,362 of 8,638 male types), global normalization factor 0.552, discrepancy report (883 types). *CONN-R-030..032* · T-CONN-V-003
+- [x] **D6** Real-data checks: rebuild byte-identical (*CONN-AC-04*; needed exact integer sums for transmitter aggregation), peak RSS ≤ 6 GB (*CONN-AC-05*; female 3.4, male 4.9 GiB), tamper refusal (*CONN-AC-03*).
+- [x] **D7** Seed I/O map with a few cited motor entries per sex (Giant Fiber, MDN, DNa01/02, pIP10). The content is owned by 004/005/006, and sensory entries arrive with spec 004. *CONN-AC-06*
+- [ ] **D8** Peptidergic cell-type lists with citations. The mechanism is done; the cited content comes with the 002 design (neither dataset annotates peptides). *CONN-R-015*
+
+## E. Phase-0 gate
+
+- [ ] **E1** All CONN acceptance criteria green; build reports committed under `specs/001-connectome-pipeline/reports/`. Open: D8.

@@ -1,0 +1,17 @@
+# I/O map seed: motor primitives -> descending neurons (spec 001 CONN-R-020).
+# Content is owned by spec 005 (motor). Phase 0 ships only a few well-established entries so the
+# resolver and coverage report run on real data. Spec 005's design replaces and extends this file.
+version: "0.1-seed"
+entries:
+  - name: escape.takeoff
+    kind: motor
+    select: {cell_type: [DNp01]}
+    citation: "Giant Fiber. von Reyn C.R. et al. (2014) Nat Neurosci 17:962-970, doi:10.1038/nn.3741"
+  - name: walk.backward
+    kind: motor
+    select: {cell_type: [MDN]}
+    citation: "Moonwalker descending neurons. Bidaye S.S. et al. (2014) Science 344:97-101, doi:10.1126/science.1249964"
+  - name: walk.steer
+    kind: motor
+    select: {cell_type: [DNa01, DNa02]}
+    citation: "Rayshubskiy A. et al. (2020) Neural circuit mechanisms for steering control in walking Drosophila, bioRxiv doi:10.1101/2020.04.04.024703"

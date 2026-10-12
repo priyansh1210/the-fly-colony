@@ -1,0 +1,41 @@
+{
+  "counts": {
+    "edges": 15091983,
+    "graded": 63502,
+    "in_cx": 2543,
+    "in_mb": 5213,
+    "is_ascending": 2362,
+    "is_descending": 1303,
+    "is_modulatory": 3477,
+    "is_motor": 110,
+    "is_neurosecretory": 80,
+    "is_sensory": 17516,
+    "min_synapses": 1,
+    "neurons": 139255,
+    "pairs_before_threshold": 15091983,
+    "synapses": 54492922,
+    "synapses_before_threshold": 54492922,
+    "type_edges": 3503922,
+    "type_nodes": 19065
+  },
+  "coverage": {
+    "descending": {
+      "mapped": 10,
+      "share_mapped": 0.0077,
+      "total": 1303,
+      "unmapped": 1293
+    },
+    "sensory": {
+      "mapped": 0,
+      "share_mapped": 0.0,
+      "total": 17516,
+      "unmapped": 17516
+    }
+  },
+  "max_rss_gb": 6.0,
+  "path": "C:\\Users\\FITT\\the-fly-colony\\data\\templates\\female-fafb783-t1",
+  "peak_rss_gb": 3.405,
+  "published": true,
+  "seconds": 3.7,
+  "template_id": "female-fafb783-t1"
+}
