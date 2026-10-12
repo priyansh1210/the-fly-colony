@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.hypothesis/
+.benchmarks/
+.import_linter_cache/
+
+# Data: raw downloads and built templates are large and reproducible (CONN-R-004).
+# data/LICENSES.md is generated from config/datasets.yaml and committed.
+data/*
+!data/LICENSES.md
+
+# Runtime output (never committed)
+flies/
+watcher/
+world/checkpoints/
+timelines/
+
+# Local hardware capacity cache (spec 014 HW-R-011); shared profiles go in config/hardware/profiles/
+.colony/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

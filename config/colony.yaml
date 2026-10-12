@@ -1,0 +1,15 @@
+# Colony configuration (schema: flycolony.config.schemas.ColonyConfig).
+# Read once at start or restore; runtime changes go through the Control API (CONN-R-072).
+seed: 0
+paths:
+  data_raw: data/raw
+  templates: data/templates
+  flies: flies
+  watcher: watcher
+  checkpoints: world/checkpoints
+clock:
+  fly_day_neural_s: 3600   # D: neural seconds per fly day (1 real hour)
+  sim_speed: 1.0
+templates:
+  female: female-fafb783-t1
+  male: male-malecns1-t1

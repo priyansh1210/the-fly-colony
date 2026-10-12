@@ -1,0 +1,258 @@
+# Parameter Registry: connectome pipeline (owner spec 001). Schema: flycolony.registry.Entry.
+# Every entry has exactly one of `source` or `assumption` (CONST-6.1).
+
+entries:
+  # --- edges (CONN-R-011, CONN-OQ-02) -------------------------------------------------------
+  - id: conn.min_synapses
+    value: 1
+    units: synapses
+    valid_range: [1, 50]
+    source:
+      authors: Shiu P.K. et al.
+      year: 2024
+      doi: 10.1038/s41586-024-07763-9
+      where: Reference configuration (CONN-OQ-02). The model's Connectivity_783.parquet keeps every proofread pair (min 1 synapse; 15,091,983 pairs, 54,492,922 synapses, verified 2026-10-12)
+    owner_spec: "001"
+    notes: Codex displays connections at >= 5 synapses; that display threshold is not used for simulation.
+
+  # --- fast sign by transmitter (CONN-R-012, CONN-OQ-03/04) ---------------------------------
+  - id: conn.sign.acetylcholine
+    value: 1
+    units: sign
+    valid_range: [-1, 1]
+    source: &shiu_sign
+      authors: Shiu P.K. et al.
+      year: 2024
+      doi: 10.1038/s41586-024-07763-9
+      where: Methods; reference model treats GABA and glutamate as inhibitory and all other transmitters as excitatory
+    owner_spec: "001"
+  - id: conn.sign.gaba
+    value: -1
+    units: sign
+    valid_range: [-1, 1]
+    source: *shiu_sign
+    owner_spec: "001"
+  - id: conn.sign.glutamate
+    value: -1
+    units: sign
+    valid_range: [-1, 1]
+    source: *shiu_sign
+    owner_spec: "001"
+    notes: Glutamate can be excitatory at some synapses; per-type exceptions go in conn.sign_exceptions (CONN-OQ-04).
+  - id: conn.sign.dopamine
+    value: 1
+    units: sign
+    valid_range: [-1, 1]
+    source: *shiu_sign
+    owner_spec: "001"
+    notes: Fast sign only. Modulatory action comes from the neuromodulator traces in 002.
+  - id: conn.sign.serotonin
+    value: 1
+    units: sign
+    valid_range: [-1, 1]
+    source: *shiu_sign
+    owner_spec: "001"
+  - id: conn.sign.octopamine
+    value: 1
+    units: sign
+    valid_range: [-1, 1]
+    source: *shiu_sign
+    owner_spec: "001"
+  - id: conn.sign.unknown
+    value: 1
+    units: sign
+    valid_range: [-1, 1]
+    assumption:
+      rationale: Neurons with no transmitter prediction follow the reference model's default (excitatory unless GABA/Glu). Revisit after Phase 1.
+      owner: "001"
+    owner_spec: "001"
+  - id: conn.sign_exceptions
+    value: []
+    units: list of "cell_type=sign"
+    assumption:
+      rationale: No per-type exceptions yet; added with citations as 002 validation needs them.
+      owner: "001"
+    owner_spec: "001"
+
+  # --- neuron model flag (CONN-R-013, BRAIN-OQ-02) ------------------------------------------
+  - id: conn.graded_cell_types
+    value: [R1-6, R7, R8, L1, L2, L3, L4, L5, Lawf1, Lawf2, Am, C2, C3, CT1, Mi1, Mi2, Mi3, Mi4, Mi9, Mi10, Mi11, Mi12, Mi13, Mi14, Mi15, T1, T2, T2a, T3, T4a, T4b, T4c, T4d, T5a, T5b, T5c, T5d, Tm1, Tm2, Tm3, Tm4, Tm5Y, Tm5a, Tm5b, Tm5c, Tm9, Tm16, Tm20, Tm28, TmY3, TmY4, TmY5a, TmY9, TmY10, TmY13, TmY14, TmY15, TmY18]
+    units: cell types
+    source:
+      authors: Lappalainen J.K. et al.
+      year: 2024
+      doi: 10.1038/s41586-024-07939-3
+      where: Connectome-constrained networks predict neural activity across the fly visual system; the flyvis model's non-spiking cell types (names mapped to FlyWire; R7/R8 subtypes and Tm5 variants grouped)
+    owner_spec: "001"
+    notes: Types absent from a template are reported, not an error. The full flyvis list is cross-checked when flyvis is installed (Phase 1).
+
+  # --- build limits and validation (CONN-R-053, CONN-R-060) ---------------------------------
+  - id: conn.build.max_rss_gb
+    value: 6.0
+    units: GiB
+    valid_range: [1.0, 512.0]
+    assumption:
+      rationale: Default cap so the build runs on an 8 GB machine (CONN-R-053); can be raised on bigger machines without changing outputs.
+      owner: "001"
+    owner_spec: "001"
+  - id: conn.expected.fafb783.neurons
+    value: 139255
+    units: neurons
+    valid_range: [1, 1000000]
+    source:
+      authors: Dorkenwald S. et al.
+      year: 2024
+      doi: 10.1038/s41586-024-07558-y
+      where: Abstract (139,255 proofread neurons, release 783)
+    owner_spec: "001"
+  - id: conn.expected.fafb783.synapses
+    value: 54500000
+    units: synapses
+    valid_range: [1, 1000000000]
+    source:
+      authors: Dorkenwald S. et al.
+      year: 2024
+      doi: 10.1038/s41586-024-07558-y
+      where: ~54.5M synapses between proofread neurons (no pair threshold); matches the Shiu et al. 2024 inputs (54,492,922)
+    owner_spec: "001"
+  - id: conn.expected.tolerance
+    value: 0.005
+    units: fraction
+    valid_range: [0.0, 0.2]
+    assumption:
+      rationale: CONN-AC-01 sets +-0.5% for synapse counts.
+      owner: "001"
+    owner_spec: "001"
+  - id: conn.expected.malecns1.neurons_full_cns
+    value: 166700
+    units: neurons
+    valid_range: [1, 1000000]
+    source:
+      authors: Janelia FlyEM
+      year: 2026
+      url: https://male-cns.janelia.org/
+      where: MaleCNS v1.0 full-CNS neuron count as given in plan §4.1 (~166.7k); recorded beside the brain-portion count
+    owner_spec: "001"
+
+  # --- male brain portion (CONN-R-016) ------------------------------------------------------
+  - id: conn.male.brain_fraction_min
+    value: 0.5
+    units: fraction of synapses in brain ROIs
+    valid_range: [0.0, 1.0]
+    assumption:
+      rationale: Design rule for the brain portion; neurons with a majority of synapses in brain neuropils are kept (plus all DNs/ANs).
+      owner: "001"
+    owner_spec: "001"
+
+  # --- cross-dataset matching (CONN-R-032) --------------------------------------------------
+  - id: conn.match.discrepancy_factor
+    value: 2.0
+    units: ratio
+    valid_range: [1.0, 100.0]
+    assumption:
+      rationale: Flag matched types whose synapse totals differ more than 2x between sexes, for review.
+      owner: "001"
+    owner_spec: "001"
+
+  # --- FAFB adapter (design §5.1) -----------------------------------------------------------
+  - id: conn.fafb.nt_source
+    value: connections
+    units: choice (annotations | connections)
+    assumption:
+      rationale: >-
+        Transmitter per neuron = synapse-weighted argmax of the connection table's mean NT
+        probabilities, falling back to the annotation top_nt. Measured 2026-10-12 against the
+        Shiu et al. 2024 reference signs - weighted mean 95.74%, annotation top_nt 95.63%,
+        per-connection vote 95.86%, unweighted mean 95.23% - so no rule reproduces the reference
+        exactly; the weighted mean is kept as the simplest documented rule.
+      owner: "001"
+    owner_spec: "001"
+  - id: conn.fafb.sign_source
+    value: reference
+    units: choice (reference | transmitter)
+    source:
+      authors: Shiu P.K. et al.
+      year: 2024
+      doi: 10.1038/s41586-024-07763-9
+      where: >-
+        CONN-OQ-03 decision "follow the reference model where it defines one" - the per-neuron
+        Excitatory column of Connectivity_783.parquet; neurons absent from the reference fall
+        back to the transmitter rule (recorded per neuron in sign_source)
+    owner_spec: "001"
+  - id: conn.fafb.mb_neuropils
+    value: [MB_CA_L, MB_CA_R, MB_PED_L, MB_PED_R, MB_VL_L, MB_VL_R, MB_ML_L, MB_ML_R]
+    units: FlyWire neuropil names
+    source:
+      authors: Dorkenwald S. et al.
+      year: 2024
+      doi: 10.1038/s41586-024-07558-y
+      where: FlyWire neuropil set (mushroom body calyx, pedunculus, vertical and medial lobes)
+    owner_spec: "014"
+  - id: conn.fafb.cx_neuropils
+    value: [FB, EB, PB, "NO"]   # quoted: bare NO is YAML boolean false
+    units: FlyWire neuropil names
+    source:
+      authors: Dorkenwald S. et al.
+      year: 2024
+      doi: 10.1038/s41586-024-07558-y
+      where: FlyWire neuropil set (central complex - fan-shaped body, ellipsoid body, protocerebral bridge, noduli)
+    owner_spec: "014"
+
+  # --- MaleCNS adapter (design §5.1 step 9, CONN-R-016) -------------------------------------
+  - id: conn.male.brain_rois
+    value: [CentralBrain, "Optic(L)", "Optic(R)"]
+    units: neuPrint top-level ROI groups
+    source:
+      authors: Janelia FlyEM
+      year: 2026
+      url: https://male-cns.janelia.org/
+      where: MaleCNS v1.0 ROI hierarchy (Neuprint_Meta.csv roiHierarchy; CNS children)
+    owner_spec: "001"
+  - id: conn.male.vnc_rois
+    value: [VNC, CV]
+    units: neuPrint top-level ROI groups
+    source:
+      authors: Janelia FlyEM
+      year: 2026
+      url: https://male-cns.janelia.org/
+      where: MaleCNS v1.0 ROI hierarchy (ventral nerve cord and cervical connective)
+    owner_spec: "001"
+  - id: conn.male.nt_source
+    value: predicted
+    units: choice (predicted | consensus)
+    assumption:
+      rationale: Per-body NT prediction, matching the per-neuron rule used for FAFB; the cell-type consensus is kept for comparison in Phase 1.
+      owner: "001"
+    owner_spec: "001"
+  - id: conn.male.mb_neuropils
+    value: ["CA(L)", "CA(R)", "PED(L)", "PED(R)", "a'L(L)", "a'L(R)", "aL(L)", "aL(R)", "b'L(L)", "b'L(R)", "bL(L)", "bL(R)", "gL(L)", "gL(R)"]
+    units: neuPrint ROI names
+    source:
+      authors: Janelia FlyEM
+      year: 2026
+      url: https://male-cns.janelia.org/
+      where: MaleCNS v1.0 ROI hierarchy, MB(L)/MB(R) leaves (calyx, pedunculus, lobes)
+    owner_spec: "014"
+  - id: conn.male.cx_neuropils
+    value: [EB, FB, "NO", PB]   # quoted: bare NO is YAML boolean false
+    units: neuPrint ROI names
+    source:
+      authors: Janelia FlyEM
+      year: 2026
+      url: https://male-cns.janelia.org/
+      where: MaleCNS v1.0 ROI hierarchy, CX children (asymmetric bodies excluded to match the FAFB set)
+    owner_spec: "014"
+
+  # --- cross-dataset normalization (CONN-R-031, CONN-OQ-05) ---------------------------------
+  - id: conn.norm.male_scale
+    value: 0.552214
+    units: multiplier on male synaptic weights
+    valid_range: [0.05, 5.0]
+    assumption:
+      rationale: >-
+        Global scale = median over 7,360 matched cell types of (FAFB mean input synapses per
+        neuron / MaleCNS mean input synapses per neuron). Computed by `colony template match`
+        (match__female-fafb783-t1__male-malecns1-t1). MaleCNS detects ~1.8x more synapses per
+        neuron. Judged against the 002 assays in Phase 1; per-type scaling only if they need it.
+      owner: "001"
+    owner_spec: "001"
