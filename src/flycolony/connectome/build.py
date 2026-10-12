@@ -11,6 +11,7 @@ from flycolony.config import load_all, project_root
 from flycolony.connectome.datasets import load_catalog, raw_dir, require_license, source_record
 from flycolony.connectome.inputs import TRANSMITTERS, BuildInputs
 from flycolony.connectome.iomap import load_iomap
+from flycolony.connectome.peptides import fafb_peptides, load_vocab
 from flycolony.connectome.template import build_template
 from flycolony.registry import Registry
 
@@ -88,6 +89,7 @@ def fafb_inputs(raw_root: Path, registry: Registry) -> BuildInputs:
         pl.col("top_nt_conf").cast(pl.Float32).alias("nt_ann_conf"),
         pl.col("dimorphism"),
         pl.col("hemibrain_type"),
+        pl.col("cell_sub_class"),
     )
     nt_source = registry.get("conn.fafb.nt_source")
     neurons = (
@@ -160,10 +162,23 @@ def fafb_inputs(raw_root: Path, registry: Registry) -> BuildInputs:
             "nt_source": nt_source,
             "sign_source": sign_source,
             "neuron_set": "proofread_root_ids_783.npy",
+            "peptides": "FlyWire known_nt + known_nt_source per neuron; endocrine types by name",
         },
         mb_neuropils=tuple(registry.get("conn.fafb.mb_neuropils")),
         cx_neuropils=tuple(registry.get("conn.fafb.cx_neuropils")),
-        extra_neuron_columns=("dimorphism", "hemibrain_type"),
+        extra_neuron_columns=("dimorphism", "hemibrain_type", "cell_sub_class"),
+        peptides=fafb_peptides(read_fafb_annotations(raw_root), load_vocab()).lazy(),
+    )
+
+
+def read_fafb_annotations(raw_root: Path) -> pl.DataFrame:
+    """The columns of the FlyWire annotation table used for peptides and matching."""
+    path = raw_dir("fafb783_annotations", raw_root) / "Supplemental_file1_neuron_annotations.tsv"
+    return pl.read_csv(path, separator="	", infer_schema=False).select(
+        pl.col("root_id").cast(pl.Int64).alias("source_id"),
+        "cell_type",
+        "known_nt",
+        "known_nt_source",
     )
 
 

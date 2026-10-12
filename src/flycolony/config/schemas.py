@@ -39,8 +39,8 @@ class Clock(Strict):
 
 
 class Templates(Strict):
-    female: str = "female-fafb783-t1"
-    male: str = "male-malecns1-t1"
+    female: str = "female-fafb783-t2"
+    male: str = "male-malecns1-t2"
 
 
 class ColonyConfig(Strict):

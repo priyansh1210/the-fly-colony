@@ -252,7 +252,7 @@ entries:
       rationale: >-
         Global scale = median over 7,360 matched cell types of (FAFB mean input synapses per
         neuron / MaleCNS mean input synapses per neuron). Computed by `colony template match`
-        (match__female-fafb783-t1__male-malecns1-t1). MaleCNS detects ~1.8x more synapses per
+        (match__female-fafb783-t2__male-malecns1-t2; same edges as t1). MaleCNS detects ~1.8x more synapses per
         neuron. Judged against the 002 assays in Phase 1; per-type scaling only if they need it.
       owner: "001"
     owner_spec: "001"

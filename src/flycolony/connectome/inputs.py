@@ -47,6 +47,9 @@ class BuildInputs:
     cx_neuropils: tuple[str, ...] = ()
     # Extra string columns copied into the neuron table (e.g. cross-dataset type names)
     extra_neuron_columns: tuple[str, ...] = ()
+    # Peptidergic neurons with a citation per row (CONN-R-015):
+    # source_id:i64, substance:str, source_ref:str. None = no peptide information.
+    peptides: pl.LazyFrame | None = None
 
 
 def conform(lf: pl.LazyFrame, schema: dict[str, pl.DataType]) -> pl.LazyFrame:

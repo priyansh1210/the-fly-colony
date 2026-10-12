@@ -373,7 +373,6 @@ def build_template(
     out_root: Path,
     iomap: IoMap | None = None,
     expected: dict | None = None,
-    peptidergic: dict[str, list[dict]] | None = None,
 ) -> dict:
     """Build one BrainTemplate into out_root/<template_id>/ and return the build report.
 
@@ -393,7 +392,10 @@ def build_template(
         fractions, primary = build_neuropil_fractions(inputs, neurons)
         neurons = neurons.join(primary, on="neuron_id", how="left").sort("neuron_id")
         neurons = neuron_level_flags(neurons, fractions, inputs)
-        modulatory = _modulatory(neurons, peptidergic or {})
+        modulatory = _modulatory(neurons, inputs.peptides)
+        neurons = neurons.with_columns(
+            pl.col("neuron_id").is_in(modulatory["neuron_id"].implode()).alias("is_modulatory")
+        )
         type_nodes, type_edges, membership = build_type_graph(neurons, tensors)
         resolved = (
             resolve_iomap(iomap, neurons) if iomap is not None else {"entries": [], "coverage": {}}
@@ -408,6 +410,9 @@ def build_template(
         }
         for flag in (*FLAG_RULES, "is_modulatory", "in_mb", "in_cx"):
             counts[flag] = int(neurons[flag].sum())
+        peptidergic = modulatory.filter(~pl.col("substance").is_in(list(AMINES)))
+        counts["peptidergic_neurons"] = peptidergic["neuron_id"].n_unique()
+        counts["peptides"] = peptidergic["substance"].n_unique()
         _validate_counts(counts, expected)
 
         tmp = out.with_name(out.name + ".building")
@@ -469,28 +474,35 @@ def build_template(
     return report
 
 
-def _modulatory(neurons: pl.DataFrame, peptidergic: dict[str, list[dict]]) -> pl.DataFrame:
-    """Aminergic neurons from transmitter predictions + cited peptidergic lists (CONN-R-015)."""
+def _modulatory(neurons: pl.DataFrame, peptides: pl.LazyFrame | None) -> pl.DataFrame:
+    """Aminergic neurons from transmitter predictions + cited peptidergic neurons (CONN-R-015).
+
+    Every row carries `source_ref`: the transmitter prediction for amines, and the publication(s)
+    behind each peptide assignment. Peptide rows for neurons outside the template are dropped.
+    """
     amine = neurons.filter(pl.col("nt_pred").is_in(list(AMINES))).select(
         "neuron_id",
-        pl.col("nt_pred").alias("substance"),
+        pl.col("nt_pred").cast(pl.String).alias("substance"),
         pl.lit("transmitter prediction (nt_pred)").alias("source_ref"),
     )
-    rows = []
-    for peptide, items in sorted(peptidergic.items()):
-        for item in items:
-            sel = neurons.filter(pl.col("cell_type").is_in(item["cell_types"]))
-            if sel.height == 0:
-                raise TemplateError(f"peptide {peptide}: no neurons of types {item['cell_types']}")
-            rows.append(
-                sel.select(
-                    "neuron_id",
-                    pl.lit(peptide).alias("substance"),
-                    pl.lit(item["source"]).alias("source_ref"),
-                )
+    frames = [amine]
+    if peptides is not None:
+        pep = (
+            peptides.select(
+                pl.col("source_id").cast(pl.Int64),
+                pl.col("substance").cast(pl.String),
+                pl.col("source_ref").cast(pl.String),
             )
-    frames = [amine.with_columns(pl.col("substance").cast(pl.String)), *rows]
-    return pl.concat(frames).sort("substance", "neuron_id")
+            .collect()
+            .join(neurons.select("source_id", "neuron_id"), on="source_id", how="inner")
+            .select("neuron_id", "substance", "source_ref")
+        )
+        frames.append(pep)
+    return (
+        pl.concat(frames)
+        .unique(["neuron_id", "substance", "source_ref"])
+        .sort("substance", "neuron_id", "source_ref")
+    )
 
 
 def _validate_counts(counts: dict, expected: dict | None) -> None:

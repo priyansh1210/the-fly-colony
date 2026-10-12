@@ -1,0 +1,60 @@
+# Peptidergic neuron vocabulary (spec 001 CONN-R-015; consumers: spec 002 neuromodulation).
+# Not registry entries (no numbers). Neurons and their citations come from the data:
+#   - FlyWire `known_nt` + `known_nt_source` (per neuron; Schlegel et al. 2024 annotations)
+#   - neurosecretory cell types named by their peptide (Schlegel et al. 2024)
+#   - male: inherited through the published MaleCNS->FlyWire type match (marked "inferred")
+#
+# canonical: annotation tokens that mean this peptide (case-sensitive, after trimming).
+
+peptides:
+  NPF:   {aliases: [NPF, dNPF], name: Neuropeptide F}
+  sNPF:  {aliases: [sNPF], name: short Neuropeptide F}
+  Tk:    {aliases: [tachykinin], name: Tachykinin}
+  DH44:  {aliases: [Dh44], name: Diuretic hormone 44}
+  DH31:  {aliases: [Dh31, Dh331], name: Diuretic hormone 31 (Dh331 is a typo in the source)}
+  ILP:   {aliases: [DILP2, DILP3, DILP5], name: Insulin-like peptides}
+  Crz:   {aliases: [corazonin], name: Corazonin}
+  AstA:  {aliases: [allatostatin-a], name: Allatostatin A}
+  AstC:  {aliases: [allatostatin-c], name: Allatostatin C}
+  MIP:   {aliases: [MIP], name: Myoinhibitory peptide}
+  DSK:   {aliases: [drosulfakinin], name: Drosulfakinin}
+  LK:    {aliases: [leucokinin], name: Leucokinin}
+  SIFa:  {aliases: [SIFamide], name: SIFamide}
+  PDF:   {aliases: [pdf], name: Pigment-dispersing factor}
+  DMS:   {aliases: [myosuppressin, myosupressin], name: Dromyosuppressin}
+  Hugin: {aliases: [hugin], name: Hugin}
+  ITP:   {aliases: [ITP], name: Ion transport peptide}
+  CAPA:  {aliases: [capability], name: CAPA}
+  CCHa1: {aliases: [CCHa1], name: CCHamide-1}
+  CNMa:  {aliases: [CNMa], name: CNMamide}
+  CCAP:  {aliases: [CCAP], name: Crustacean cardioactive peptide}
+  FMRFa: {aliases: [FMRFa], name: FMRFamide}
+  Nplp1: {aliases: [Nplp1], name: Neuropeptide-like precursor 1}
+  Proc:  {aliases: [proctolin], name: Proctolin}
+  Orcokinin: {aliases: [orcokinin], name: Orcokinin}
+  Trissin:   {aliases: [trissin], name: Trissin}
+  Natalisin: {aliases: [natalisin], name: Natalisin}
+  EH:    {aliases: [eclosion hormone], name: Eclosion hormone}
+  IPNa:  {aliases: [IPNamide], name: IPNamide}
+  Amn:   {aliases: [amnesiac], name: Amnesiac (PACAP-like)}
+  Spab:  {aliases: [space blanket], name: "Space blanket (predicted neuropeptide gene, probed by Wolff et al. 2024)"}
+
+# Tokens in known_nt that are not peptides (fast transmitters, gases, negatives, genes).
+not_peptides: [acetylcholine, gaba, glutamate, dopamine, serotonin, octopamine, histamine,
+               tyramine, nitric oxide, glycine, negative, dARC1]
+
+# Neurosecretory cell types named by the peptide they release (FlyWire super_class endocrine).
+endocrine_types:
+  IPC: ILP
+  DH44: DH44
+  DH31: DH31
+  CRZ: Crz
+  DMS: DMS
+  ITP: ITP
+  CAPA: CAPA
+  Hugin-RG: Hugin
+
+# Peptides named in spec 002 with no neurons in a brain-only template, and why.
+not_in_brain:
+  AKH: Released by the corpora cardiaca (a gland outside the brain); enters via physiology (006).
+  SP: Sex peptide comes from the male's seminal fluid; it reaches the female brain through SPSN/SAG sensory pathways (004/006).

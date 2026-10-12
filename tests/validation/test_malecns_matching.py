@@ -16,9 +16,10 @@ from tests.conftest import ROOT
 
 pytestmark = pytest.mark.data
 
-TEMPLATES = ROOT / load_all()["colony.yaml"].paths.templates
-MALE = TEMPLATES / "male-malecns1-t1"
-MATCH = TEMPLATES / "match__female-fafb783-t1__male-malecns1-t1"
+_CFG = load_all()["colony.yaml"]
+TEMPLATES = ROOT / _CFG.paths.templates
+MALE = TEMPLATES / _CFG.templates.male
+MATCH = TEMPLATES / f"match__{_CFG.templates.female}__{_CFG.templates.male}"
 
 
 @pytest.fixture(scope="module")
