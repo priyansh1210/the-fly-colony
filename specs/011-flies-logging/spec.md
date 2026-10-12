@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Draft — awaiting review |
+| Status | Approved — 2026-10-12 |
 | ID prefix | `LOG` |
 | Phase | 3 (writers, completeness). Later phases add content (mind, speech, tasks, LLM prose). |
 | Plan refs | §11, §3 (Watcher writes), §17 (log volume), §18 (completeness) |
@@ -156,11 +156,11 @@ Example diary lines (format draft):
 
 ## 7. Assumptions and open questions
 
-| ID | Question | Proposal |
-|---|---|---|
-| LOG-OQ-01 | "Brain summaries older than 7 days": fly days or real days? | **Real days**, since the rule exists to manage disk space. |
-| LOG-OQ-02 | Flight-recorder scope and RAM budget. | Default: all flies, 10 s pre + 10 s post window, ≤ 8 GB RAM on the 56 GB rig (less on the laptop). |
-| LOG-OQ-03 | Do day files start at fly midnight or at dawn? | Midnight (a calendar day); dawn is still visible in the diary. |
-| LOG-OQ-04 | Sampling rate for health data. | Every fly minute (2.5 s real). |
-| LOG-OQ-05 | Recording file format. | Parquet (neuron_id, t) per dump, with a small JSON header; NWB export later if wanted. |
-| LOG-OQ-06 | Writing directly to `/mnt/d` from WSL2 may be slow (9P filesystem). | Stage to WSL ext4 and copy asynchronously to D: if the throughput test fails (PERF-R-009). |
+| ID | Question | Proposal | Decision |
+|---|---|---|---|
+| LOG-OQ-01 | "Brain summaries older than 7 days": fly days or real days? | **Real days**, since the rule exists to manage disk space. | Accepted (proposal), 2026-10-12 |
+| LOG-OQ-02 | Flight-recorder scope and RAM budget. | Default: all flies, 10 s pre + 10 s post window, ≤ 8 GB RAM on the 56 GB rig (less on the laptop). | Accepted (proposal), 2026-10-12 |
+| LOG-OQ-03 | Do day files start at fly midnight or at dawn? | Midnight (a calendar day); dawn is still visible in the diary. | Accepted (proposal), 2026-10-12 |
+| LOG-OQ-04 | Sampling rate for health data. | Every fly minute (2.5 s real). | Accepted (proposal), 2026-10-12 |
+| LOG-OQ-05 | Recording file format. | Parquet (neuron_id, t) per dump, with a small JSON header; NWB export later if wanted. | Accepted (proposal), 2026-10-12 |
+| LOG-OQ-06 | Writing directly to `/mnt/d` from WSL2 may be slow (9P filesystem). | Stage to WSL ext4 and copy asynchronously to D: if the throughput test fails (PERF-R-009). | Accepted (proposal), 2026-10-12 |

@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Draft — awaiting review |
+| Status | Approved — 2026-10-12 |
 | ID prefix | `COMM` |
 | Phase | 5 (signals, reception, social emergence); 6 (translation polish) |
 | Plan refs | §1 ("Speak / communicate"), §7, §11 (`speech/` logs) |
@@ -113,9 +113,9 @@ Example rows (the full table is drafted in design):
 
 ## 7. Assumptions and open questions
 
-| ID | Question | Proposal |
-|---|---|---|
-| COMM-OQ-01 | In v1, how are the song pattern (pulse vs sine) and IPI set without a VNC? | See MOTOR-OQ-01. |
-| COMM-OQ-02 | Acoustic model for aggression sounds. | Treat as wing-generated near-field sound with registry spectra (`ASSUMPTION`). |
-| COMM-OQ-03 | Include substrate vibration (abdominal quivering) as a channel? | Not in v1 (WORLD-R-043 "Could"). |
-| COMM-OQ-04 | Translation tone: short first-person phrases like the plan's examples? | Yes. Tone is adjustable in the table without code changes. |
+| ID | Question | Proposal | Decision |
+|---|---|---|---|
+| COMM-OQ-01 | In v1, how are the song pattern (pulse vs sine) and IPI set without a VNC? | See MOTOR-OQ-01. | Accepted (proposal), 2026-10-12 |
+| COMM-OQ-02 | Acoustic model for aggression sounds. | Treat as wing-generated near-field sound with registry spectra (`ASSUMPTION`). | Accepted (proposal), 2026-10-12 |
+| COMM-OQ-03 | Include substrate vibration (abdominal quivering) as a channel? | Not in v1 (WORLD-R-043 "Could"). | Accepted (proposal), 2026-10-12 |
+| COMM-OQ-04 | Translation tone: short first-person phrases like the plan's examples? | Yes. Tone is adjustable in the table without code changes. | Accepted (proposal), 2026-10-12 |

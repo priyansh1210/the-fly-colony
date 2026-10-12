@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Draft — awaiting review |
+| Status | Approved — 2026-10-12 |
 | ID prefix | `MIND` |
 | Phase | 3–5 (behavior classifier, needed by the Watcher and the gates); 6 (emotion and thought decoders, relationships, calibration) |
 | Plan refs | §1 (feelings, think), §4.5 (measured personality), §7 (relationships), §8 |
@@ -133,10 +133,10 @@ Evidence table (plan §8):
 
 ## 12. Assumptions and open questions
 
-| ID | Question | Proposal |
-|---|---|---|
-| MIND-OQ-01 | Sleep-bout time base. | See WATCH-OQ-01. |
-| MIND-OQ-02 | Is the label set final? Add e.g. "calm" or "stressed"? | Keep the plan's set; "calm" = low arousal with neutral valence, shown as a derived state. |
-| MIND-OQ-03 | Confidence calibration method. | Logistic calibration on calibration-suite scenarios per label. |
-| MIND-OQ-04 | Classifier method: rules on kinematics, or a model trained on synthetic labelled data? | Rules first (transparent, easy to cite as evidence); add a learned model only where rules fail. Either way, evidence is stored. |
-| MIND-OQ-05 | Should the sampling rate be adaptive (e.g. faster for focus flies)? | 1 Hz for all, 10 Hz for focus flies. |
+| ID | Question | Proposal | Decision |
+|---|---|---|---|
+| MIND-OQ-01 | Sleep-bout time base. | See WATCH-OQ-01. | Accepted (proposal), 2026-10-12 |
+| MIND-OQ-02 | Is the label set final? Add e.g. "calm" or "stressed"? | Keep the plan's set; "calm" = low arousal with neutral valence, shown as a derived state. | Accepted (proposal), 2026-10-12 |
+| MIND-OQ-03 | Confidence calibration method. | Logistic calibration on calibration-suite scenarios per label. | Accepted (proposal), 2026-10-12 |
+| MIND-OQ-04 | Classifier method: rules on kinematics, or a model trained on synthetic labelled data? | Rules first (transparent, easy to cite as evidence); add a learned model only where rules fail. Either way, evidence is stored. | Accepted (proposal), 2026-10-12 |
+| MIND-OQ-05 | Should the sampling rate be adaptive (e.g. faster for focus flies)? | 1 Hz for all, 10 Hz for focus flies. | Accepted (proposal), 2026-10-12 |

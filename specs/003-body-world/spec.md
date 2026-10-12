@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Draft — awaiting review |
+| Status | Approved — 2026-10-12 |
 | ID prefixes | `WORLD` (environment), `BODY` (ColonyBody) |
 | Phase | 2 (dome, body, basic fields); 4–5 (food lifecycle, nursery, life-cycle entities); 7 (chamber world side) |
 | Plan refs | §5.1, §5.2, §5.5 (entities), §7 (contact physics), §10.1 (naturalization), §10.4 (chambers) |
@@ -150,11 +150,11 @@ Provide the physical world the flies live in (the Colony Dome and the separate P
 
 ## 7. Assumptions and open questions
 
-| ID | Question | Proposal |
-|---|---|---|
-| WORLD-OQ-01 | Odor grid resolution and species list. | 2.5–5 mm cells in the dome (finer in chambers); 12 species to start. Decide in design against the VRAM budget. |
-| WORLD-OQ-02 | Do corpses smell? | Off by default (`ASSUMPTION`); visual only. |
-| WORLD-OQ-03 | Is the occluded-placement rule (R-071) an acceptable naturalization for structural changes? | Yes, together with a darkness option; queued delays are shown to you. |
-| WORLD-OQ-04 | Larvae as positioned entities or as abstract "nursery pools"? | Positioned entities with no behavior (CONST-1.5), so they are visible to adults. |
-| WORLD-OQ-05 | Individual leg contacts vs grouped contact sites? | Grouped per leg pair and side (enough for foreleg tapping). Full legs arrive with the v2 FlyGym body. |
-| WORLD-OQ-06 | Are looming shadows ever dangerous? | Harmless by default; predation is a flagged option. |
+| ID | Question | Proposal | Decision |
+|---|---|---|---|
+| WORLD-OQ-01 | Odor grid resolution and species list. | 2.5–5 mm cells in the dome (finer in chambers); 12 species to start. Decide in design against the VRAM budget. | Accepted (proposal), 2026-10-12 |
+| WORLD-OQ-02 | Do corpses smell? | Off by default (`ASSUMPTION`); visual only. | Accepted (proposal), 2026-10-12 |
+| WORLD-OQ-03 | Is the occluded-placement rule (R-071) an acceptable naturalization for structural changes? | Yes, together with a darkness option; queued delays are shown to you. | Accepted (proposal), 2026-10-12 |
+| WORLD-OQ-04 | Larvae as positioned entities or as abstract "nursery pools"? | Positioned entities with no behavior (CONST-1.5), so they are visible to adults. | Accepted (proposal), 2026-10-12 |
+| WORLD-OQ-05 | Individual leg contacts vs grouped contact sites? | Grouped per leg pair and side (enough for foreleg tapping). Full legs arrive with the v2 FlyGym body. | Accepted (proposal), 2026-10-12 |
+| WORLD-OQ-06 | Are looming shadows ever dangerous? | Harmless by default; predation is a flagged option. | Accepted (proposal), 2026-10-12 |

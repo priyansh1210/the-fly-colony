@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Draft — awaiting review |
+| Status | Approved — 2026-10-12 |
 | ID prefixes | `CLI` (command line), `DASH` (API + web dashboard), `LLM` (Watcher's local language model) |
 | Phase | 6 (LLM runtime, eval harness, model pick); 8 (CLI, API, dashboard) |
 | Plan refs | §10.3, §10.5, §12, §13 |
@@ -99,9 +99,9 @@ All three talk only to the Watcher, and the LLM is grounded or silent.
 
 ## 8. Assumptions and open questions
 
-| ID | Question | Proposal |
-|---|---|---|
-| LLM-OQ-01 | Which models to evaluate? | Candidates in the 8–14B dense and ~30B-A3B MoE classes (or newer equivalents at eval time), all run on CPU with 56 GB RAM. The harness decides. |
-| LLM-OQ-02 | Auto-execute small, non-destructive chat commands, or always confirm? | Always show the parsed command; auto-execute only if you enable it. |
-| DASH-OQ-01 | Confirm the frontend stack (Svelte + PixiJS). | Keep the plan's choice. |
-| DASH-OQ-02 | Do you want to reach the dashboard from another device on your LAN (e.g. a phone)? | Off by default; token-protected LAN mode as an option. |
+| ID | Question | Proposal | Decision |
+|---|---|---|---|
+| LLM-OQ-01 | Which models to evaluate? | Candidates in the 8–14B dense and ~30B-A3B MoE classes (or newer equivalents at eval time), all run on CPU with 56 GB RAM. The harness decides. | Accepted (proposal), 2026-10-12 |
+| LLM-OQ-02 | Auto-execute small, non-destructive chat commands, or always confirm? | Always show the parsed command; auto-execute only if you enable it. | Accepted (proposal), 2026-10-12 |
+| DASH-OQ-01 | Confirm the frontend stack (Svelte + PixiJS). | Keep the plan's choice. | Accepted (proposal), 2026-10-12 |
+| DASH-OQ-02 | Do you want to reach the dashboard from another device on your LAN (e.g. a phone)? | Off by default; token-protected LAN mode as an option. | Accepted (proposal), 2026-10-12 |

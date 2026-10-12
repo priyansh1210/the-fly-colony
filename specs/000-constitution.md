@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Draft — awaiting review |
+| Status | Approved — 2026-10-12 |
 | Applies to | Every spec, design, task, line of code, config file, test and tool in this repository |
 | Plan refs | §2 (with §1, §3, §10.1) |
 | Cited as | `CONST-<article>.<clause>`, e.g. `CONST-2.5` |
@@ -143,4 +143,5 @@ The constitution overrides specs, specs override designs, and designs override t
 
 | Date | Change | Approved by |
 |---|---|---|
-| 2026-09-26 | Initial draft from master plan §2. Added CONST-1.3 (global-only calibration), CONST-1.4 (test-only stimulation) and CONST-1.5 (pre-adult scope) to make plan §1 explicit. | pending |
+| 2026-09-26 | Initial draft from master plan §2. Added CONST-1.3 (global-only calibration), CONST-1.4 (test-only stimulation) and CONST-1.5 (pre-adult scope) to make plan §1 explicit. | Project owner, 2026-10-12 |
+| 2026-10-12 | Constitution and specs 001–014 approved. Every open question resolved as proposed (see each spec's open-question table). No clause text changed. | Project owner |
