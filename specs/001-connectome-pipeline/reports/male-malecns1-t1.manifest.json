@@ -50,8 +50,8 @@
       "sha256": "96001ce551317b46e8a39fa44f7f9821538be9b9ab7a62379906d97891941da5"
     },
     "iomap.json": {
-      "bytes": 1434,
-      "sha256": "66c5bb134c947721554080f1f0490ce74e4a82f29100a2a4836b9ff8a4dbb822"
+      "bytes": 1375,
+      "sha256": "397ae13586c8116d3153175fd8de2176134497128f39da038dde3436a6e4113c"
     },
     "modulatory.parquet": {
       "bytes": 22659,
@@ -150,7 +150,7 @@
     "conn.sign.unknown": 1,
     "conn.sign_exceptions": []
   },
-  "pipeline_version": "0dcdf970549a",
+  "pipeline_version": "6bc8c0868fa1",
   "registry_hash": "1ce27da3e9c094446904bba3baf0c1cce45eedc8c8a1e01f58d899bf89e8f251",
   "schema_version": 1,
   "sex": "male",

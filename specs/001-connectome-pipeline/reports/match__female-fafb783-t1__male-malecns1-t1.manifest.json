@@ -73,5 +73,5 @@
     "type_match.parquet": "3e1431f88ffd00d98fe8415b36127362bbec785c3a869e271b7cf20459cdc892",
     "type_stats.parquet": "27236011b15914307d5c6fdce00b13b1330b7afcea44bf3b92ba48ef063b4160"
   },
-  "pipeline_version": "0dcdf970549a"
+  "pipeline_version": "6bc8c0868fa1"
 }

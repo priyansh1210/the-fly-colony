@@ -1,6 +1,6 @@
 # 001 build reports
 
-Manifests and build reports of the Phase-0 artifacts, built on the dev PC (Windows 11, RTX 4000 SFF Ada, 64 GB) from commit `0dcdf970549a`. The artifacts are under `data/templates/` (not committed) and are reproducible with `colony data fetch` + `colony template build female|male` + `colony template match`. Rebuilds are byte-identical (CONN-AC-04).
+Manifests and build reports of the Phase-0 artifacts, built on the dev PC (Windows 11, RTX 4000 SFF Ada, 64 GB) from commit `6bc8c0868fa1`. The artifacts are under `data/templates/` (not committed) and are reproducible with `colony data fetch` + `colony template build female|male` + `colony template match`. Rebuilds are byte-identical (CONN-AC-04).
 
 | Artifact | Neurons | Edges | Synapses | Peak RAM | Notes |
 |---|---|---|---|---|---|
