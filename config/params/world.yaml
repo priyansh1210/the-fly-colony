@@ -1,0 +1,304 @@
+# Parameter Registry: world, fields and clock (owner specs 003 and 009). Schema: flycolony.registry.Entry.
+# Units: mm, s, lux (relative illuminance units), degrees.
+
+entries:
+  # --- clock (009, CLOCK-R-003, -004) ------------------------------------------------------------
+  - id: clock.fly_day_neural_s_range
+    value: [60.0, 86400.0]
+    units: neural s per fly day (valid range of D)
+    assumption:
+      rationale: >-
+        D from 1 neural minute per fly day (stress tests) up to real time (no compression).
+      owner: "009"
+    owner_spec: "009"
+  - id: clock.genesis_hour
+    value: 6.0
+    units: fly hour of Day 1
+    valid_range: [0, 24]
+    source:
+      authors: Fly Colony spec 009
+      year: 2026
+      where: CLOCK-R-004 (genesis at Day 1, 06:00:00)
+    owner_spec: "009"
+
+  # --- light and sky (003, WORLD-R-030, -031) ----------------------------------------------------
+  - id: world.light.day_lux
+    value: 1000.0
+    units: lux
+    valid_range: [0, 100000]
+    assumption:
+      rationale: Indoor-laboratory daylight level typical of Drosophila incubators (500-1500 lux).
+      owner: "003"
+    owner_spec: "003"
+  - id: world.light.night_lux
+    value: 0.01
+    units: lux
+    valid_range: [0, 100]
+    assumption:
+      rationale: Near darkness (dim residual light) so the log-photoreceptor response stays finite.
+      owner: "003"
+    owner_spec: "003"
+  - id: world.light.lights_on_hour
+    value: 8.0
+    units: fly hour (zeitgeber time 0)
+    valid_range: [0, 24]
+    assumption:
+      rationale: Lights on at 08:00, off at 20:00 for the default 12:12 cycle; genesis (06:00) is late night.
+      owner: "003"
+    owner_spec: "003"
+  - id: world.light.photoperiod_h
+    value: 12.0
+    units: fly hours of light per day
+    valid_range: [0, 24]
+    source:
+      authors: Fly Colony spec 003
+      year: 2026
+      where: "WORLD-R-030 (default 12 h light, 12 h dark)"
+    owner_spec: "003"
+  - id: world.light.ramp_h
+    value: 1.0
+    units: fly hours (full width of the dawn and dusk ramps)
+    valid_range: [0, 6]
+    assumption:
+      rationale: Gradual dawn/dusk transitions as in ramped-light incubator protocols.
+      owner: "003"
+    owner_spec: "003"
+  - id: world.light.spectrum_sky
+    value: [0.6, 1.0, 0.8]
+    units: relative radiance in UV, blue, green
+    valid_range: [0, 10]
+    assumption:
+      rationale: Blue-rich skylight with substantial UV (shape of clear-sky spectra, coarse 3-band).
+      owner: "003"
+    owner_spec: "003"
+  - id: world.light.spectrum_sun
+    value: [0.5, 0.9, 1.0]
+    units: relative radiance in UV, blue, green
+    valid_range: [0, 10]
+    assumption:
+      rationale: Direct sunlight is greener and less UV-rich than skylight (coarse 3-band).
+      owner: "003"
+    owner_spec: "003"
+  - id: world.sky.sun_tilt_deg
+    value: 30.0
+    units: degrees of the sun path from the zenith plane
+    valid_range: [0, 90]
+    assumption:
+      rationale: Mid-latitude sun path; only used for sky gradient, sun glow and polarization.
+      owner: "003"
+    owner_spec: "003"
+  - id: world.sky.zenith_gain
+    value: 0.5
+    units: relative brightening from horizon to zenith
+    valid_range: [0, 10]
+    assumption:
+      rationale: Coarse luminance gradient of the sky (brighter overhead in the dome).
+      owner: "003"
+    owner_spec: "003"
+  - id: world.sky.sun_glow_gain
+    value: 3.0
+    units: relative radiance at the sun position
+    valid_range: [0, 100]
+    assumption:
+      rationale: Bright region around the sun used for the sun-compass cue.
+      owner: "003"
+    owner_spec: "003"
+  - id: world.sky.sun_glow_width_deg
+    value: 10.0
+    units: degrees
+    valid_range: [1, 90]
+    assumption:
+      rationale: Angular width of the sun glow at the coarse ommatidial resolution (~5 deg).
+      owner: "003"
+    owner_spec: "003"
+  - id: world.sky.max_polarization
+    value: 0.7
+    units: maximum degree of linear polarization
+    valid_range: [0, 1]
+    source:
+      authors: Horváth G., Varjú D.
+      year: 2004
+      where: Polarized Light in Animal Vision (clear-sky maximum degree ~0.7 at 90 deg from the sun)
+    owner_spec: "003"
+
+  # --- looming events (003, WORLD-R-035) ---------------------------------------------------------
+  - id: world.looming.radius_mm
+    value: 10.0
+    units: mm
+    valid_range: [0.1, 1000]
+    assumption:
+      rationale: Disk radius; with speed 250 mm/s gives l/v = 40 ms, inside the range that drives GF takeoffs.
+      owner: "003"
+    owner_spec: "003"
+  - id: world.looming.speed_mm_s
+    value: 250.0
+    units: mm/s
+    valid_range: [1, 10000]
+    source:
+      authors: von Reyn C.R. et al.
+      year: 2014
+      doi: 10.1038/nn.3741
+      where: looming stimuli with r/v from 10 to 80 ms; 40 ms used as the standard gate value
+    owner_spec: "003"
+  - id: world.looming.start_distance_mm
+    value: 200.0
+    units: mm
+    valid_range: [1, 10000]
+    assumption:
+      rationale: Start far enough that the disk subtends < 6 deg at onset (2 atan(10/200)).
+      owner: "003"
+    owner_spec: "003"
+  - id: world.looming.albedo
+    value: 0.02
+    units: fraction of sky radiance
+    valid_range: [0, 1]
+    assumption:
+      rationale: Black disk on the sky (high contrast, as in looming experiments).
+      owner: "003"
+    owner_spec: "003"
+  - id: world.looming.natural_rate_per_fly_h
+    value: 0.0
+    units: events per fly hour per world
+    valid_range: [0, 1000]
+    assumption:
+      rationale: No spontaneous looming in the dome by default; enabled per experiment.
+      owner: "003"
+    owner_spec: "003"
+  - id: world.looming.predation
+    value: false
+    units: flag
+    source:
+      authors: Fly Colony spec 003
+      year: 2026
+      where: WORLD-OQ-06 (harmless by default)
+    owner_spec: "003"
+
+  # --- fields (003, WORLD-R-032, -033, -040, WORLD-OQ-01) ----------------------------------------
+  - id: world.grid.cell_mm_dome
+    value: 5.0
+    units: mm
+    valid_range: [0.5, 50]
+    source:
+      authors: Fly Colony spec 003
+      year: 2026
+      where: WORLD-OQ-01 decision (2.5-5 mm cells in the dome)
+    owner_spec: "003"
+  - id: world.grid.cell_mm_chamber
+    value: 2.5
+    units: mm
+    valid_range: [0.5, 50]
+    source:
+      authors: Fly Colony spec 003
+      year: 2026
+      where: WORLD-OQ-01 decision (finer in chambers)
+    owner_spec: "003"
+  - id: world.field.max_cfl
+    value: 0.5
+    units: Courant number per sub-step
+    valid_range: [0.01, 1]
+    assumption:
+      rationale: Stability margin for explicit first-order upwind advection (CFL < 1).
+      owner: "003"
+    owner_spec: "003"
+  - id: world.field.max_diffusion_number
+    value: 0.16
+    units: D dt / dx^2 per sub-step
+    valid_range: [0.001, 0.1666]
+    assumption:
+      rationale: Stability limit of the explicit 7-point Laplacian is 1/6.
+      owner: "003"
+    owner_spec: "003"
+  - id: world.wind.tolerance
+    value: 1.0e-8
+    units: relative residual
+    valid_range: [1.0e-14, 1.0e-2]
+    assumption:
+      rationale: Conjugate-gradient stopping tolerance for the potential-flow wind solve.
+      owner: "003"
+    owner_spec: "003"
+  - id: world.wind.max_iterations
+    value: 5000
+    units: iterations
+    valid_range: [1, 1000000]
+    assumption:
+      rationale: Iteration cap for the wind solve (fixed, so solves are reproducible).
+      owner: "003"
+    owner_spec: "003"
+  - id: world.odor.species
+    value: [ethanol, acetic_acid, ethyl_acetate, co2, geosmin, cva, acetoin, phenylethanol,
+            isoamyl_acetate, methyl_salicylate, benzaldehyde, ammonia]
+    units: odorant species list
+    source:
+      authors: Fly Colony spec 003
+      year: 2026
+      where: WORLD-R-040 and WORLD-OQ-01 decision (12 species to start)
+    owner_spec: "003"
+  - id: world.odor.diffusion_mm2_s
+    value: 10.0
+    units: mm^2/s
+    valid_range: [0.1, 100]
+    source:
+      authors: Cussler E.L.
+      year: 2009
+      where: Diffusion (3rd ed.), gas-phase diffusion of small organic vapours in air ~0.1 cm^2/s
+    owner_spec: "003"
+  - id: world.odor.decay_per_s
+    value: 0.0
+    units: 1/s
+    valid_range: [0, 10]
+    assumption:
+      rationale: Odorants are chemically stable on the seconds-to-hours scale; loss is by ventilation.
+      owner: "003"
+    owner_spec: "003"
+  - id: world.air.temperature_c
+    value: 25.0
+    units: degC
+    valid_range: [0, 45]
+    source:
+      authors: Ashburner M. et al.
+      year: 2005
+      where: Drosophila - A Laboratory Handbook, standard rearing temperature 25 degC
+    owner_spec: "003"
+  - id: world.air.humidity
+    value: 0.6
+    units: relative humidity fraction
+    valid_range: [0, 1]
+    source:
+      authors: Ashburner M. et al.
+      year: 2005
+      where: Drosophila - A Laboratory Handbook, rearing humidity 60%
+    owner_spec: "003"
+  - id: world.air.thermal_diffusivity_mm2_s
+    value: 22.0
+    units: mm^2/s
+    valid_range: [1, 100]
+    source:
+      authors: Incropera F.P. et al.
+      year: 2007
+      where: Fundamentals of Heat and Mass Transfer, air at 300 K (alpha = 2.2e-5 m^2/s)
+    owner_spec: "003"
+  - id: world.air.vapour_diffusivity_mm2_s
+    value: 24.0
+    units: mm^2/s
+    valid_range: [1, 100]
+    source:
+      authors: Cussler E.L.
+      year: 2009
+      where: Diffusion (3rd ed.), water vapour in air at 25 degC (0.24 cm^2/s)
+    owner_spec: "003"
+  - id: world.air.source_tau_s
+    value: 5.0
+    units: s (neural) relaxation time of temperature/humidity source cells
+    valid_range: [0.01, 10000]
+    assumption:
+      rationale: Sources (springs, heat zones) hold their cells near the set value within seconds.
+      owner: "003"
+    owner_spec: "003"
+  - id: world.food.ramp_refresh_fly_s
+    value: 60.0
+    units: life-clock s between emission updates while a patch ripens in place
+    valid_range: [1, 86400]
+    assumption:
+      rationale: The ripening ramp (WORLD-R-025) spans fly hours; per-fly-minute updates are smooth enough.
+      owner: "003"
+    owner_spec: "003"
