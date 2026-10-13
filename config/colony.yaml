@@ -13,3 +13,12 @@ clock:
 templates:
   female: female-fafb783-t2
   male: male-malecns1-t2
+brain:
+  mode: production      # production | experimental | reference (spec 002, BRAIN-R-022)
+  dt_ms: null           # null = largest timestep that passed the gate for the template
+  graded: true          # optic-lobe (flyvis) types as graded units (BRAIN-R-014)
+  weights: fp32         # fp16 only if the gate passed with fp16 (BRAIN-R-052)
+schedule:               # BRAIN-R-023: whole numbers of brain steps
+  physics_ms: 0.5
+  senses_ms: 1.0
+  vision_ms: 10.0       # 100 Hz of neural time

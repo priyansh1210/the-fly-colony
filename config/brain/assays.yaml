@@ -1,0 +1,44 @@
+# Validation assay set (BRAIN-R-080). Schema: flycolony.brain.assays.AssaySet.
+#
+# Stimuli are the exact neuron lists of Shiu et al. 2024 (config/brain/shiu2024_neurons.yaml);
+# the few ids that changed between FlyWire v630 and v783 are dropped and reported. Engine and
+# Brian2 reference always receive the identical neuron set. Readouts name a Shiu list or an
+# I/O map channel.
+version: 1
+defaults:
+  duration_ms: 1000      # Shiu et al. t_run
+  trials: 30             # Shiu et al. n_run
+assays:
+  - name: sugar
+    description: Sugar GRNs at 150 Hz activate the proboscis-extension motor neuron MN9.
+    citation: Shiu et al. 2024, Fig. 1d-e (r_poi default 150 Hz)
+    drive:
+      - {select: {shiu_list: sugar}, rate_hz: 150}
+    readout: [{shiu_list: mn9}]
+    expect:
+      - {readout: mn9, op: ">", vs: baseline}
+  - name: sugar_bitter
+    description: Coactivating bitter GRNs suppresses the sugar-evoked MN9 response.
+    citation: Shiu et al. 2024, Fig. 3a (sugar x bitter coactivation)
+    drive:
+      - {select: {shiu_list: sugar}, rate_hz: 150}
+      - {select: {shiu_list: bitter}, rate_hz: 150}
+    readout: [{shiu_list: mn9}]
+    expect:
+      - {readout: mn9, op: "<", vs: sugar}
+  - name: water
+    description: Water GRNs at 150 Hz activate MN9.
+    citation: Shiu et al. 2024, Fig. 4a-b
+    drive:
+      - {select: {shiu_list: water}, rate_hz: 150}
+    readout: [{shiu_list: mn9}]
+    expect:
+      - {readout: mn9, op: ">", vs: baseline}
+  - name: jon_ce
+    description: Johnston's organ C/E neurons at 150 Hz activate the antennal grooming interneuron aBN1.
+    citation: Shiu et al. 2024, Fig. 5b,g (JON-CE -> aBN1; Hampel et al. 2015)
+    drive:
+      - {select: {shiu_list: jon_ce}, rate_hz: 150}
+    readout: [{shiu_list: abn1}, {channel: groom.antenna}]
+    expect:
+      - {readout: abn1, op: ">", vs: baseline}

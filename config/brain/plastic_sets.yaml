@@ -1,0 +1,20 @@
+# Plastic synapse sets (BRAIN-R-004). Each fly stores its own weights for these edges; every other
+# edge uses the shared template weight. The learning rules arrive in Phases 2-4 (BRAIN-R-040..044);
+# Phase 1 provides the per-fly storage and the override in propagation.
+version: 1
+sets:
+  - name: mb_kc_mbon
+    enabled: true
+    pre: {cell_type_regex: "^KC"}
+    post: {cell_type_regex: "^MBON"}
+    citation: "Dopamine-gated KC->MBON plasticity: Hige T. et al. (2015) Neuron 88:985; Cohn R. et al. (2015) Cell 163:1742"
+  - name: cx_ring_epg
+    enabled: true
+    pre: {cell_type_regex: "^ER[0-9]"}
+    post: {cell_types: [EPG]}
+    citation: "Ring neuron -> EPG plasticity maps the visual scene to heading: Kim S.S. et al. (2019) Nature 576:126; Fisher Y.E. et al. (2019) Nature 576:121"
+  - name: rstdp_lh_smp
+    enabled: false
+    pre: {cell_type_regex: "^(LH|SMP)"}
+    post: {cell_type_regex: "^(LH|SMP)"}
+    citation: "Research option (BRAIN-R-044, brain.plasticity.rstdp, default off): reward-modulated STDP in lateral horn and SMP"

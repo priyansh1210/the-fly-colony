@@ -1,0 +1,214 @@
+{
+  "assays": {
+    "jon_ce": {
+      "agreement": {
+        "n_responsive": 228,
+        "pearson": 0.9996695694258032,
+        "top_k": 50,
+        "top_k_overlap": 0.98
+      },
+      "citation": "Shiu et al. 2024, Fig. 5b,g (JON-CE -> aBN1; Hampel et al. 2015)",
+      "expect_engine": [
+        {
+          "op": ">",
+          "other_hz": 0.0,
+          "pass": true,
+          "readout": "abn1",
+          "value_hz": 50.6,
+          "vs": "baseline"
+        }
+      ],
+      "expect_reference": [
+        {
+          "op": ">",
+          "other_hz": 0.0,
+          "pass": true,
+          "readout": "abn1",
+          "value_hz": 51.1,
+          "vs": "baseline"
+        }
+      ],
+      "pass": true,
+      "readout_engine_hz": {
+        "abn1": 50.6,
+        "groom.antenna": 8.075
+      },
+      "readout_reference_hz": {
+        "abn1": 51.1,
+        "groom.antenna": 8.375
+      },
+      "stimulus": [
+        {
+          "missing_v630_ids": [
+            720575940626307902
+          ],
+          "n": 69,
+          "name": "jon_ce",
+          "rate_hz": 150.0
+        }
+      ]
+    },
+    "sugar": {
+      "agreement": {
+        "n_responsive": 348,
+        "pearson": 0.9998815951199125,
+        "top_k": 50,
+        "top_k_overlap": 0.98
+      },
+      "citation": "Shiu et al. 2024, Fig. 1d-e (r_poi default 150 Hz)",
+      "expect_engine": [
+        {
+          "op": ">",
+          "other_hz": 0.0,
+          "pass": true,
+          "readout": "mn9",
+          "value_hz": 78.4,
+          "vs": "baseline"
+        }
+      ],
+      "expect_reference": [
+        {
+          "op": ">",
+          "other_hz": 0.0,
+          "pass": true,
+          "readout": "mn9",
+          "value_hz": 78.03333333333333,
+          "vs": "baseline"
+        }
+      ],
+      "pass": true,
+      "readout_engine_hz": {
+        "mn9": 78.4
+      },
+      "readout_reference_hz": {
+        "mn9": 78.03333333333333
+      },
+      "stimulus": [
+        {
+          "missing_v630_ids": [
+            720575940620900446
+          ],
+          "n": 20,
+          "name": "sugar",
+          "rate_hz": 150.0
+        }
+      ]
+    },
+    "sugar_bitter": {
+      "agreement": {
+        "n_responsive": 277,
+        "pearson": 0.9998441316668142,
+        "top_k": 50,
+        "top_k_overlap": 1.0
+      },
+      "citation": "Shiu et al. 2024, Fig. 3a (sugar x bitter coactivation)",
+      "expect_engine": [
+        {
+          "op": "<",
+          "other_hz": 78.4,
+          "pass": true,
+          "readout": "mn9",
+          "value_hz": 4.433333333333334,
+          "vs": "sugar"
+        }
+      ],
+      "expect_reference": [
+        {
+          "op": "<",
+          "other_hz": 78.03333333333333,
+          "pass": true,
+          "readout": "mn9",
+          "value_hz": 5.233333333333333,
+          "vs": "sugar"
+        }
+      ],
+      "pass": true,
+      "readout_engine_hz": {
+        "mn9": 4.433333333333334
+      },
+      "readout_reference_hz": {
+        "mn9": 5.233333333333333
+      },
+      "stimulus": [
+        {
+          "missing_v630_ids": [
+            720575940620900446
+          ],
+          "n": 20,
+          "name": "sugar",
+          "rate_hz": 150.0
+        },
+        {
+          "missing_v630_ids": [
+            720575940618600651
+          ],
+          "n": 20,
+          "name": "bitter",
+          "rate_hz": 150.0
+        }
+      ]
+    },
+    "water": {
+      "agreement": {
+        "n_responsive": 106,
+        "pearson": 0.9999267017383625,
+        "top_k": 50,
+        "top_k_overlap": 1.0
+      },
+      "citation": "Shiu et al. 2024, Fig. 4a-b",
+      "expect_engine": [
+        {
+          "op": ">",
+          "other_hz": 0.0,
+          "pass": true,
+          "readout": "mn9",
+          "value_hz": 6.266666666666667,
+          "vs": "baseline"
+        }
+      ],
+      "expect_reference": [
+        {
+          "op": ">",
+          "other_hz": 0.0,
+          "pass": true,
+          "readout": "mn9",
+          "value_hz": 6.066666666666666,
+          "vs": "baseline"
+        }
+      ],
+      "pass": true,
+      "readout_engine_hz": {
+        "mn9": 6.266666666666667
+      },
+      "readout_reference_hz": {
+        "mn9": 6.066666666666666
+      },
+      "stimulus": [
+        {
+          "missing_v630_ids": [],
+          "n": 18,
+          "name": "water",
+          "rate_hz": 150.0
+        }
+      ]
+    }
+  },
+  "engine": {
+    "device": "cuda:0",
+    "dt_ms": 0.1,
+    "mode": "reference",
+    "trials": "assay default"
+  },
+  "kind": "reference-validation",
+  "model_hash": "91bfcb55864d8f60a3a5b5f35fd14b3557f48d9d7faa6fcf653280c555b95348",
+  "passed": true,
+  "pipeline_version": "153ee52cb657-dirty",
+  "reference": "Brian2 (numpy codegen) running philshiu/Drosophila_brain_model@91bdd1e, same stimulus sets",
+  "template_id": "female-fafb783-t2",
+  "thresholds": {
+    "min_corr": 0.9,
+    "min_top_k_overlap": 0.8,
+    "responsive_hz": 1.0,
+    "top_k": 50
+  }
+}

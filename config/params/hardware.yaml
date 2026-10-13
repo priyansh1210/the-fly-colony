@@ -1,0 +1,43 @@
+# Parameter Registry: hardware capacity limits (owner spec 014 §5). Schema: flycolony.registry.Entry.
+entries:
+  - id: hw.vram_reserve_frac
+    value: 0.15
+    units: fraction of total VRAM
+    valid_range: [0, 0.9]
+    assumption:
+      rationale: VRAM kept free for fragmentation, the display and other apps (HW-R-012; HW-OQ-02 accepted 2026-10-12 as an ASSUMPTION).
+      owner: "014"
+    owner_spec: "014"
+  - id: hw.rtf_target
+    value: 1.0
+    units: real-time factor
+    valid_range: [0.01, 100]
+    source:
+      authors: Fly Colony spec 014
+      year: 2026
+      where: HW-R-012 soft limit (1 real hour = 1 fly day at RTF 1), approved 2026-10-12
+    owner_spec: "014"
+  - id: hw.bench.warmup_steps
+    value: 200
+    units: steps
+    valid_range: [0, 100000]
+    assumption:
+      rationale: Steps run before timing each batch size, so allocation and the first event blocks are excluded.
+      owner: "014"
+    owner_spec: "014"
+  - id: hw.bench.timed_steps
+    value: 1000
+    units: steps
+    valid_range: [10, 1000000]
+    assumption:
+      rationale: Steps timed per batch size in the capacity benchmark (0.25-1 s of neural time).
+      owner: "014"
+    owner_spec: "014"
+  - id: hw.bench.max_wall_s
+    value: 60.0
+    units: s
+    valid_range: [1, 3600]
+    assumption:
+      rationale: Stop growing the batch once one timed run takes longer than this; larger batches are extrapolated from the linear fit.
+      owner: "014"
+    owner_spec: "014"

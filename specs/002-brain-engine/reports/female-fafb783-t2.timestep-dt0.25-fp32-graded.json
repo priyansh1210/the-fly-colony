@@ -1,0 +1,144 @@
+{
+  "assays": {
+    "jon_ce": {
+      "agreement": {
+        "n_responsive": 55145,
+        "pearson": 0.9994730939889078,
+        "top_k": 50,
+        "top_k_overlap": 0.96
+      },
+      "expect_candidate": [
+        {
+          "op": ">",
+          "other_hz": 0.0,
+          "pass": true,
+          "readout": "abn1",
+          "value_hz": 58.56666666666666,
+          "vs": "baseline"
+        }
+      ],
+      "expect_reference_dt": [
+        {
+          "op": ">",
+          "other_hz": 0.0,
+          "pass": true,
+          "readout": "abn1",
+          "value_hz": 58.9,
+          "vs": "baseline"
+        }
+      ],
+      "pass": true,
+      "same_outcome": true
+    },
+    "sugar": {
+      "agreement": {
+        "n_responsive": 55401,
+        "pearson": 0.9994732310240515,
+        "top_k": 50,
+        "top_k_overlap": 0.98
+      },
+      "expect_candidate": [
+        {
+          "op": ">",
+          "other_hz": 0.0,
+          "pass": true,
+          "readout": "mn9",
+          "value_hz": 26.8,
+          "vs": "baseline"
+        }
+      ],
+      "expect_reference_dt": [
+        {
+          "op": ">",
+          "other_hz": 0.0,
+          "pass": true,
+          "readout": "mn9",
+          "value_hz": 29.833333333333332,
+          "vs": "baseline"
+        }
+      ],
+      "pass": true,
+      "same_outcome": true
+    },
+    "sugar_bitter": {
+      "agreement": {
+        "n_responsive": 55136,
+        "pearson": 0.9994719503157776,
+        "top_k": 50,
+        "top_k_overlap": 1.0
+      },
+      "expect_candidate": [
+        {
+          "op": "<",
+          "other_hz": 26.8,
+          "pass": true,
+          "readout": "mn9",
+          "value_hz": 11.066666666666666,
+          "vs": "sugar"
+        }
+      ],
+      "expect_reference_dt": [
+        {
+          "op": "<",
+          "other_hz": 29.833333333333332,
+          "pass": true,
+          "readout": "mn9",
+          "value_hz": 8.766666666666666,
+          "vs": "sugar"
+        }
+      ],
+      "pass": true,
+      "same_outcome": true
+    },
+    "water": {
+      "agreement": {
+        "n_responsive": 55472,
+        "pearson": 0.9994808357033407,
+        "top_k": 50,
+        "top_k_overlap": 0.98
+      },
+      "expect_candidate": [
+        {
+          "op": ">",
+          "other_hz": 0.0,
+          "pass": true,
+          "readout": "mn9",
+          "value_hz": 11.4,
+          "vs": "baseline"
+        }
+      ],
+      "expect_reference_dt": [
+        {
+          "op": ">",
+          "other_hz": 0.0,
+          "pass": true,
+          "readout": "mn9",
+          "value_hz": 11.033333333333333,
+          "vs": "baseline"
+        }
+      ],
+      "pass": true,
+      "same_outcome": true
+    }
+  },
+  "device": "cuda:0",
+  "dt_ms": 0.25,
+  "emergence": "pending: the Phase-2 emergence assays do not exist yet; the gate is re-run when they do (BRAIN-R-021)",
+  "graded": true,
+  "kind": "timestep-gate",
+  "model": "production (background noise, neuromodulation, plastic sets)",
+  "model_hash": "91bfcb55864d8f60a3a5b5f35fd14b3557f48d9d7faa6fcf653280c555b95348",
+  "name": "timestep-dt0.25-fp32-graded",
+  "passed": true,
+  "pipeline_version": "153ee52cb657-dirty",
+  "reference_dt_ms": 0.1,
+  "template_id": "female-fafb783-t2",
+  "thresholds": {
+    "min_corr": 0.9,
+    "min_top_k_overlap": 0.8,
+    "responsive_hz": 1.0,
+    "top_k": 50
+  },
+  "trials": "assay default",
+  "weights": "fp32"
+}

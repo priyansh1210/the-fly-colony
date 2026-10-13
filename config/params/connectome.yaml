@@ -256,3 +256,27 @@ entries:
         neuron. Judged against the 002 assays in Phase 1; per-type scaling only if they need it.
       owner: "001"
     owner_spec: "001"
+  - id: conn.norm.male_mode
+    value: per_type
+    units: global | per_type
+    assumption:
+      rationale: >-
+        per_type scales each male neuron's input weights by its matched type's FAFB/MaleCNS mean
+        input-synapse ratio (type_stats.in_ratio, median over female matches). This corrects
+        region-dependent synapse detection, which a single global factor cannot do. Chosen on the
+        002 male assays (spec 002 design §12-13): at the type-side level the mean cross-sex
+        correlation over the four assays is 0.59 with per_type and 0.44 with global. JO-CE ->
+        aBN1 is 54 Hz in the male and 51 Hz in the female; global gives 92 Hz and drives
+        antennal grooming at 92 Hz against 8 Hz in the female.
+      owner: "002"
+    owner_spec: "001"
+  - id: conn.norm.male_type_clip
+    value: 4.0
+    units: factor around conn.norm.male_scale
+    valid_range: [1.0, 100.0]
+    assumption:
+      rationale: >-
+        Per-type factors are clipped to [male_scale / clip, male_scale x clip], so a type with
+        truncated or fragmented reconstructions in one dataset cannot get an extreme scale.
+      owner: "002"
+    owner_spec: "001"

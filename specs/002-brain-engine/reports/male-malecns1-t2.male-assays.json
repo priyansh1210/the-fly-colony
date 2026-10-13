@@ -1,0 +1,171 @@
+{
+  "assays": {
+    "jon_ce": {
+      "expect_male": [
+        {
+          "op": ">",
+          "other_hz": 0.0,
+          "pass": true,
+          "readout": "abn1",
+          "value_hz": 54.333333333333336,
+          "vs": "baseline"
+        }
+      ],
+      "male_readout_input_frac": {
+        "abn1": [
+          1.1176835460992909
+        ],
+        "groom.antenna": [
+          1.6660394829821719,
+          1.1523104132901134,
+          1.505834773095624,
+          1.0122431669367908
+        ]
+      },
+      "male_stimulus": [
+        {
+          "n": 67,
+          "name": "jon_ce",
+          "unmapped_types": []
+        }
+      ],
+      "mirrored": false,
+      "pass": true,
+      "readout_female_hz": {
+        "abn1": 50.6,
+        "groom.antenna": 8.075
+      },
+      "readout_male_hz": {
+        "abn1": 54.333333333333336,
+        "groom.antenna": 0.0
+      },
+      "responsive_matched_type_sides": 369,
+      "type_side_pearson": 0.729478730155516
+    },
+    "sugar": {
+      "expect_male": [
+        {
+          "op": ">",
+          "other_hz": 0.0,
+          "pass": true,
+          "readout": "mn9",
+          "value_hz": 139.53333333333333,
+          "vs": "baseline"
+        }
+      ],
+      "male_readout_input_frac": {
+        "mn9": [
+          0.5950726954651371
+        ]
+      },
+      "male_stimulus": [
+        {
+          "n": 20,
+          "name": "sugar",
+          "unmapped_types": []
+        }
+      ],
+      "mirrored": true,
+      "pass": true,
+      "readout_female_hz": {
+        "mn9": 78.4
+      },
+      "readout_male_hz": {
+        "mn9": 139.53333333333333
+      },
+      "responsive_matched_type_sides": 410,
+      "type_side_pearson": 0.7914341087258118
+    },
+    "sugar_bitter": {
+      "expect_male": [
+        {
+          "op": "<",
+          "other_hz": 139.53333333333333,
+          "pass": true,
+          "readout": "mn9",
+          "value_hz": 0.0,
+          "vs": "sugar"
+        }
+      ],
+      "male_readout_input_frac": {
+        "mn9": [
+          0.5950726954651371
+        ]
+      },
+      "male_stimulus": [
+        {
+          "n": 20,
+          "name": "sugar",
+          "unmapped_types": []
+        },
+        {
+          "n": 16,
+          "name": "bitter",
+          "unmapped_types": []
+        }
+      ],
+      "mirrored": true,
+      "pass": true,
+      "readout_female_hz": {
+        "mn9": 4.433333333333334
+      },
+      "readout_male_hz": {
+        "mn9": 0.0
+      },
+      "responsive_matched_type_sides": 673,
+      "type_side_pearson": 0.43426659616450375
+    },
+    "water": {
+      "expect_male": [
+        {
+          "op": ">",
+          "other_hz": 0.0,
+          "pass": true,
+          "readout": "mn9",
+          "value_hz": 123.96666666666667,
+          "vs": "baseline"
+        }
+      ],
+      "male_readout_input_frac": {
+        "mn9": [
+          0.5950726954651371
+        ]
+      },
+      "male_stimulus": [
+        {
+          "n": 15,
+          "name": "water",
+          "unmapped_types": []
+        }
+      ],
+      "mirrored": true,
+      "pass": true,
+      "readout_female_hz": {
+        "mn9": 6.266666666666667
+      },
+      "readout_male_hz": {
+        "mn9": 123.96666666666667
+      },
+      "responsive_matched_type_sides": 324,
+      "type_side_pearson": 0.39717799460564795
+    }
+  },
+  "engine": {
+    "device": "cuda:0",
+    "dt_ms": 0.1,
+    "mode": "reference",
+    "trials": "assay default"
+  },
+  "female_template": "female-fafb783-t2",
+  "kind": "male-assays",
+  "male_template": "male-malecns1-t2",
+  "male_weight_norm": {
+    "global_scale": 0.552214,
+    "mode": "per_type",
+    "type_clip": 4.0
+  },
+  "model_hash": "91bfcb55864d8f60a3a5b5f35fd14b3557f48d9d7faa6fcf653280c555b95348",
+  "passed": true,
+  "pipeline_version": "153ee52cb657-dirty",
+  "stimulus_mapping": "female Shiu lists -> same cell types (MaleCNS->FlyWire match, else same name), same side (mirrored when a male readout neuron is truncated), same count per type"
+}
