@@ -13,7 +13,7 @@
 - [x] **S4** Smell: ORN transduction, adaptation, antenna/palp sampling. *SENSE-R-020..023* · T-SENSE-V-002, -003, SENSE-AC-02, -03
 - [x] **S5** Johnston's organ (wind, gravity), head bristles. *SENSE-R-040, -041* · T-SENSE-V-006, -009, SENSE-AC-06
 - [x] **S6** Thermo- and hygrosensation. *SENSE-R-050, -051* · T-SENSE-V-007, SENSE-AC-07
-- [ ] **S7** Vision: eye lattice, ray caster, spectral classes, polarization, transduction, preview. *SENSE-R-010..013, -015* · T-SENSE-U-002, -003
+- [x] **S7** Vision: eye lattice, ray caster, spectral classes, polarization, transduction, preview. *SENSE-R-010..013, -015* · T-SENSE-U-002, -003
 - [ ] **S8** Column map → photoreceptor mapping (full mode); luminance mode fallback. *SENSE-R-013* · T-SENSE-V-004, SENSE-AC-04
 - [ ] **S9** Interoceptive routes at the sensory layer; sleep-pressure route; synthetic VNC relay (walking state). *SENSE-R-060, SENSE-OQ-01*
 - [ ] **S10** Isolation: import contract + runtime probe; summaries never fed back. *SENSE-R-001, -004, -006* · T-SENSE-I-001, -002, SENSE-AC-09

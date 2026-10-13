@@ -791,3 +791,191 @@ entries:
       rationale: "Tonic hygrosensory drive per unit RH (max_hz scales it)."
       owner: "004"
     owner_spec: "004"
+
+  # --- vision (004 §7) ------------------------------------------------------------------------
+  - id: senses.vision.lattice_extent
+    value: 15
+    units: "hex lattice radius (721 columns)"
+    valid_range: [1, 40]
+    source:
+      authors: "Lappalainen J.K. et al."
+      year: 2024
+      where: "Nature 634:1132, flyvis hexagonal lattice of extent 15 (721 columns)"
+    owner_spec: "004"
+  - id: senses.vision.dphi_deg
+    value: 4.6
+    units: "deg"
+    valid_range: [1, 10]
+    source:
+      authors: "Land M.F."
+      year: 1997
+      where: "Annu Rev Entomol 42:147, Drosophila inter-ommatidial angle ~4.6-5 deg"
+    owner_spec: "004"
+  - id: senses.vision.drho_deg
+    value: 5.0
+    units: "deg (acceptance angle, FWHM)"
+    valid_range: [1, 15]
+    source:
+      authors: "Götz K.G."
+      year: 1964
+      where: "Kybernetik 2:77, Drosophila acceptance angle ~5 deg"
+    owner_spec: "004"
+  - id: senses.vision.eye_azimuth_deg
+    value: 75.0
+    units: "deg from the body axis"
+    valid_range: [0, 180]
+    assumption:
+      rationale: "Eye centre direction; with the extent-15 lattice each eye spans ~6-144 deg azimuth (small frontal overlap)."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.vision.eye_elevation_deg
+    value: 0.0
+    units: "deg"
+    valid_range: [-90, 90]
+    assumption:
+      rationale: "Eye centre at the horizon."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.vision.weights.r1_6
+    value: [0.3, 0.3, 0.4]
+    units: "UV/blue/green weights"
+    valid_range: [0, 10]
+    source:
+      authors: "Sharkey C.R. et al."
+      year: 2020
+      where: "Sci Rep 10:18242, Rh1 broadband sensitivity (coarse 3-band)"
+    owner_spec: "004"
+  - id: senses.vision.weights.r7
+    value: [1.0, 0.0, 0.0]
+    units: "UV/blue/green weights"
+    valid_range: [0, 10]
+    source:
+      authors: "Salcedo E. et al."
+      year: 1999
+      where: "J Neurosci 19:10716, R7 Rh3/Rh4 UV-sensitive"
+    owner_spec: "004"
+  - id: senses.vision.weights.r8
+    value: [0.0, 0.5, 0.5]
+    units: "UV/blue/green weights"
+    valid_range: [0, 10]
+    source:
+      authors: "Salcedo E. et al."
+      year: 1999
+      where: "J Neurosci 19:10716, R8 Rh5 blue / Rh6 green (pale/yellow mix)"
+    owner_spec: "004"
+  - id: senses.vision.weights.dorsal_rim
+    value: [1.0, 0.0, 0.0]
+    units: "UV/blue/green weights"
+    valid_range: [0, 10]
+    source:
+      authors: "Fortini M.E., Rubin G.M."
+      year: 1990
+      where: "Genes Dev 4:444, dorsal-rim R7 and R8 both express UV Rh3"
+    owner_spec: "004"
+  - id: senses.vision.floor_albedo
+    value: 0.3
+    units: "reflectance"
+    valid_range: [0, 1]
+    assumption:
+      rationale: "Mean floor reflectance."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.vision.floor_contrast
+    value: 0.5
+    units: "Michelson contrast of the floor pattern"
+    valid_range: [0, 1]
+    assumption:
+      rationale: "Checkerboard floor texture so self-motion produces optic flow."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.vision.floor_period_mm
+    value: 10.0
+    units: "mm"
+    valid_range: [0.5, 1000]
+    assumption:
+      rationale: "Floor checker period (~2-5 ommatidia at a few mm viewing distance)."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.vision.fly_albedo
+    value: 0.1
+    units: "reflectance"
+    valid_range: [0, 1]
+    assumption:
+      rationale: "Flies appear dark against the floor and sky."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.vision.patch_albedo
+    value: 0.2
+    units: "reflectance"
+    valid_range: [0, 1]
+    assumption:
+      rationale: "Food and water patches slightly darker than the floor."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.vision.walls_transparent
+    value: true
+    units: "flag"
+    assumption:
+      rationale: "Dome and arena walls and ceiling are transparent mesh: the sky (and looming stimuli) are visible through them."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.vision.abs_gain_mv
+    value: 2.0
+    units: "mV per e-fold of intensity"
+    valid_range: [0, 50]
+    source:
+      authors: "Juusola M., Hardie R.C."
+      year: 2001
+      where: "J Gen Physiol 117:3, photoreceptor depolarisation grows with log intensity (gain ASSUMPTION)"
+    owner_spec: "004"
+  - id: senses.vision.ref_lux
+    value: 0.01
+    units: "lux (0 mV reference)"
+    valid_range: [1e-09, 1000000.0]
+    assumption:
+      rationale: "Intensity giving no steady depolarisation: the night light level, so darkness ~ rest."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.vision.contrast_gain_mv
+    value: 5.0
+    units: "mV per e-fold of contrast"
+    valid_range: [0, 100]
+    source:
+      authors: "Juusola M., Hardie R.C."
+      year: 2001
+      where: "J Gen Physiol 117:3, transient contrast responses (gain ASSUMPTION)"
+    owner_spec: "004"
+  - id: senses.vision.adapt_tau_s
+    value: 0.1
+    units: "s"
+    valid_range: [0.001, 100]
+    source:
+      authors: "Juusola M., Hardie R.C."
+      year: 2001
+      where: "J Gen Physiol 117:3, light adaptation on the ~100 ms scale"
+    owner_spec: "004"
+  - id: senses.vision.max_mv
+    value: 30.0
+    units: "mV"
+    valid_range: [0, 100]
+    source:
+      authors: "Juusola M., Hardie R.C."
+      year: 2001
+      where: "J Gen Physiol 117:3, saturating depolarisation of tens of mV"
+    owner_spec: "004"
+  - id: senses.vision.min_mv
+    value: -10.0
+    units: "mV"
+    valid_range: [-100, 0]
+    assumption:
+      rationale: "Hyperpolarising limit of transient responses."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.vision.pol_gain_mv
+    value: 1.0
+    units: "relative polarization modulation"
+    valid_range: [0, 10]
+    assumption:
+      rationale: "Dorsal-rim polarization sensitivity (Labhart & Meyer 1999: high PS in DRA receptors)."
+      owner: "004"
+    owner_spec: "004"

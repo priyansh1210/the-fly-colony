@@ -111,3 +111,50 @@ def test_temperature_step_signs(registry, layout):  # T-SENSE-V-007, SENSE-AC-07
     r = s.step(w, b, 0.01)
     hot, cold = _mean(r, layout, "hot"), _mean(r, layout, "cold")
     assert hot[0] > hot[1] and cold[1] > cold[0]
+
+
+def _vision_setup(registry, layout):
+    from flycolony.senses.vision import Vision
+
+    arena = Arena("box", height=40, size_x=60, size_y=60)
+    w = WorldGroup(WorldSpec(arena, n_worlds=1), registry, CPU)
+    b = BodyBatch(arena, BodyParams.from_registry(registry), CPU)
+    b.add("f", 0, (30.0, 30.0), 0.0)
+    return w, b, Vision(layout, registry, CPU)
+
+
+def _noon(registry):
+    c = Clock.build(0.5, 3600.0, registry)
+    c.advance(round(c.neural_s_for_fly_s(6 * 3600) * 1000 / c.dt_ms))  # 06:00 → 12:00
+    return c
+
+
+def test_vision_scene_day_night_and_preview(registry, layout):  # T-SENSE-U-002, -003
+    w, b, v = _vision_setup(registry, layout)
+    day = _noon(registry)
+    rad = v.render(w, b, day)
+    el = v.eyes.elevation
+    assert rad[0, 0][el[0] > 0.3].mean() > rad[0, 0][el[0] < -0.3].mean()  # sky above floor
+    mv_day = v.photoreceptors(w, b, day, 0.01)
+    assert mv_day.shape == (1, layout.n_photo) and float(mv_day.mean()) > 10
+    night = Clock.build(0.5, 3600.0, registry)  # 06:00, before lights-on
+    v2 = _vision_setup(registry, layout)[2]
+    assert abs(float(v2.photoreceptors(w, b, night, 0.01).mean())) < 1.0
+    prev = v.preview(0)
+    assert torch.equal(prev["radiance"], v.last_frame[0])
+
+
+def test_looming_darkens_the_ipsilateral_eye(registry, layout):  # T-SENSE-U-002 (looming)
+    w, b, v = _vision_setup(registry, layout)
+    c = _noon(registry)
+    w.start_looming(0, c, target=b.sites()["head"][0].tolist(), direction=(0.0, 1.0, 0.2))
+    t_col = float(w.looming.collision_time()[0])
+    left, right = [], []
+    for frac in (0.0, 0.6, 0.9, 0.99):
+        ck = _noon(registry)
+        ck.advance(round((t_col - c.sim_ts) * frac * 1000 / ck.dt_ms))
+        r = v.render(w, b, ck)
+        left.append(float(r[0, 0].mean()))
+        right.append(float(r[0, 1].mean()))
+    assert left[0] > left[1] > left[2] > left[3]  # the left eye darkens as the disk expands
+    assert left[3] < 0.8 * right[3]

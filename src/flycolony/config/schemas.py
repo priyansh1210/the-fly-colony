@@ -64,6 +64,8 @@ class Schedule(Strict):
     physics_ms: float = Field(0.5, gt=0)
     senses_ms: float = Field(1.0, gt=0)
     vision_ms: float = Field(10.0, gt=0)
+    fields_ms: float = Field(10.0, gt=0)  # world fields, entities, events (003 §2)
+    physio_ms: float = Field(100.0, gt=0)  # physiology routes to the brain (006)
 
 
 class ColonyConfig(Strict):

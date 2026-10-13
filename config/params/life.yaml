@@ -1,0 +1,77 @@
+# Parameter Registry: minimal physiology (owner spec 006, Phase-2 subset). Schema: flycolony.registry.Entry.
+
+entries:
+  - id: life.energy.max_j
+    value: 1.5
+    units: "J"
+    valid_range: [0.01, 100]
+    assumption:
+      rationale: "Lumped energy reserve; with the basal rate gives ~2-3 fly days of starvation survival (LIFE-R-014 target, calibrated in Phase 4)."
+      owner: "006"
+    owner_spec: "006"
+  - id: life.energy.basal_j_per_day
+    value: 0.5
+    units: "J per fly day"
+    valid_range: [0.001, 100]
+    assumption:
+      rationale: "Basal metabolism (~0.2-1 J/day for a 1 mg fly at 25 degC; Phase-4 calibration)."
+      owner: "006"
+    owner_spec: "006"
+  - id: life.energy.effort_j_per_day
+    value: 0.2
+    units: "J per fly day per unit motor effort"
+    valid_range: [0, 100]
+    assumption:
+      rationale: "Activity cost per unit effort (005 effort units)."
+      owner: "006"
+    owner_spec: "006"
+  - id: life.energy.sucrose_j_per_mol
+    value: 5640000.0
+    units: "J/mol"
+    valid_range: [1000000.0, 10000000.0]
+    source:
+      authors: "Atkins P., de Paula J."
+      year: 2010
+      where: "Physical Chemistry, sucrose enthalpy of combustion -5.64 MJ/mol"
+    owner_spec: "006"
+  - id: life.ingest.pump_volume_mm3
+    value: 0.001
+    units: "mm^3 (uL) per pharyngeal pump"
+    valid_range: [1e-06, 0.1]
+    assumption:
+      rationale: "~1 nL per pump (crop-filling rates of ~nL/s, Manzo et al. 2012)."
+      owner: "006"
+    owner_spec: "006"
+  - id: life.sleep.tau_wake_h
+    value: 18.0
+    units: "fly hours"
+    valid_range: [0.1, 1000]
+    assumption:
+      rationale: "Build-up time constant of sleep pressure while awake (process S; Borbely 1982 model, fly values ASSUMPTION)."
+      owner: "006"
+    owner_spec: "006"
+  - id: life.sleep.tau_sleep_h
+    value: 3.0
+    units: "fly hours"
+    valid_range: [0.1, 1000]
+    assumption:
+      rationale: "Decay time constant of sleep pressure while asleep (process S)."
+      owner: "006"
+    owner_spec: "006"
+  - id: life.sleep.bout_fly_min
+    value: 5.0
+    units: "fly minutes"
+    valid_range: [0.1, 600]
+    source:
+      authors: "Shaw P.J. et al."
+      year: 2000
+      where: "Science 287:1834 and Hendricks J.C. et al. 2000 Neuron 25:129: >= 5 min of immobility; life-clock minutes per WATCH-OQ-01"
+    owner_spec: "006"
+  - id: life.sleep.move_threshold
+    value: 0.5
+    units: "mm/s or rad/s of commanded motion"
+    valid_range: [0, 100]
+    assumption:
+      rationale: "Below this the body counts as quiescent."
+      owner: "006"
+    owner_spec: "006"

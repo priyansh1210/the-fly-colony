@@ -425,9 +425,10 @@ class BrainBatch:
 
         `sensory_ids` are Poisson-driven sensory neurons; each step draws one Bernoulli event per
         neuron from its current rate (`sense_rate`, Hz) with the counter-based RNG, so input is
-        device- and batch-independent. `photo_ids` are photoreceptor units; `photo_in` (mV per
-        step) is added to their synaptic input like the graded coupling. No neuron state is ever
-        written directly.
+        device- and batch-independent. `photo_ids` are photoreceptor units; `photo_in` (mV of
+        steady-state depolarisation) is converted per unit with its own membrane and synaptic
+        propagators and added to its synaptic input like the graded coupling. No neuron state is
+        ever written directly.
         """
         dev = self.device
         s = torch.as_tensor(np.asarray(sensory_ids, dtype=np.int64), device=dev)
@@ -448,6 +449,13 @@ class BrainBatch:
         if b and s.numel():
             self.ref[:, s] = self.k.driven_ref_steps
         self._sense_salt = self._salt[s]
+        self._photo_steady()
+
+    def _photo_steady(self) -> None:
+        """Per-step synaptic increment that holds a photoreceptor unit at +1 mV in steady state:
+        g* = x / (1 − e_s) and u* = g*·c_m / (1 − e_m), so x = (1 − e_s)(1 − e_m) / c_m."""
+        ph = self.photo_ids
+        self._photo_k = (1 - self.k.e_s) * (1 - self.e_m[ph]) / self.c_m[ph]
 
     def set_senses(self, rates_hz: torch.Tensor, photo_mv: torch.Tensor | None = None) -> None:
         """Replace all flies' sensory rates [B, n_sensory] (Hz) and photoreceptor input [B, n_photo]."""
@@ -507,7 +515,8 @@ class BrainBatch:
                 torch.arange(self.batch_size, device=self.device).unsqueeze(1) * self.n
                 + self.photo_ids.unsqueeze(0)
             ).reshape(-1)
-            gv[flat] = torch.where(self._open[flat], gv[flat] + self.photo_in.reshape(-1), gv[flat])
+            inc = (self.photo_in * self._photo_k).reshape(-1)
+            gv[flat] = torch.where(self._open[flat], gv[flat] + inc, gv[flat])
         uf = self.u.view(-1)
         hit = self._drive_at(t)
         sense = self._sense_at(t)
@@ -691,6 +700,7 @@ class BrainBatch:
             self.sense_ids = tensors["sense_ids"].to(dev)
             self.photo_ids = tensors["photo_ids"].to(dev)
             self._sense_salt = self._salt[self.sense_ids]
+            self._photo_steady()
         for name in self.STATE_FIELDS:
             setattr(self, name, tensors[name].to(dev).clone())
         self.step_count = int(meta["step"])

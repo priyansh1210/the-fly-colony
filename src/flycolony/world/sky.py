@@ -193,7 +193,8 @@ class Looming:
         self.active[world] = True
 
     def collision_time(self) -> torch.Tensor:
-        return self.t0 + self.d0 / self.speed
+        """Projected collision: the sphere's surface reaches the target point (d = r)."""
+        return self.t0 + (self.d0 - self.radius) / self.speed
 
     def update(self, t_s: float) -> None:
         """End events whose projected collision has passed."""
@@ -201,7 +202,7 @@ class Looming:
 
     def spheres(self, t_s: float) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         """(centres [W, 3], radii [W], active [W]) at neural time t_s."""
-        d = (self.d0 - self.speed * (t_s - self.t0)).clamp_min(0)
+        d = (self.d0 - self.speed * (t_s - self.t0)).clamp_min(self.radius)
         return self.target + self.dir * d.unsqueeze(-1), self.radius, self.active
 
     def state_dict(self) -> dict[str, torch.Tensor]:

@@ -1,0 +1,22 @@
+# Motor primitive table (spec 005 §2-§3). Groups are I/O-map motor groups (per template and sex).
+# side: "LR" = command from the left minus the right group (steering). Parameters are registry ids.
+version: 1
+primitives:
+  - {name: walk_forward, groups: [walk.forward], command: speed, sign: 1, params: motor.walk_forward,
+     citation: "BDN2 forward walking. Sapkal N. et al. (2024) Nature 634:191"}
+  - {name: walk_backward, groups: [walk.backward], command: speed, sign: -1, params: motor.walk_backward,
+     citation: "Moonwalker DNs. Bidaye S.S. et al. (2014) Science 344:97"}
+  - {name: steer, groups: [walk.steer], side: LR, command: yaw, sign: 1, params: motor.steer,
+     citation: "DNa01/DNa02 ipsilateral turning. Rayshubskiy A. et al. (2020) bioRxiv 10.1101/2020.04.04.024703"}
+  - {name: escape, groups: [escape.takeoff], command: jump, trigger_spikes: 1, params: motor.escape,
+     citation: "Giant Fiber: one GF spike triggers a short-mode takeoff. von Reyn C.R. et al. (2014) Nat Neurosci 17:962"}
+  - {name: landing, groups: [flight.landing], command: landing, params: motor.landing,
+     citation: "Landing DNs. Ache J.M. et al. (2019) Curr Biol 29:1073"}
+  - {name: proboscis, groups: [feeding.proboscis_extension], command: proboscis, params: motor.proboscis,
+     citation: "MN9 proboscis extension. Gordon M.D., Scott K. (2009) Neuron 61:373"}
+  - {name: ingestion, groups: [feeding.ingestion], command: pump, params: motor.ingestion,
+     citation: "Pharyngeal pump motor neurons. Manzo A. et al. (2012) PNAS 109:6389; Schlegel P. et al. (2024) Nature 634:139"}
+  - {name: groom_antenna, groups: [groom.antenna], command: groom, params: motor.groom,
+     citation: "aDN antennal grooming. Hampel S. et al. (2015) eLife 4:e08758"}
+not_yet_mappable: [flight_steering, lunge, wing_threat, foreleg_actions, abdomen_bend, copulation,
+                   vaginal_plate, ovipositor, wing_flick, song, egg_laying]

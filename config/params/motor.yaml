@@ -1,0 +1,343 @@
+# Parameter Registry: motor readout (owner spec 005). Schema: flycolony.registry.Entry.
+# Thresholds are ASSUMPTIONs set by one global calibration against spontaneous activity (005 M8).
+
+entries:
+  - id: motor.walk_forward.threshold_hz
+    value: 10.0
+    units: "Hz"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "Group rate below which the primitive is off; set above spontaneous activity (global calibration)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.walk_forward.half_hz
+    value: 20.0
+    units: "Hz above threshold at half command"
+    valid_range: [0.1, 1000]
+    assumption:
+      rationale: "Saturation scale of the transfer function."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.walk_forward.max
+    value: 20.0
+    units: "mm/s"
+    valid_range: [0, 10000]
+    source:
+      authors: "Strauss R., Heisenberg M."
+      year: 1993
+      where: "J Comp Physiol A 172:45, walking up to ~2 cm/s"
+    owner_spec: "005"
+  - id: motor.walk_forward.latency_ms
+    value: 30.0
+    units: "ms"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "DN activity to movement onset (MOTOR-R-009)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.walk_forward.effort_cost
+    value: 1.0
+    units: "effort units per unit command"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "Relative energetic cost (flight >> walking; 006 converts to energy)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.walk_backward.threshold_hz
+    value: 10.0
+    units: "Hz"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "Group rate below which the primitive is off; set above spontaneous activity (global calibration)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.walk_backward.half_hz
+    value: 20.0
+    units: "Hz above threshold at half command"
+    valid_range: [0.1, 1000]
+    assumption:
+      rationale: "Saturation scale of the transfer function."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.walk_backward.max
+    value: 5.0
+    units: "mm/s"
+    valid_range: [0, 10000]
+    assumption:
+      rationale: "Maximum command (biomechanical limit)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.walk_backward.latency_ms
+    value: 30.0
+    units: "ms"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "DN activity to movement onset (MOTOR-R-009)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.walk_backward.effort_cost
+    value: 1.0
+    units: "effort units per unit command"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "Relative energetic cost (flight >> walking; 006 converts to energy)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.steer.threshold_hz
+    value: 10.0
+    units: "Hz"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "Group rate below which the primitive is off; set above spontaneous activity (global calibration)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.steer.half_hz
+    value: 20.0
+    units: "Hz above threshold at half command"
+    valid_range: [0.1, 1000]
+    assumption:
+      rationale: "Saturation scale of the transfer function."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.steer.max
+    value: 6.0
+    units: "rad/s"
+    valid_range: [0, 10000]
+    assumption:
+      rationale: "Maximum command (biomechanical limit)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.steer.latency_ms
+    value: 20.0
+    units: "ms"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "DN activity to movement onset (MOTOR-R-009)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.steer.effort_cost
+    value: 0.5
+    units: "effort units per unit command"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "Relative energetic cost (flight >> walking; 006 converts to energy)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.escape.threshold_hz
+    value: 0.0
+    units: "Hz"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "Group rate below which the primitive is off; set above spontaneous activity (global calibration)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.escape.half_hz
+    value: 1.0
+    units: "Hz above threshold at half command"
+    valid_range: [0.1, 1000]
+    assumption:
+      rationale: "Saturation scale of the transfer function."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.escape.max
+    value: 1.0
+    units: "trigger"
+    valid_range: [0, 10000]
+    assumption:
+      rationale: "Maximum command (biomechanical limit)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.escape.latency_ms
+    value: 5.0
+    units: "ms"
+    valid_range: [0, 1000]
+    source:
+      authors: "von Reyn C.R. et al."
+      year: 2014
+      where: "Nat Neurosci 17:962, GF spike to leg extension ~5 ms in short-mode takeoffs"
+    owner_spec: "005"
+  - id: motor.escape.effort_cost
+    value: 10.0
+    units: "effort units per unit command"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "Relative energetic cost (flight >> walking; 006 converts to energy)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.landing.threshold_hz
+    value: 10.0
+    units: "Hz"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "Group rate below which the primitive is off; set above spontaneous activity (global calibration)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.landing.half_hz
+    value: 10.0
+    units: "Hz above threshold at half command"
+    valid_range: [0.1, 1000]
+    assumption:
+      rationale: "Saturation scale of the transfer function."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.landing.max
+    value: 1.0
+    units: "flag"
+    valid_range: [0, 10000]
+    assumption:
+      rationale: "Maximum command (biomechanical limit)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.landing.latency_ms
+    value: 20.0
+    units: "ms"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "DN activity to movement onset (MOTOR-R-009)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.landing.effort_cost
+    value: 0.1
+    units: "effort units per unit command"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "Relative energetic cost (flight >> walking; 006 converts to energy)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.proboscis.threshold_hz
+    value: 5.0
+    units: "Hz"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "Group rate below which the primitive is off; set above spontaneous activity (global calibration)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.proboscis.half_hz
+    value: 20.0
+    units: "Hz above threshold at half command"
+    valid_range: [0.1, 1000]
+    assumption:
+      rationale: "Saturation scale of the transfer function."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.proboscis.max
+    value: 1.0
+    units: "extension fraction"
+    valid_range: [0, 10000]
+    assumption:
+      rationale: "Maximum command (biomechanical limit)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.proboscis.latency_ms
+    value: 20.0
+    units: "ms"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "DN activity to movement onset (MOTOR-R-009)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.proboscis.effort_cost
+    value: 0.5
+    units: "effort units per unit command"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "Relative energetic cost (flight >> walking; 006 converts to energy)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.ingestion.threshold_hz
+    value: 5.0
+    units: "Hz"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "Group rate below which the primitive is off; set above spontaneous activity (global calibration)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.ingestion.half_hz
+    value: 20.0
+    units: "Hz above threshold at half command"
+    valid_range: [0.1, 1000]
+    assumption:
+      rationale: "Saturation scale of the transfer function."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.ingestion.max
+    value: 6.0
+    units: "pumps/s"
+    valid_range: [0, 10000]
+    source:
+      authors: "Manzo A. et al."
+      year: 2012
+      where: "PNAS 109:6389, pharyngeal pumping ~6 Hz"
+    owner_spec: "005"
+  - id: motor.ingestion.latency_ms
+    value: 20.0
+    units: "ms"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "DN activity to movement onset (MOTOR-R-009)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.ingestion.effort_cost
+    value: 0.5
+    units: "effort units per unit command"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "Relative energetic cost (flight >> walking; 006 converts to energy)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.groom.threshold_hz
+    value: 10.0
+    units: "Hz"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "Group rate below which the primitive is off; set above spontaneous activity (global calibration)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.groom.half_hz
+    value: 20.0
+    units: "Hz above threshold at half command"
+    valid_range: [0.1, 1000]
+    assumption:
+      rationale: "Saturation scale of the transfer function."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.groom.max
+    value: 1.0
+    units: "grooming drive"
+    valid_range: [0, 10000]
+    assumption:
+      rationale: "Maximum command (biomechanical limit)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.groom.latency_ms
+    value: 30.0
+    units: "ms"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "DN activity to movement onset (MOTOR-R-009)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.groom.effort_cost
+    value: 0.5
+    units: "effort units per unit command"
+    valid_range: [0, 1000]
+    assumption:
+      rationale: "Relative energetic cost (flight >> walking; 006 converts to energy)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.ingest.min_extension
+    value: 0.5
+    units: "extension fraction"
+    valid_range: [0, 1]
+    assumption:
+      rationale: "Ingestion needs the proboscis extended at least this far (biomechanical constraint)."
+      owner: "005"
+    owner_spec: "005"
+  - id: motor.groom.walk_factor
+    value: 0.3
+    units: "walking speed multiplier at full grooming"
+    valid_range: [0, 1]
+    assumption:
+      rationale: "Antennal grooming occupies the forelegs (biomechanical constraint)."
+      owner: "005"
+    owner_spec: "005"

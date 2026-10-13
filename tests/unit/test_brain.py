@@ -575,9 +575,9 @@ def test_photoreceptor_input_depolarises_and_checkpoints(tmp_path, registry):  #
     b = batch(tpl, p)
     b.attach_senses(np.array([1]), np.array([0]))
     b.add(FlyBrainSpec("a", 1))
-    b.set_senses(torch.zeros(1, 1), torch.full((1, 1), 0.5))
-    b.run(200)
-    assert float(b.potential("a")[0]) > p.v_rest + 1.0
+    b.set_senses(torch.zeros(1, 1), torch.full((1, 1), 4.0))
+    b.run(4000)
+    assert float(b.potential("a")[0]) == pytest.approx(p.v_rest + 4.0, abs=0.05)
     tensors, meta = b.state_dict()
     c = batch(tpl, p)
     c.load_state_dict(tensors, meta)
