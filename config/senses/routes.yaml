@@ -23,3 +23,19 @@ routes:
     target: {trace: SP}
     transfer: {kind: linear, gain: 1.0, offset: 0.0}
     citation: "Yapici N. et al. (2008) Nature 451:33, sex peptide receptor; Feng K. et al. (2014) Neuron 83:135, SP silences SPSN -> SAG ascending neurons (SPSN are in the reproductive tract, outside the brain template)"
+  # --- Phase 2 (004 §3, §8; 006 design §2-§3) -------------------------------------------------
+  - id: hunger_sweet
+    source: physiology.energy_deficit
+    target: {sense_channel: sugar}
+    transfer: {kind: linear, gain: 1.0, offset: 1.0}
+    citation: "Inagaki H.K. et al. (2012) Neuron 74:663, starvation raises sugar-GRN sensitivity via dopamine; gain 1 + deficit is an ASSUMPTION"
+  - id: hunger_bitter
+    source: physiology.energy_deficit
+    target: {sense_channel: bitter}
+    transfer: {kind: linear, gain: -0.5, offset: 1.0}
+    citation: "LeDue E.E. et al. (2016) eLife 5:e13048, starvation lowers bitter-GRN sensitivity; gain 1 - 0.5 x deficit is an ASSUMPTION"
+  - id: sleep_pressure
+    source: physiology.sleep_pressure
+    target: {select: {cell_type_regex: "^(ER5|FB6A.*|FB7A)$"}, effect: excitability}
+    transfer: {kind: linear, gain: 2.0, offset: 0.0}
+    citation: "Liu S. et al. (2016) Cell 165:1347, R5 (ER5) neurons encode sleep drive; Donlea J.M. et al. (2014) Neuron 81:860, dFB sleep-promoting neurons (FB6A/FB7A typing of the 23E10 dFB population is an ASSUMPTION); mV per unit pressure is an ASSUMPTION"

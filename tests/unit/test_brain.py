@@ -534,3 +534,53 @@ def test_batch_with_modulation_is_freed_without_gc(tmp_path, registry):
         assert ref() is None and m.batch is None
     finally:
         gc.enable()
+
+
+def test_sensory_layout_drives_rates_independently_of_batch(tmp_path, registry):  # 004 §2
+    from flycolony.brain.engine import BrainInputError
+
+    tpl = tiny_template(tmp_path, [(0, 2, 5.0), (1, 2, 5.0)], 4, sensory=(0, 1, 3))
+    p = params(registry)
+
+    def run(flies):
+        b = batch(tpl, p)
+        b.attach_senses(np.array([0, 1]), np.array([3]))
+        for f in flies:
+            b.add(FlyBrainSpec(f, 7 if f == "a" else 9))
+        counts = torch.zeros(len(flies), 4)
+
+        def tap(bb, t, spikes):
+            counts.view(-1).index_add_(0, spikes.cpu(), torch.ones(spikes.numel()))
+
+        b.taps.append(tap)
+        rates = torch.zeros(len(flies), 2)
+        rates[:, 0] = 200.0  # neuron 0 driven, neuron 1 silent
+        b.set_senses(rates)
+        b.run(4000)
+        return b, counts
+
+    b1, c1 = run(["a"])
+    _b2, c2 = run(["a", "b"])
+    assert c1[0, 0] > 0 and c1[0, 1] == 0
+    assert torch.equal(c1[0], c2[0])  # fly a's input events do not depend on fly b
+    with pytest.raises(BrainInputError):
+        b1.attach_senses(np.array([2]), np.array([]))  # neuron 2 is not sensory
+    with pytest.raises(BrainInputError):
+        b1.set_senses(torch.zeros(1, 3))
+
+
+def test_photoreceptor_input_depolarises_and_checkpoints(tmp_path, registry):  # 004 §2
+    tpl = tiny_template(tmp_path, [], 2, sensory=(0, 1), graded=(0,))
+    p = params(registry)
+    b = batch(tpl, p)
+    b.attach_senses(np.array([1]), np.array([0]))
+    b.add(FlyBrainSpec("a", 1))
+    b.set_senses(torch.zeros(1, 1), torch.full((1, 1), 0.5))
+    b.run(200)
+    assert float(b.potential("a")[0]) > p.v_rest + 1.0
+    tensors, meta = b.state_dict()
+    c = batch(tpl, p)
+    c.load_state_dict(tensors, meta)
+    b.run(50)
+    c.run(50)
+    assert torch.equal(b.u, c.u) and torch.equal(c.photo_in, b.photo_in)

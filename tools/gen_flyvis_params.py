@@ -57,7 +57,10 @@ def main() -> int:
         vals = np.mean([per_flyvis[s] for s in src], axis=0)  # per model
         rows[fw_type] = {
             "tau_ms": round(float(np.median(vals)), 3),
-            "iqr_ms": [round(float(np.percentile(vals, 25)), 3), round(float(np.percentile(vals, 75)), 3)],
+            "iqr_ms": [
+                round(float(np.percentile(vals, 25)), 3),
+                round(float(np.percentile(vals, 75)), 3),
+            ],
             "flyvis_types": src,
             "at_floor": bool(np.median(vals) <= train_dt_ms + 1e-9),
         }
@@ -76,7 +79,9 @@ def main() -> int:
         "cell_types:",
     ]
     for k, v in rows.items():
-        lines.append(f'  "{k}": {{tau_ms: {v["tau_ms"]}, iqr_ms: {v["iqr_ms"]}, flyvis_types: {json.dumps(v["flyvis_types"])}, at_floor: {str(v["at_floor"]).lower()}}}')
+        lines.append(
+            f'  "{k}": {{tau_ms: {v["tau_ms"]}, iqr_ms: {v["iqr_ms"]}, flyvis_types: {json.dumps(v["flyvis_types"])}, at_floor: {str(v["at_floor"]).lower()}}}'
+        )
     OUT.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     print(f"wrote {OUT.relative_to(ROOT)}: {len(rows)} types from {len(names)} models")
     return 0

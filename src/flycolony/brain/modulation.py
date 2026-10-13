@@ -74,11 +74,13 @@ class RouteTarget(_Strict):
     trace: str | None = None
     select: Select | None = None
     effect: Literal["gain", "excitability"] | None = None
+    sense_channel: str | None = None  # a sensory-layer gain (004 §8), applied by flycolony.senses
 
     @model_validator(mode="after")
     def _one(self) -> RouteTarget:
-        if (self.trace is None) == (self.select is None):
-            raise ValueError("a route targets either a trace or a neuron selection")
+        kinds = (self.trace, self.select, self.sense_channel)
+        if sum(k is not None for k in kinds) != 1:
+            raise ValueError("a route targets one of: a trace, a neuron selection, a sense channel")
         if self.select is not None and self.effect is None:
             raise ValueError("a neuron-targeting route needs an effect")
         return self
@@ -364,6 +366,8 @@ class Modulation:
             route = self.routes.get(route_id)
         except KeyError as e:
             raise RouteError(str(e)) from None
+        if route.target.sense_channel is not None:
+            raise RouteError(f"route {route_id!r} acts at the sensory layer (flycolony.senses)")
         b = self.batch.slot(fly_id)
         level = float(route.transfer(float(value)))
         if route.target.trace is not None:

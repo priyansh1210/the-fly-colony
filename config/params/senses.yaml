@@ -1,0 +1,793 @@
+# Parameter Registry: senses (owner spec 004). Schema: flycolony.registry.Entry.
+# Units: Hz, s, mol/L, mm.
+
+entries:
+  - id: senses.taste.sugar.spont_hz
+    value: 2.0
+    units: "Hz"
+    valid_range: [0, 200]
+    source:
+      authors: "Dahanukar A. et al."
+      year: 2007
+      where: "Nat Neurosci 10:1265, Gr5a GRN dose-response (half-max tens of mM, tens of spikes/s at 100 mM); spontaneous rate and adaptation ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.taste.sugar.max_hz
+    value: 100.0
+    units: "Hz"
+    valid_range: [0, 500]
+    source:
+      authors: "Dahanukar A. et al."
+      year: 2007
+      where: "Nat Neurosci 10:1265, Gr5a GRN dose-response (half-max tens of mM, tens of spikes/s at 100 mM); spontaneous rate and adaptation ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.taste.sugar.half
+    value: 0.05
+    units: "stimulus units at half response"
+    valid_range: [0, 1000000.0]
+    source:
+      authors: "Dahanukar A. et al."
+      year: 2007
+      where: "Nat Neurosci 10:1265, Gr5a GRN dose-response (half-max tens of mM, tens of spikes/s at 100 mM); spontaneous rate and adaptation ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.taste.sugar.hill_n
+    value: 1.0
+    units: "Hill coefficient"
+    valid_range: [0.1, 10]
+    source:
+      authors: "Dahanukar A. et al."
+      year: 2007
+      where: "Nat Neurosci 10:1265, Gr5a GRN dose-response (half-max tens of mM, tens of spikes/s at 100 mM); spontaneous rate and adaptation ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.taste.sugar.adapt_tau_s
+    value: 0.5
+    units: "s"
+    valid_range: [0.001, 1000]
+    source:
+      authors: "Dahanukar A. et al."
+      year: 2007
+      where: "Nat Neurosci 10:1265, Gr5a GRN dose-response (half-max tens of mM, tens of spikes/s at 100 mM); spontaneous rate and adaptation ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.taste.sugar.adapt_frac
+    value: 0.5
+    units: "steady/onset response"
+    valid_range: [0, 1]
+    source:
+      authors: "Dahanukar A. et al."
+      year: 2007
+      where: "Nat Neurosci 10:1265, Gr5a GRN dose-response (half-max tens of mM, tens of spikes/s at 100 mM); spontaneous rate and adaptation ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.taste.bitter.spont_hz
+    value: 1.0
+    units: "Hz"
+    valid_range: [0, 200]
+    source:
+      authors: "Meunier N. et al."
+      year: 2003
+      where: "J Neurobiol 56:139, caffeine responses of bitter GRNs (mM range); rates ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.taste.bitter.max_hz
+    value: 60.0
+    units: "Hz"
+    valid_range: [0, 500]
+    source:
+      authors: "Meunier N. et al."
+      year: 2003
+      where: "J Neurobiol 56:139, caffeine responses of bitter GRNs (mM range); rates ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.taste.bitter.half
+    value: 0.002
+    units: "stimulus units at half response"
+    valid_range: [0, 1000000.0]
+    source:
+      authors: "Meunier N. et al."
+      year: 2003
+      where: "J Neurobiol 56:139, caffeine responses of bitter GRNs (mM range); rates ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.taste.bitter.hill_n
+    value: 1.0
+    units: "Hill coefficient"
+    valid_range: [0.1, 10]
+    source:
+      authors: "Meunier N. et al."
+      year: 2003
+      where: "J Neurobiol 56:139, caffeine responses of bitter GRNs (mM range); rates ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.taste.bitter.adapt_tau_s
+    value: 0.5
+    units: "s"
+    valid_range: [0.001, 1000]
+    source:
+      authors: "Meunier N. et al."
+      year: 2003
+      where: "J Neurobiol 56:139, caffeine responses of bitter GRNs (mM range); rates ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.taste.bitter.adapt_frac
+    value: 0.5
+    units: "steady/onset response"
+    valid_range: [0, 1]
+    source:
+      authors: "Meunier N. et al."
+      year: 2003
+      where: "J Neurobiol 56:139, caffeine responses of bitter GRNs (mM range); rates ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.taste.water.spont_hz
+    value: 2.0
+    units: "Hz"
+    valid_range: [0, 200]
+    source:
+      authors: "Cameron P. et al."
+      year: 2010
+      where: "PNAS 107:2, ppk28 water GRNs (~30 spikes/s to water); adaptation ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.taste.water.max_hz
+    value: 50.0
+    units: "Hz"
+    valid_range: [0, 500]
+    source:
+      authors: "Cameron P. et al."
+      year: 2010
+      where: "PNAS 107:2, ppk28 water GRNs (~30 spikes/s to water); adaptation ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.taste.water.half
+    value: 1.0
+    units: "stimulus units at half response"
+    valid_range: [0, 1000000.0]
+    source:
+      authors: "Cameron P. et al."
+      year: 2010
+      where: "PNAS 107:2, ppk28 water GRNs (~30 spikes/s to water); adaptation ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.taste.water.hill_n
+    value: 1.0
+    units: "Hill coefficient"
+    valid_range: [0.1, 10]
+    source:
+      authors: "Cameron P. et al."
+      year: 2010
+      where: "PNAS 107:2, ppk28 water GRNs (~30 spikes/s to water); adaptation ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.taste.water.adapt_tau_s
+    value: 0.5
+    units: "s"
+    valid_range: [0.001, 1000]
+    source:
+      authors: "Cameron P. et al."
+      year: 2010
+      where: "PNAS 107:2, ppk28 water GRNs (~30 spikes/s to water); adaptation ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.taste.water.adapt_frac
+    value: 0.6
+    units: "steady/onset response"
+    valid_range: [0, 1]
+    source:
+      authors: "Cameron P. et al."
+      year: 2010
+      where: "PNAS 107:2, ppk28 water GRNs (~30 spikes/s to water); adaptation ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.taste.low_salt.spont_hz
+    value: 1.0
+    units: "Hz"
+    valid_range: [0, 200]
+    source:
+      authors: "Zhang Y.V. et al."
+      year: 2013
+      where: "Science 340:1334, low-salt attractive GRNs (tens of mM)"
+    owner_spec: "004"
+  - id: senses.taste.low_salt.max_hz
+    value: 50.0
+    units: "Hz"
+    valid_range: [0, 500]
+    source:
+      authors: "Zhang Y.V. et al."
+      year: 2013
+      where: "Science 340:1334, low-salt attractive GRNs (tens of mM)"
+    owner_spec: "004"
+  - id: senses.taste.low_salt.half
+    value: 0.05
+    units: "stimulus units at half response"
+    valid_range: [0, 1000000.0]
+    source:
+      authors: "Zhang Y.V. et al."
+      year: 2013
+      where: "Science 340:1334, low-salt attractive GRNs (tens of mM)"
+    owner_spec: "004"
+  - id: senses.taste.low_salt.hill_n
+    value: 1.0
+    units: "Hill coefficient"
+    valid_range: [0.1, 10]
+    source:
+      authors: "Zhang Y.V. et al."
+      year: 2013
+      where: "Science 340:1334, low-salt attractive GRNs (tens of mM)"
+    owner_spec: "004"
+  - id: senses.taste.low_salt.adapt_tau_s
+    value: 0.5
+    units: "s"
+    valid_range: [0.001, 1000]
+    source:
+      authors: "Zhang Y.V. et al."
+      year: 2013
+      where: "Science 340:1334, low-salt attractive GRNs (tens of mM)"
+    owner_spec: "004"
+  - id: senses.taste.low_salt.adapt_frac
+    value: 0.5
+    units: "steady/onset response"
+    valid_range: [0, 1]
+    source:
+      authors: "Zhang Y.V. et al."
+      year: 2013
+      where: "Science 340:1334, low-salt attractive GRNs (tens of mM)"
+    owner_spec: "004"
+  - id: senses.taste.high_salt.spont_hz
+    value: 1.0
+    units: "Hz"
+    valid_range: [0, 200]
+    source:
+      authors: "Zhang Y.V. et al."
+      year: 2013
+      where: "Science 340:1334, high-salt aversive GRNs (hundreds of mM)"
+    owner_spec: "004"
+  - id: senses.taste.high_salt.max_hz
+    value: 50.0
+    units: "Hz"
+    valid_range: [0, 500]
+    source:
+      authors: "Zhang Y.V. et al."
+      year: 2013
+      where: "Science 340:1334, high-salt aversive GRNs (hundreds of mM)"
+    owner_spec: "004"
+  - id: senses.taste.high_salt.half
+    value: 0.3
+    units: "stimulus units at half response"
+    valid_range: [0, 1000000.0]
+    source:
+      authors: "Zhang Y.V. et al."
+      year: 2013
+      where: "Science 340:1334, high-salt aversive GRNs (hundreds of mM)"
+    owner_spec: "004"
+  - id: senses.taste.high_salt.hill_n
+    value: 1.0
+    units: "Hill coefficient"
+    valid_range: [0.1, 10]
+    source:
+      authors: "Zhang Y.V. et al."
+      year: 2013
+      where: "Science 340:1334, high-salt aversive GRNs (hundreds of mM)"
+    owner_spec: "004"
+  - id: senses.taste.high_salt.adapt_tau_s
+    value: 0.5
+    units: "s"
+    valid_range: [0.001, 1000]
+    source:
+      authors: "Zhang Y.V. et al."
+      year: 2013
+      where: "Science 340:1334, high-salt aversive GRNs (hundreds of mM)"
+    owner_spec: "004"
+  - id: senses.taste.high_salt.adapt_frac
+    value: 0.5
+    units: "steady/onset response"
+    valid_range: [0, 1]
+    source:
+      authors: "Zhang Y.V. et al."
+      year: 2013
+      where: "Science 340:1334, high-salt aversive GRNs (hundreds of mM)"
+    owner_spec: "004"
+  - id: senses.smell.spont_hz
+    value: 8.0
+    units: "Hz"
+    valid_range: [0, 200]
+    source:
+      authors: "Nagel K.I., Wilson R.I."
+      year: 2011
+      where: "Nat Neurosci 14:208, ORN dynamics and adaptation; de Bruyne M. et al. 2001 Neuron 30:537, spontaneous 1-15 Hz, responses to ~200 Hz"
+    owner_spec: "004"
+  - id: senses.smell.max_hz
+    value: 200.0
+    units: "Hz"
+    valid_range: [0, 500]
+    source:
+      authors: "Nagel K.I., Wilson R.I."
+      year: 2011
+      where: "Nat Neurosci 14:208, ORN dynamics and adaptation; de Bruyne M. et al. 2001 Neuron 30:537, spontaneous 1-15 Hz, responses to ~200 Hz"
+    owner_spec: "004"
+  - id: senses.smell.half
+    value: 1.0
+    units: "stimulus units at half response"
+    valid_range: [0, 1000000.0]
+    source:
+      authors: "Nagel K.I., Wilson R.I."
+      year: 2011
+      where: "Nat Neurosci 14:208, ORN dynamics and adaptation; de Bruyne M. et al. 2001 Neuron 30:537, spontaneous 1-15 Hz, responses to ~200 Hz"
+    owner_spec: "004"
+  - id: senses.smell.hill_n
+    value: 1.0
+    units: "Hill coefficient"
+    valid_range: [0.1, 10]
+    source:
+      authors: "Nagel K.I., Wilson R.I."
+      year: 2011
+      where: "Nat Neurosci 14:208, ORN dynamics and adaptation; de Bruyne M. et al. 2001 Neuron 30:537, spontaneous 1-15 Hz, responses to ~200 Hz"
+    owner_spec: "004"
+  - id: senses.smell.adapt_tau_s
+    value: 1.0
+    units: "s"
+    valid_range: [0.001, 1000]
+    source:
+      authors: "Nagel K.I., Wilson R.I."
+      year: 2011
+      where: "Nat Neurosci 14:208, ORN dynamics and adaptation; de Bruyne M. et al. 2001 Neuron 30:537, spontaneous 1-15 Hz, responses to ~200 Hz"
+    owner_spec: "004"
+  - id: senses.smell.adapt_frac
+    value: 0.4
+    units: "steady/onset response"
+    valid_range: [0, 1]
+    source:
+      authors: "Nagel K.I., Wilson R.I."
+      year: 2011
+      where: "Nat Neurosci 14:208, ORN dynamics and adaptation; de Bruyne M. et al. 2001 Neuron 30:537, spontaneous 1-15 Hz, responses to ~200 Hz"
+    owner_spec: "004"
+  - id: senses.jo.ce.spont_hz
+    value: 10.0
+    units: "Hz"
+    valid_range: [0, 200]
+    source:
+      authors: "Yorozu S. et al."
+      year: 2009
+      where: "Nature 458:201, JO-C/E respond to sustained airflow deflection; rates and half-point (mm/s air) ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.jo.ce.max_hz
+    value: 80.0
+    units: "Hz"
+    valid_range: [0, 500]
+    source:
+      authors: "Yorozu S. et al."
+      year: 2009
+      where: "Nature 458:201, JO-C/E respond to sustained airflow deflection; rates and half-point (mm/s air) ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.jo.ce.half
+    value: 100.0
+    units: "stimulus units at half response"
+    valid_range: [0, 1000000.0]
+    source:
+      authors: "Yorozu S. et al."
+      year: 2009
+      where: "Nature 458:201, JO-C/E respond to sustained airflow deflection; rates and half-point (mm/s air) ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.jo.ce.hill_n
+    value: 1.5
+    units: "Hill coefficient"
+    valid_range: [0.1, 10]
+    source:
+      authors: "Yorozu S. et al."
+      year: 2009
+      where: "Nature 458:201, JO-C/E respond to sustained airflow deflection; rates and half-point (mm/s air) ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.jo.ce.adapt_tau_s
+    value: 1.0
+    units: "s"
+    valid_range: [0.001, 1000]
+    source:
+      authors: "Yorozu S. et al."
+      year: 2009
+      where: "Nature 458:201, JO-C/E respond to sustained airflow deflection; rates and half-point (mm/s air) ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.jo.ce.adapt_frac
+    value: 1.0
+    units: "steady/onset response"
+    valid_range: [0, 1]
+    source:
+      authors: "Yorozu S. et al."
+      year: 2009
+      where: "Nature 458:201, JO-C/E respond to sustained airflow deflection; rates and half-point (mm/s air) ASSUMPTION"
+    owner_spec: "004"
+  - id: senses.jo.ab.spont_hz
+    value: 5.0
+    units: "Hz"
+    valid_range: [0, 200]
+    assumption:
+      rationale: "JO-A/B: vibration-driven (Phase 5); spontaneous rate only in Phase 2."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.jo.ab.max_hz
+    value: 80.0
+    units: "Hz"
+    valid_range: [0, 500]
+    assumption:
+      rationale: "JO-A/B: vibration-driven (Phase 5); spontaneous rate only in Phase 2."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.jo.ab.half
+    value: 1.0
+    units: "stimulus units at half response"
+    valid_range: [0, 1000000.0]
+    assumption:
+      rationale: "JO-A/B: vibration-driven (Phase 5); spontaneous rate only in Phase 2."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.jo.ab.hill_n
+    value: 1.0
+    units: "Hill coefficient"
+    valid_range: [0.1, 10]
+    assumption:
+      rationale: "JO-A/B: vibration-driven (Phase 5); spontaneous rate only in Phase 2."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.jo.ab.adapt_tau_s
+    value: 1.0
+    units: "s"
+    valid_range: [0.001, 1000]
+    assumption:
+      rationale: "JO-A/B: vibration-driven (Phase 5); spontaneous rate only in Phase 2."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.jo.ab.adapt_frac
+    value: 1.0
+    units: "steady/onset response"
+    valid_range: [0, 1]
+    assumption:
+      rationale: "JO-A/B: vibration-driven (Phase 5); spontaneous rate only in Phase 2."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.touch.bristle.spont_hz
+    value: 1.0
+    units: "Hz"
+    valid_range: [0, 200]
+    assumption:
+      rationale: "Head bristles: low spontaneous rate; impact responses arrive with contact physics (Phase 5)."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.touch.bristle.max_hz
+    value: 100.0
+    units: "Hz"
+    valid_range: [0, 500]
+    assumption:
+      rationale: "Head bristles: low spontaneous rate; impact responses arrive with contact physics (Phase 5)."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.touch.bristle.half
+    value: 1.0
+    units: "stimulus units at half response"
+    valid_range: [0, 1000000.0]
+    assumption:
+      rationale: "Head bristles: low spontaneous rate; impact responses arrive with contact physics (Phase 5)."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.touch.bristle.hill_n
+    value: 1.0
+    units: "Hill coefficient"
+    valid_range: [0.1, 10]
+    assumption:
+      rationale: "Head bristles: low spontaneous rate; impact responses arrive with contact physics (Phase 5)."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.touch.bristle.adapt_tau_s
+    value: 0.1
+    units: "s"
+    valid_range: [0.001, 1000]
+    assumption:
+      rationale: "Head bristles: low spontaneous rate; impact responses arrive with contact physics (Phase 5)."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.touch.bristle.adapt_frac
+    value: 0.2
+    units: "steady/onset response"
+    valid_range: [0, 1]
+    assumption:
+      rationale: "Head bristles: low spontaneous rate; impact responses arrive with contact physics (Phase 5)."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.thermo.hot.spont_hz
+    value: 3.0
+    units: "Hz"
+    valid_range: [0, 200]
+    source:
+      authors: "Gallio M. et al."
+      year: 2011
+      where: "Cell 144:614, arista hot/cold cells respond phasically to ~0.5 degC/s changes"
+    owner_spec: "004"
+  - id: senses.thermo.hot.max_hz
+    value: 60.0
+    units: "Hz"
+    valid_range: [0, 500]
+    source:
+      authors: "Gallio M. et al."
+      year: 2011
+      where: "Cell 144:614, arista hot/cold cells respond phasically to ~0.5 degC/s changes"
+    owner_spec: "004"
+  - id: senses.thermo.hot.half
+    value: 1.0
+    units: "stimulus units at half response"
+    valid_range: [0, 1000000.0]
+    source:
+      authors: "Gallio M. et al."
+      year: 2011
+      where: "Cell 144:614, arista hot/cold cells respond phasically to ~0.5 degC/s changes"
+    owner_spec: "004"
+  - id: senses.thermo.hot.hill_n
+    value: 1.0
+    units: "Hill coefficient"
+    valid_range: [0.1, 10]
+    source:
+      authors: "Gallio M. et al."
+      year: 2011
+      where: "Cell 144:614, arista hot/cold cells respond phasically to ~0.5 degC/s changes"
+    owner_spec: "004"
+  - id: senses.thermo.hot.adapt_tau_s
+    value: 2.0
+    units: "s"
+    valid_range: [0.001, 1000]
+    source:
+      authors: "Gallio M. et al."
+      year: 2011
+      where: "Cell 144:614, arista hot/cold cells respond phasically to ~0.5 degC/s changes"
+    owner_spec: "004"
+  - id: senses.thermo.hot.adapt_frac
+    value: 1.0
+    units: "steady/onset response"
+    valid_range: [0, 1]
+    source:
+      authors: "Gallio M. et al."
+      year: 2011
+      where: "Cell 144:614, arista hot/cold cells respond phasically to ~0.5 degC/s changes"
+    owner_spec: "004"
+  - id: senses.thermo.cold.spont_hz
+    value: 3.0
+    units: "Hz"
+    valid_range: [0, 200]
+    source:
+      authors: "Gallio M. et al."
+      year: 2011
+      where: "Cell 144:614, arista hot/cold cells respond phasically to ~0.5 degC/s changes"
+    owner_spec: "004"
+  - id: senses.thermo.cold.max_hz
+    value: 60.0
+    units: "Hz"
+    valid_range: [0, 500]
+    source:
+      authors: "Gallio M. et al."
+      year: 2011
+      where: "Cell 144:614, arista hot/cold cells respond phasically to ~0.5 degC/s changes"
+    owner_spec: "004"
+  - id: senses.thermo.cold.half
+    value: 1.0
+    units: "stimulus units at half response"
+    valid_range: [0, 1000000.0]
+    source:
+      authors: "Gallio M. et al."
+      year: 2011
+      where: "Cell 144:614, arista hot/cold cells respond phasically to ~0.5 degC/s changes"
+    owner_spec: "004"
+  - id: senses.thermo.cold.hill_n
+    value: 1.0
+    units: "Hill coefficient"
+    valid_range: [0.1, 10]
+    source:
+      authors: "Gallio M. et al."
+      year: 2011
+      where: "Cell 144:614, arista hot/cold cells respond phasically to ~0.5 degC/s changes"
+    owner_spec: "004"
+  - id: senses.thermo.cold.adapt_tau_s
+    value: 2.0
+    units: "s"
+    valid_range: [0.001, 1000]
+    source:
+      authors: "Gallio M. et al."
+      year: 2011
+      where: "Cell 144:614, arista hot/cold cells respond phasically to ~0.5 degC/s changes"
+    owner_spec: "004"
+  - id: senses.thermo.cold.adapt_frac
+    value: 1.0
+    units: "steady/onset response"
+    valid_range: [0, 1]
+    source:
+      authors: "Gallio M. et al."
+      year: 2011
+      where: "Cell 144:614, arista hot/cold cells respond phasically to ~0.5 degC/s changes"
+    owner_spec: "004"
+  - id: senses.hygro.dry.spont_hz
+    value: 2.0
+    units: "Hz"
+    valid_range: [0, 200]
+    source:
+      authors: "Knecht Z.A. et al."
+      year: 2017
+      where: "eLife 6:e26654, dry and moist cells respond tonically to humidity"
+    owner_spec: "004"
+  - id: senses.hygro.dry.max_hz
+    value: 40.0
+    units: "Hz"
+    valid_range: [0, 500]
+    source:
+      authors: "Knecht Z.A. et al."
+      year: 2017
+      where: "eLife 6:e26654, dry and moist cells respond tonically to humidity"
+    owner_spec: "004"
+  - id: senses.hygro.dry.half
+    value: 1.0
+    units: "stimulus units at half response"
+    valid_range: [0, 1000000.0]
+    source:
+      authors: "Knecht Z.A. et al."
+      year: 2017
+      where: "eLife 6:e26654, dry and moist cells respond tonically to humidity"
+    owner_spec: "004"
+  - id: senses.hygro.dry.hill_n
+    value: 1.0
+    units: "Hill coefficient"
+    valid_range: [0.1, 10]
+    source:
+      authors: "Knecht Z.A. et al."
+      year: 2017
+      where: "eLife 6:e26654, dry and moist cells respond tonically to humidity"
+    owner_spec: "004"
+  - id: senses.hygro.dry.adapt_tau_s
+    value: 5.0
+    units: "s"
+    valid_range: [0.001, 1000]
+    source:
+      authors: "Knecht Z.A. et al."
+      year: 2017
+      where: "eLife 6:e26654, dry and moist cells respond tonically to humidity"
+    owner_spec: "004"
+  - id: senses.hygro.dry.adapt_frac
+    value: 1.0
+    units: "steady/onset response"
+    valid_range: [0, 1]
+    source:
+      authors: "Knecht Z.A. et al."
+      year: 2017
+      where: "eLife 6:e26654, dry and moist cells respond tonically to humidity"
+    owner_spec: "004"
+  - id: senses.hygro.moist.spont_hz
+    value: 2.0
+    units: "Hz"
+    valid_range: [0, 200]
+    source:
+      authors: "Knecht Z.A. et al."
+      year: 2017
+      where: "eLife 6:e26654, dry and moist cells respond tonically to humidity"
+    owner_spec: "004"
+  - id: senses.hygro.moist.max_hz
+    value: 40.0
+    units: "Hz"
+    valid_range: [0, 500]
+    source:
+      authors: "Knecht Z.A. et al."
+      year: 2017
+      where: "eLife 6:e26654, dry and moist cells respond tonically to humidity"
+    owner_spec: "004"
+  - id: senses.hygro.moist.half
+    value: 1.0
+    units: "stimulus units at half response"
+    valid_range: [0, 1000000.0]
+    source:
+      authors: "Knecht Z.A. et al."
+      year: 2017
+      where: "eLife 6:e26654, dry and moist cells respond tonically to humidity"
+    owner_spec: "004"
+  - id: senses.hygro.moist.hill_n
+    value: 1.0
+    units: "Hill coefficient"
+    valid_range: [0.1, 10]
+    source:
+      authors: "Knecht Z.A. et al."
+      year: 2017
+      where: "eLife 6:e26654, dry and moist cells respond tonically to humidity"
+    owner_spec: "004"
+  - id: senses.hygro.moist.adapt_tau_s
+    value: 5.0
+    units: "s"
+    valid_range: [0.001, 1000]
+    source:
+      authors: "Knecht Z.A. et al."
+      year: 2017
+      where: "eLife 6:e26654, dry and moist cells respond tonically to humidity"
+    owner_spec: "004"
+  - id: senses.hygro.moist.adapt_frac
+    value: 1.0
+    units: "steady/onset response"
+    valid_range: [0, 1]
+    source:
+      authors: "Knecht Z.A. et al."
+      year: 2017
+      where: "eLife 6:e26654, dry and moist cells respond tonically to humidity"
+    owner_spec: "004"
+  - id: senses.undriven.spont_hz
+    value: 2.0
+    units: "Hz"
+    valid_range: [0, 100]
+    assumption:
+      rationale: "Spontaneous rate of sensory channels with no established ligand (simulated, undriven)."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.taste.labellum_half_width_mm
+    value: 0.1
+    units: "mm"
+    valid_range: [0, 1]
+    assumption:
+      rationale: "Half the labellum width; the two labellar halves are sampled separately (SENSE-R-005)."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.taste.water.half_osmolality
+    value: 0.15
+    units: "Osm"
+    valid_range: [0.001, 10]
+    source:
+      authors: "Cameron P. et al."
+      year: 2010
+      where: "PNAS 107:2, ppk28 water response inhibited by osmolality (half ~100-200 mOsm)"
+    owner_spec: "004"
+  - id: senses.taste.low_salt.max_concentration
+    value: 0.1
+    units: "mol/L"
+    valid_range: [0, 5]
+    source:
+      authors: "Zhang Y.V. et al."
+      year: 2013
+      where: "Science 340:1334, low-salt cells saturate near 100 mM"
+    owner_spec: "004"
+  - id: senses.smell.odor_half
+    value: 0.0001
+    units: "odor amount units per mm^3"
+    valid_range: [1e-12, 1000.0]
+    assumption:
+      rationale: "Half-activation concentration for every odorant in the world's odor units; global calibration of source emission vs ORN sensitivity."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.smell.odor_hill_n
+    value: 1.0
+    units: "Hill coefficient"
+    valid_range: [0.1, 10]
+    assumption:
+      rationale: "Concentration-response slope for ORNs (DoOR responses are at one concentration)."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.smell.palp_below_head_mm
+    value: 0.3
+    units: "mm"
+    valid_range: [0, 2]
+    assumption:
+      rationale: "Maxillary palp position below the head centre."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.jo.arista_angle_rad
+    value: 0.8
+    units: "rad"
+    valid_range: [0, 1.6]
+    assumption:
+      rationale: "Arista sensitive axis: forward-outward, ~45 deg from the body axis."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.jo.gravity_equivalent_mm_s
+    value: 50.0
+    units: "mm/s of air per g"
+    valid_range: [0, 10000]
+    assumption:
+      rationale: "Gravity deflection of the antenna expressed as an equivalent airspeed (Kamikouchi et al. 2009: C/E respond to gravity)."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.thermo.gain_hz_per_c_s
+    value: 20.0
+    units: "drive per degC/s"
+    valid_range: [0, 1000]
+    source:
+      authors: "Gallio M. et al."
+      year: 2011
+      where: "Cell 144:614, phasic responses to temperature change rates"
+    owner_spec: "004"
+  - id: senses.thermo.tau_s
+    value: 1.0
+    units: "s"
+    valid_range: [0.01, 100]
+    assumption:
+      rationale: "Low-pass time constant of the temperature-change signal."
+      owner: "004"
+    owner_spec: "004"
+  - id: senses.hygro.gain_hz_per_rh
+    value: 1.0
+    units: "drive per unit relative humidity"
+    valid_range: [0, 100]
+    assumption:
+      rationale: "Tonic hygrosensory drive per unit RH (max_hz scales it)."
+      owner: "004"
+    owner_spec: "004"

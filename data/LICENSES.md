@@ -4,11 +4,21 @@ Generated from `config/datasets.yaml` by `colony data licenses`. Do not edit by 
 
 | Dataset | License | Status | Restrictions |
 |---|---|---|---|
+| `door_v2` | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | verified | Share-alike. Tables derived from DoOR (config/senses/door_tuning.yaml) carry the same license and attribution. |
 | `fafb783_annotations` | [CC BY 4.0 (assumed)](https://creativecommons.org/licenses/by/4.0/) | assumed | Treated as attribution-only. Confirm with the authors before public redistribution. |
 | `fafb783_connectome` | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | verified | Attribution required. No non-commercial restriction. |
 | `flyvis_pretrained` | [MIT](https://github.com/TuragaLab/flyvis/blob/main/LICENSE) | verified | Keep the MIT notice with any copied parameters. |
 | `malecns_v1` | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | verified | Attribution required. No non-commercial restriction. |
 | `shiu2024_model` | [MIT (code); data derived from FlyWire 783 (CC BY 4.0)](https://github.com/philshiu/Drosophila_brain_model/blob/main/LICENSE) | verified | Keep the MIT notice with any copied code. FlyWire attribution applies to the data. |
+
+## `door_v2`: DoOR 2.0 - Database of Odorant Responses (DoOR.data)
+
+- **Version:** commit db323a496577c4b4a72b5c2fcd1859e07521ffb5 (2.0.1.9001)
+- **Source:** https://github.com/ropensci/DoOR.data
+- **License:** [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) (verified, checked 2026-10-13)
+- **Evidence:** DESCRIPTION file of the repository ("License CC BY-SA 4.0")
+- **Restrictions:** Share-alike. Tables derived from DoOR (config/senses/door_tuning.yaml) carry the same license and attribution.
+- **Required attribution:** Münch D., Galizia C.G. (2016) DoOR 2.0 - Comprehensive Mapping of Drosophila melanogaster Odorant Responses, Sci Rep 6:21841, doi:10.1038/srep21841.
 
 ## `fafb783_annotations`: FlyWire neuron annotations (flywire_annotations v3.2.0, materialization 783)
 

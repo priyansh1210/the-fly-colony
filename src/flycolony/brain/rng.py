@@ -25,6 +25,7 @@ _HIGH = 32  # registry-ok: split a 64-bit step counter into two 32-bit words
 STREAM_DRIVE = 1
 STREAM_NOISE = 2
 STREAM_NOISE_INIT = 3  # registry-ok: stream id
+STREAM_SENSE = 4  # registry-ok: stream id
 
 
 def hash32(x: torch.Tensor) -> torch.Tensor:

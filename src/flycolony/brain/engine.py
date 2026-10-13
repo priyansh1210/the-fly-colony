@@ -101,7 +101,7 @@ class BrainBatch:
 
     STATE_FIELDS = (
         "u", "g", "last", "next_noise", "theta", "vrest", "pre", "post", "ref", "graded_in",
-        "rates", "plastic", "keys", "spike_window",
+        "rates", "plastic", "keys", "spike_window", "sense_rate", "photo_in",
     )  # fmt: skip
 
     def __init__(
@@ -175,6 +175,9 @@ class BrainBatch:
         self.queue: list[torch.Tensor] = [self._empty() for _ in range(max(1, self.k.delay_steps))]
         self._drive_events: _Events | None = None
         self._noise_events: _Events | None = None
+        # Closed-loop sensory input (004 §2): none until attach_senses().
+        self.sense_ids = self._empty()
+        self.photo_ids = self._empty()
 
     # --- state ---------------------------------------------------------------------------------
 
@@ -197,6 +200,10 @@ class BrainBatch:
         self.plastic = torch.zeros(b, self.n_plastic, dtype=f32, device=dev)
         self.keys = torch.zeros(b, dtype=torch.int64, device=dev)
         self.spike_window = torch.zeros(b, dtype=torch.int64, device=dev)
+        n_s = int(self.sense_ids.numel()) if hasattr(self, "sense_ids") else 0
+        n_p = int(self.photo_ids.numel()) if hasattr(self, "photo_ids") else 0
+        self.sense_rate = torch.zeros(b, n_s, dtype=f32, device=dev)
+        self.photo_in = torch.zeros(b, n_p, dtype=f32, device=dev)
         self.drive: dict[str, tuple[torch.Tensor, torch.Tensor]] = {}
         self._drive_flat = self._empty()
         self._drive_p = torch.empty(0, dtype=torch.float64, device=dev)
@@ -251,11 +258,15 @@ class BrainBatch:
             "plastic": self._shared_plastic_weights(),
             "keys": torch.tensor(key, dtype=torch.int64, device=dev),
             "spike_window": torch.zeros((), dtype=torch.int64, device=dev),
+            "sense_rate": torch.zeros(self.sense_ids.numel(), device=dev),
+            "photo_in": torch.zeros(self.photo_ids.numel(), device=dev),
         }
         b = self.batch_size
         for name, value in row.items():
             setattr(self, name, torch.cat([getattr(self, name), value.unsqueeze(0)]))
         self.fly_ids.append(spec.fly_id)
+        if self.sense_ids.numel():
+            self.ref[b, self.sense_ids] = self.k.driven_ref_steps
         self._acc = torch.zeros(self.batch_size * n, dtype=torch.int64, device=dev)
         self._drive_events = None
         if self._noise_events is not None:
@@ -407,6 +418,61 @@ class BrainBatch:
         )
         self._drive_events = None
 
+    # --- closed-loop sensory input (004 §2) -----------------------------------------------------------
+
+    def attach_senses(self, sensory_ids: np.ndarray, photo_ids: np.ndarray) -> None:
+        """Register the per-template sensory layout once.
+
+        `sensory_ids` are Poisson-driven sensory neurons; each step draws one Bernoulli event per
+        neuron from its current rate (`sense_rate`, Hz) with the counter-based RNG, so input is
+        device- and batch-independent. `photo_ids` are photoreceptor units; `photo_in` (mV per
+        step) is added to their synaptic input like the graded coupling. No neuron state is ever
+        written directly.
+        """
+        dev = self.device
+        s = torch.as_tensor(np.asarray(sensory_ids, dtype=np.int64), device=dev)
+        ph = torch.as_tensor(np.asarray(photo_ids, dtype=np.int64), device=dev)
+        for ids, what in ((s, "sensory"), (ph, "photoreceptor")):
+            if ids.numel() and not bool(self.topo.sensory[ids].all()):
+                bad = ids[~self.topo.sensory[ids]][:5].tolist()
+                raise BrainInputError(f"{what} input only reaches sensory neurons; not: {bad}")
+        if torch.isin(s, ph).any():
+            raise BrainInputError("a neuron cannot be both rate-driven and photoreceptor input")
+        driven = torch.cat([ids for ids, _ in self.drive.values()]) if self.drive else s[:0]
+        if torch.isin(s, driven).any() or torch.isin(ph, driven).any():
+            raise BrainInputError("sensory layout overlaps an existing set_drive() drive")
+        self.sense_ids, self.photo_ids = s, ph
+        b = self.batch_size
+        self.sense_rate = torch.zeros(b, s.numel(), dtype=torch.float32, device=dev)
+        self.photo_in = torch.zeros(b, ph.numel(), dtype=torch.float32, device=dev)
+        if b and s.numel():
+            self.ref[:, s] = self.k.driven_ref_steps
+        self._sense_salt = self._salt[s]
+
+    def set_senses(self, rates_hz: torch.Tensor, photo_mv: torch.Tensor | None = None) -> None:
+        """Replace all flies' sensory rates [B, n_sensory] (Hz) and photoreceptor input [B, n_photo]."""
+        if tuple(rates_hz.shape) != tuple(self.sense_rate.shape):
+            raise BrainInputError(
+                f"sensory rates have shape {tuple(rates_hz.shape)}, "
+                f"expected {tuple(self.sense_rate.shape)}"
+            )
+        self.sense_rate = rates_hz.to(device=self.device, dtype=torch.float32).clamp_min(0)
+        if photo_mv is not None:
+            if tuple(photo_mv.shape) != tuple(self.photo_in.shape):
+                raise BrainInputError("photoreceptor input has the wrong shape")
+            self.photo_in = photo_mv.to(device=self.device, dtype=torch.float32)
+
+    def _sense_at(self, t: int) -> torch.Tensor:
+        """Flat indices of sensory neurons that receive a Poisson input event at step t."""
+        b, m = self.sense_rate.shape
+        if b == 0 or m == 0:
+            return self._empty()
+        sk = rng.step_keys(self.keys, rng.STREAM_SENSE, t).unsqueeze(1)  # [B, 1]
+        u = rng.uniform(sk, self._sense_salt.unsqueeze(0))  # [B, M]
+        p = self.sense_rate.double() * (self.k.dt / MS_PER_S)
+        fb, j = (u < p).nonzero(as_tuple=True)
+        return fb * self.n + self.sense_ids[j]
+
     # --- stepping ------------------------------------------------------------------------------------
 
     def step(self) -> list[BrainEvent]:
@@ -435,8 +501,19 @@ class BrainBatch:
                 self._update_graded()
             self.g = torch.where(self._open.view_as(nr), self.g + self.graded_in, self.g)
         self._deliver(self.queue[slot] if k.delay_steps else spikes)
+        if self.photo_in.numel():
+            gv = self.g.view(-1)
+            flat = (
+                torch.arange(self.batch_size, device=self.device).unsqueeze(1) * self.n
+                + self.photo_ids.unsqueeze(0)
+            ).reshape(-1)
+            gv[flat] = torch.where(self._open[flat], gv[flat] + self.photo_in.reshape(-1), gv[flat])
         uf = self.u.view(-1)
         hit = self._drive_at(t)
+        sense = self._sense_at(t)
+        if sense.numel():
+            sense = sense[self._open[sense]]
+            uf[sense] = uf[sense] + self.params.w_poisson
         if hit.numel():
             hit = hit[self._open[hit]]
             uf[hit] = uf[hit] + self.params.w_poisson
@@ -590,6 +667,8 @@ class BrainBatch:
             "drive": sorted(drive),
             "modulated": self.modulation is not None,
         }
+        tensors["sense_ids"] = self.sense_ids.cpu()
+        tensors["photo_ids"] = self.photo_ids.cpu()
         if self.modulation is not None:
             m = self.modulation
             for name in m.STATE_FIELDS:
@@ -608,6 +687,10 @@ class BrainBatch:
             raise ValueError("checkpoint and engine disagree on neuromodulation")
         dev = self.device
         self.fly_ids = list(meta["fly_ids"])
+        if "sense_ids" in tensors:
+            self.sense_ids = tensors["sense_ids"].to(dev)
+            self.photo_ids = tensors["photo_ids"].to(dev)
+            self._sense_salt = self._salt[self.sense_ids]
         for name in self.STATE_FIELDS:
             setattr(self, name, tensors[name].to(dev).clone())
         self.step_count = int(meta["step"])
