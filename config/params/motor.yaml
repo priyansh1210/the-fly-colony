@@ -341,3 +341,11 @@ entries:
       rationale: "Antennal grooming occupies the forelegs (biomechanical constraint)."
       owner: "005"
     owner_spec: "005"
+  - id: gate.feed.min_extension
+    value: 0.5
+    units: "extension fraction"
+    valid_range: [0, 1]
+    assumption:
+      rationale: "Feeding-gate outcome (AC-01/02): a proboscis extension counts when it exceeds the extension ingestion needs (motor.ingest.min_extension), i.e. a full PER."
+      owner: "005"
+    owner_spec: "005"

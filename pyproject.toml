@@ -60,6 +60,7 @@ markers = [
     "data: needs downloaded datasets under data/raw (skipped when absent)",
     "gpu: needs a CUDA device (skipped when absent)",
     "perf: performance test",
+    "emergence: Phase-2 emergence gate reports (005; run `colony gates run` first)",
 ]
 
 [tool.ruff]
