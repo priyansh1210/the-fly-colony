@@ -1,0 +1,110 @@
+{
+  "spec": "005 M8 global threshold calibration",
+  "template": "female-fafb783-t2",
+  "rule": "threshold = q0.99 of resting group rate, rounded up to 0.5 Hz",
+  "condition": {
+    "flies": 32,
+    "seeds": [
+      5000,
+      5031
+    ],
+    "arena": "20 x 20 x 30 mm box per fly, no food, odor or wind, daylight, sated",
+    "warmup_s": 0.5,
+    "measured_s": 2.0,
+    "brain_dt_ms": 0.5,
+    "note": "measured once, under the pre-calibration thresholds (current_threshold_hz); applied to config/params/motor.yaml without further iteration"
+  },
+  "fraction_of_steps_moving": 0.259234375,
+  "primitives": {
+    "walk_forward": {
+      "groups": [
+        "walk.forward"
+      ],
+      "mean_hz": 7.0356384546817825,
+      "p50_hz": 4.590838432312012,
+      "p99_hz": 32.86142520904538,
+      "max_hz": 49.59527587890625,
+      "current_threshold_hz": 10.0,
+      "calibrated_threshold_hz": 33.0
+    },
+    "walk_backward": {
+      "groups": [
+        "walk.backward"
+      ],
+      "mean_hz": 5.425898567642112e-07,
+      "p50_hz": 0.0,
+      "p99_hz": 5.769272775069112e-07,
+      "max_hz": 0.00035070936428382993,
+      "current_threshold_hz": 10.0,
+      "calibrated_threshold_hz": 0.5
+    },
+    "steer": {
+      "groups": [
+        "walk.steer.L",
+        "walk.steer.R"
+      ],
+      "mean_hz": 27.96368897609432,
+      "p50_hz": 24.601215362548828,
+      "p99_hz": 72.8945450592041,
+      "max_hz": 97.87333679199219,
+      "current_threshold_hz": 10.0,
+      "calibrated_threshold_hz": 73.0
+    },
+    "escape": {
+      "groups": [
+        "escape.takeoff"
+      ],
+      "mean_hz": 1.7459499514431565e-06,
+      "p50_hz": 0.0,
+      "p99_hz": 1.0413544259790797e-05,
+      "max_hz": 0.0008313949801959097,
+      "current_threshold_hz": 0.0,
+      "calibrated_threshold_hz": null,
+      "note": "spike-triggered (one GF spike); not rate-calibrated"
+    },
+    "landing": {
+      "groups": [
+        "flight.landing"
+      ],
+      "mean_hz": 13.475523026388604,
+      "p50_hz": 12.82505989074707,
+      "p99_hz": 28.764000301361072,
+      "max_hz": 40.646751403808594,
+      "current_threshold_hz": 10.0,
+      "calibrated_threshold_hz": 29.0
+    },
+    "proboscis": {
+      "groups": [
+        "feeding.proboscis_extension"
+      ],
+      "mean_hz": 1.1410855423037272,
+      "p50_hz": 0.025672201067209244,
+      "p99_hz": 12.141552343368495,
+      "max_hz": 29.16486930847168,
+      "current_threshold_hz": 5.0,
+      "calibrated_threshold_hz": 12.5
+    },
+    "ingestion": {
+      "groups": [
+        "feeding.ingestion"
+      ],
+      "mean_hz": 4.722191722283634,
+      "p50_hz": 2.196559190750122,
+      "p99_hz": 27.525335369110095,
+      "max_hz": 34.45598602294922,
+      "current_threshold_hz": 5.0,
+      "calibrated_threshold_hz": 28.0
+    },
+    "groom_antenna": {
+      "groups": [
+        "groom.antenna"
+      ],
+      "mean_hz": 0.04552830917658634,
+      "p50_hz": 0.0,
+      "p99_hz": 1.5441030263900757,
+      "max_hz": 9.851654052734375,
+      "current_threshold_hz": 10.0,
+      "calibrated_threshold_hz": 2.0
+    }
+  }
+}

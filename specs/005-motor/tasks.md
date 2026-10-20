@@ -13,8 +13,8 @@
 - [x] **M4** Effort reporting. *MOTOR-R-007* · T-MOTOR-U-005
 - [x] **M5** Minimal physiology: energy, ingestion, sleep pressure, engine sleep state (006 design). *LIFE-R-010, -011, -030; BRAIN-R-045*
 - [x] **M6** Closed loop (`engine/loop.py`): brain ↔ senses ↔ motor ↔ body ↔ world on the schedule; checkpoint of the whole loop.
-- [ ] **M7** Open-loop harness (tests only) and its isolation. *MOTOR-R-011, -012* · T-MOTOR-V-001, T-MOTOR-I-002, MOTOR-AC-06
-- [ ] **M8** Global calibration of transfer thresholds against spontaneous activity (report).
+- [x] **M7** Open-loop harness (tests only) and its isolation. Report: `reports/female-fafb783-t2.openloop.json` (8/8 groups 20/20 at the saturating level; MDN and GF need ≥ 4–8× threshold against tonic inhibition). *MOTOR-R-011, -012* · T-MOTOR-V-001, T-MOTOR-I-002, MOTOR-AC-06
+- [x] **M8** Global calibration of transfer thresholds against spontaneous activity (report). `tools/calibrate_motor.py`; rule q0.99 of resting rate; report `reports/female-fafb783-t2.motor-calibration.json`.
 - [ ] **M9** Emergence suite: protocols, statistics, reports, `colony gates run`. *MOTOR-R-020, -021* · T-MOTOR-E-001..005, MOTOR-AC-01..05, -07
 - [ ] **M10** Phase-2 gate: all gates run and reported; timestep gate re-run with the emergence assays (002 G7).
 

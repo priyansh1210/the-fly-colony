@@ -3,11 +3,11 @@
 
 entries:
   - id: motor.walk_forward.threshold_hz
-    value: 10.0
+    value: 33.0
     units: "Hz"
     valid_range: [0, 1000]
     assumption:
-      rationale: "Group rate below which the primitive is off; set above spontaneous activity (global calibration)."
+      rationale: "Global calibration (005 M8): q0.99 of the resting group rate, rounded up to 0.5 Hz (resting mean 7.04 Hz, q0.99 32.86 Hz; specs/005-motor/reports/female-fafb783-t2.motor-calibration.json)."
       owner: "005"
     owner_spec: "005"
   - id: motor.walk_forward.half_hz
@@ -44,11 +44,11 @@ entries:
       owner: "005"
     owner_spec: "005"
   - id: motor.walk_backward.threshold_hz
-    value: 10.0
+    value: 0.5
     units: "Hz"
     valid_range: [0, 1000]
     assumption:
-      rationale: "Group rate below which the primitive is off; set above spontaneous activity (global calibration)."
+      rationale: "Global calibration (005 M8): q0.99 of the resting group rate, rounded up to 0.5 Hz (resting mean 0.00 Hz, q0.99 0.00 Hz; specs/005-motor/reports/female-fafb783-t2.motor-calibration.json)."
       owner: "005"
     owner_spec: "005"
   - id: motor.walk_backward.half_hz
@@ -84,11 +84,11 @@ entries:
       owner: "005"
     owner_spec: "005"
   - id: motor.steer.threshold_hz
-    value: 10.0
+    value: 73.0
     units: "Hz"
     valid_range: [0, 1000]
     assumption:
-      rationale: "Group rate below which the primitive is off; set above spontaneous activity (global calibration)."
+      rationale: "Global calibration (005 M8): q0.99 of the resting group rate, rounded up to 0.5 Hz (resting mean 27.96 Hz, q0.99 72.89 Hz; specs/005-motor/reports/female-fafb783-t2.motor-calibration.json)."
       owner: "005"
     owner_spec: "005"
   - id: motor.steer.half_hz
@@ -165,11 +165,11 @@ entries:
       owner: "005"
     owner_spec: "005"
   - id: motor.landing.threshold_hz
-    value: 10.0
+    value: 29.0
     units: "Hz"
     valid_range: [0, 1000]
     assumption:
-      rationale: "Group rate below which the primitive is off; set above spontaneous activity (global calibration)."
+      rationale: "Global calibration (005 M8): q0.99 of the resting group rate, rounded up to 0.5 Hz (resting mean 13.48 Hz, q0.99 28.76 Hz; specs/005-motor/reports/female-fafb783-t2.motor-calibration.json)."
       owner: "005"
     owner_spec: "005"
   - id: motor.landing.half_hz
@@ -205,11 +205,11 @@ entries:
       owner: "005"
     owner_spec: "005"
   - id: motor.proboscis.threshold_hz
-    value: 5.0
+    value: 12.5
     units: "Hz"
     valid_range: [0, 1000]
     assumption:
-      rationale: "Group rate below which the primitive is off; set above spontaneous activity (global calibration)."
+      rationale: "Global calibration (005 M8): q0.99 of the resting group rate, rounded up to 0.5 Hz (resting mean 1.14 Hz, q0.99 12.14 Hz; specs/005-motor/reports/female-fafb783-t2.motor-calibration.json)."
       owner: "005"
     owner_spec: "005"
   - id: motor.proboscis.half_hz
@@ -245,11 +245,11 @@ entries:
       owner: "005"
     owner_spec: "005"
   - id: motor.ingestion.threshold_hz
-    value: 5.0
+    value: 28.0
     units: "Hz"
     valid_range: [0, 1000]
     assumption:
-      rationale: "Group rate below which the primitive is off; set above spontaneous activity (global calibration)."
+      rationale: "Global calibration (005 M8): q0.99 of the resting group rate, rounded up to 0.5 Hz (resting mean 4.72 Hz, q0.99 27.53 Hz; specs/005-motor/reports/female-fafb783-t2.motor-calibration.json)."
       owner: "005"
     owner_spec: "005"
   - id: motor.ingestion.half_hz
@@ -286,11 +286,11 @@ entries:
       owner: "005"
     owner_spec: "005"
   - id: motor.groom.threshold_hz
-    value: 10.0
+    value: 2.0
     units: "Hz"
     valid_range: [0, 1000]
     assumption:
-      rationale: "Group rate below which the primitive is off; set above spontaneous activity (global calibration)."
+      rationale: "Global calibration (005 M8): q0.99 of the resting group rate, rounded up to 0.5 Hz (resting mean 0.05 Hz, q0.99 1.54 Hz; specs/005-motor/reports/female-fafb783-t2.motor-calibration.json)."
       owner: "005"
     owner_spec: "005"
   - id: motor.groom.half_hz
