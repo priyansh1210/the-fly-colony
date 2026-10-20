@@ -173,6 +173,17 @@ def test_food_stages_emission_and_depletion(registry):  # T-WORLD-U-003, WORLD-A
         torch.tensor([1, 1]), torch.tensor([0, 0]), torch.tensor([1.5, 1.5], dtype=torch.float64)
     )
     assert took.tolist() == [1.5, 0.5] and int(w2.patches.stage[1, 0]) == DEPLETED
+    assert float(w2.patches.ingested[1, 0]) == 2.0
+    # Several patches at once, a fly outside any drop, and lower fly index first on a patch.
+    w2.place_patch(1, 1, PatchSpec("sucrose_100mM", 20, 25, 5, 1, 3.0), c2)
+    w2.place_patch(0, 1, PatchSpec("sucrose_100mM", 20, 25, 5, 1, 5.0), c2)
+    took = w2.patches.ingest(
+        torch.tensor([1, 0, 1, 1, 0]),
+        torch.tensor([1, 1, -1, 1, 1]),
+        torch.tensor([2.0, 1.0, 9.0, 2.0, 0.5], dtype=torch.float64),
+    )
+    assert took.tolist() == [2.0, 1.0, 0.0, 1.0, 0.5]
+    assert int(w2.patches.stage[1, 1]) == DEPLETED and float(w2.patches.volume[0, 1]) == 3.5
 
 
 def test_world_step_is_deterministic_and_checkpoints(registry):  # T-WORLD-I-001, -002

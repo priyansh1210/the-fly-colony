@@ -35,6 +35,8 @@ from flycolony.brain.topology import Topology, expand_rows
 
 _NEVER = -(1 << 40)  # registry-ok: "never spiked" step marker, far below any reachable step
 _BLOCK_ELEMENTS = 1 << 24  # registry-ok: memory bound (elements) for one block of drive draws
+GRADED_CHUNK_BYTES = 1 << 29  # registry-ok: buffer bound for one chunk of the graded update
+GRADED_BYTES_PER_EDGE = 16  # registry-ok: float32 term + its gathered pre scale + int64 copy
 
 
 class BrainInputError(ValueError):
@@ -139,6 +141,7 @@ class BrainBatch:
         self.e_m = torch.from_numpy(e_m).to(device=dev, dtype=f32)
         self.c_m = torch.from_numpy(c_m).to(device=dev, dtype=f32)
         self.has_graded = topo.graded_edges is not None
+        self._graded_static: tuple[torch.Tensor, ...] | None = None
         # Plastic sets: CSR edge -> slot in the per-fly plastic block (-1 = shared weight).
         self.plastic_sets = list(plastic_sets)
         self.n_plastic = sum(int(s.edges.numel()) for s in self.plastic_sets)
@@ -362,7 +365,11 @@ class BrainBatch:
     def _noise_at(self, t: int) -> torch.Tensor:
         ev = self._noise_events
         if ev is None or t >= ev.end:
-            end = t + self.params.event_block_steps
+            # Expected events per step bound the block, like the drive draws (draws are
+            # counter-based, so the block size never changes the events).
+            per_step = max(1.0, self.next_noise.numel() * self.k.p_noise)
+            steps = max(1, min(self.params.event_block_steps, int(_BLOCK_ELEMENTS // per_step)))
+            end = t + steps
             times, flat = self._draw_noise(self.next_noise, self.keys, t, end)
             ev = self._noise_events = _group_by_step(times, flat, t, end)
         return ev.at(t)
@@ -581,19 +588,36 @@ class BrainBatch:
         self._acc[target] = 0
 
     def _update_graded(self) -> None:
-        """Recompute the held graded→all coupling (BRAIN-R-015): rate-equivalent output × weight."""
+        """Recompute the held graded→all coupling (BRAIN-R-015): rate-equivalent output × weight.
+
+        Rates are computed per neuron and gathered per edge, and each chunk of flies scatters into
+        its own rows of a [B, n] accumulator, so the per-edge temporaries stay within
+        GRADED_CHUNK_BYTES. Every edge term is rounded to fixed point exactly as before, and the
+        integer sums do not depend on order, so the result is bit-identical at any chunk size.
+        """
         p, topo, n, b = self.params, self.topo, self.n, self.batch_size
-        pre = topo.graded_pre
+        if self._graded_static is None:
+            g_edges = topo.graded_edges
+            self._graded_static = (
+                topo.graded_pre,
+                topo.weight[g_edges].float() * (self.k.dt / MS_PER_S),  # mV/spike × s
+                topo.indices[g_edges],
+            )
+        pre, w, tgt = self._graded_static
         # Output in Hz: gain × (v - v_thresh_graded), v = u + v_rest.
-        v = self.u[:, pre] + self.vrest[:, pre]
+        v = self.u + self.vrest
         rate = ((v - p.graded_v_thresh) * p.graded_gain).clamp_(0.0, p.graded_max_rate)
-        # Per step: weight [mV/spike] × rate [Hz] × dt [s], i.e. as if spiking at `rate`.
-        w = topo.weight[topo.graded_edges].float() * (self.k.dt / MS_PER_S)
-        q = torch.round(rate * w * self.pre[:, pre] * self._scale).to(torch.int64)
-        tgt = torch.arange(b, device=self.device).unsqueeze(1) * n + topo.indices[topo.graded_edges]
-        acc = torch.zeros(b * n, dtype=torch.int64, device=self.device)
-        acc.index_add_(0, tgt.reshape(-1), q.reshape(-1))
-        held = (acc.to(torch.float32) / self._scale).view(b, n) * self.post
+        acc = torch.zeros(b, n, dtype=torch.int64, device=self.device)
+        per_fly = pre.numel() * GRADED_BYTES_PER_EDGE
+        step = max(1, GRADED_CHUNK_BYTES // max(1, per_fly))
+        for lo in range(0, b, step):
+            hi = min(b, lo + step)
+            # Per step: weight [mV/spike] × rate [Hz] × dt [s], i.e. as if spiking at `rate`.
+            x = rate[lo:hi, pre]
+            x.mul_(w).mul_(self.pre[lo:hi, pre]).mul_(self._scale).round_()
+            acc[lo:hi].index_add_(1, tgt, x.to(torch.int64))
+            del x
+        held = (acc.to(torch.float32) / self._scale) * self.post
         if self.modulation is not None:
             held = held * self.modulation.gain
         self.graded_in = held

@@ -13,6 +13,7 @@ Units: mm, s, radians. State is float64 so long runs keep sub-micrometre precisi
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 
 import torch
@@ -132,6 +133,8 @@ class BodyBatch:
         self.proboscis, self.jump_left, self.injury = z.clone(), z.clone(), z.clone()
         self.yaw_rate, self.speed = z.clone(), z.clone()
         self.last_impact = z.clone()
+        self._sites: tuple[tuple[torch.Tensor, ...], dict[str, torch.Tensor]] | None = None
+        self._graspable: torch.Tensor | None = None
 
     @property
     def n(self) -> int:
@@ -189,14 +192,18 @@ class BodyBatch:
         grounded = self.mode == GROUNDED
         airborne = self.mode == AIRBORNE
         # Proboscis follows its command with a first-order lag.
-        a = 1 - torch.exp(torch.tensor(-dt / p.proboscis_tau_s, dtype=torch.float64))
+        a = 1 - math.exp(-dt / p.proboscis_tau_s)
         self.proboscis = self.proboscis + (cmd.proboscis.clamp(0, 1) - self.proboscis) * a
         # Ballistic jump trigger (grounded only).
         jump = cmd.jump & grounded & (self.jump_left <= 0)
-        if bool(jump.any()):
-            dirn = self.fwd * torch.cos(torch.tensor(p.jump_angle)) + self.up * torch.sin(
-                torch.tensor(p.jump_angle)
-            )
+        walking = grounded & ~jump
+        moving = walking & ((cmd.speed != 0) | (cmd.yaw != 0))
+        # One host read for all the branch flags of this step.
+        any_jump, any_air, any_move = torch.stack(
+            [jump.any(), (airborne | jump).any(), moving.any()]
+        ).tolist()
+        if any_jump:
+            dirn = self.fwd * math.cos(p.jump_angle) + self.up * math.sin(p.jump_angle)
             self.vel = torch.where(jump.unsqueeze(-1), dirn * p.jump_speed, self.vel)
             self.jump_left = torch.where(
                 jump, torch.full_like(self.jump_left, p.jump_duration_s), self.jump_left
@@ -206,18 +213,20 @@ class BodyBatch:
             self.pos = torch.where(
                 jump.unsqueeze(-1), self.pos + self.up * p.stand_height, self.pos
             )
-            grounded, airborne = self.mode == GROUNDED, self.mode == AIRBORNE
-        self._walk(cmd, dt, grounded)
-        self._fly(cmd, dt, airborne, wind)
+            airborne = self.mode == AIRBORNE
+        self._walk(cmd, dt, walking, moving, any_move)
+        if any_air:
+            self._fly(cmd, dt, airborne, wind)
         self._collide()
 
-    def _walk(self, cmd: Commands, dt: float, grounded: torch.Tensor) -> None:
+    def _walk(
+        self, cmd: Commands, dt: float, grounded: torch.Tensor, moving: torch.Tensor, any_move: bool
+    ) -> None:
         p = self.p
         speed = cmd.speed.clamp(-p.max_back_speed, p.max_speed) * grounded
         yaw = cmd.yaw.clamp(-p.max_yaw, p.max_yaw) * grounded
         self.speed, self.yaw_rate = speed, yaw
-        moving = grounded & ((speed != 0) | (yaw != 0))
-        if not bool(moving.any()):
+        if not any_move:
             return
         # Turn about the surface normal, then step forward in the tangent plane.
         ang = (yaw * dt).unsqueeze(-1)
@@ -229,13 +238,10 @@ class BodyBatch:
         viol = viol.scatter(-1, self.face.unsqueeze(-1), float("-inf"))
         worst, new_face = viol.max(-1)
         cross = moving & (worst > 0)
-        if bool(cross.any()):
-            n_new = self.arena.normal(new_face, pos)
-            fwd = torch.where(cross.unsqueeze(-1), rotate_frame(fwd, up, n_new), fwd)
-            up = torch.where(cross.unsqueeze(-1), n_new, up)
-            face = torch.where(cross, new_face, self.face)
-        else:
-            face = self.face
+        n_new = self.arena.normal(new_face, pos)
+        fwd = torch.where(cross.unsqueeze(-1), rotate_frame(fwd, up, n_new), fwd)
+        up = torch.where(cross.unsqueeze(-1), n_new, up)
+        face = torch.where(cross, new_face, self.face)
         pos = self.arena.project(face, pos)
         up = torch.where(moving.unsqueeze(-1), self.arena.normal(face, pos), up)
         # Keep the frame orthonormal.
@@ -248,8 +254,6 @@ class BodyBatch:
         self.face = torch.where(moving, face, self.face)
 
     def _fly(self, cmd: Commands, dt: float, airborne: torch.Tensor, wind) -> None:
-        if not bool(airborne.any()):
-            return
         p = self.p
         g = torch.tensor([0.0, 0.0, -p.gravity], dtype=torch.float64, device=self.device)
         air = wind if wind is not None else torch.zeros_like(self.vel)
@@ -275,11 +279,12 @@ class BodyBatch:
                 land, (impact - thr).clamp_min(0) / thr, torch.zeros_like(impact)
             )
             self.last_impact = torch.where(land, impact, self.last_impact)
-            graspable = torch.tensor(
-                [self.arena.material(i).graspable for i in range(self.arena.n_faces)],
-                device=self.device,
-            )
-            land = land & graspable[face]
+            if self._graspable is None:
+                self._graspable = torch.tensor(
+                    [self.arena.material(i).graspable for i in range(self.arena.n_faces)],
+                    device=self.device,
+                )
+            land = land & self._graspable[face]
             heading = vel - n * (vel * n).sum(-1, keepdim=True)
             hn = heading.norm(dim=-1, keepdim=True)
             old_t = self.fwd - n * (self.fwd * n).sum(-1, keepdim=True)
@@ -321,26 +326,32 @@ class BodyBatch:
         push = (d / dist.clamp_min(EPS).unsqueeze(-1) * (overlap / 2).unsqueeze(-1)).sum(
             1
         )  # registry-ok: numerical floor for coincident flies
-        if bool((overlap > 0).any()):
-            pos = self.pos + push
-            self.pos = self.arena.project(self.face, pos)
+        hit = (overlap > 0).any(1, keepdim=True)
+        self.pos = torch.where(hit, self.arena.project(self.face, self.pos + push), self.pos)
 
     # --- contact sites (BODY-R-004) -------------------------------------------------------------------
 
     def sites(self) -> dict[str, torch.Tensor]:
-        """World positions of the contact and sensor sites [N, 3] each."""
+        """World positions of the contact and sensor sites [N, 3] each.
+
+        Cached until the body state they depend on is replaced (state tensors are never written in
+        place), so the senses, physics and contacts of one step share one computation.
+        """
+        key = (self.pos, self.fwd, self.up, self.proboscis)
+        if self._sites is not None and all(
+            a is b for a, b in zip(self._sites[0], key, strict=True)
+        ):
+            return self._sites[1]
         p = self.p
         lft, up, fwd = self.left, self.up, self.fwd
         center = self.pos + up * p.stand_height
         head = center + fwd * p.head_offset + up * (p.head_height - p.stand_height)
         ext = self.proboscis.unsqueeze(-1)
-        drop = p.labellum_rest_drop + ext * p.proboscis_length * torch.sin(
-            torch.tensor(p.proboscis_angle)
-        )
-        reach = ext * p.proboscis_length * torch.cos(torch.tensor(p.proboscis_angle))
+        drop = p.labellum_rest_drop + ext * p.proboscis_length * math.sin(p.proboscis_angle)
+        reach = ext * p.proboscis_length * math.cos(p.proboscis_angle)
         labellum = head - up * drop + fwd * reach
         ant = head + fwd * p.antenna_forward + up * p.antenna_height
-        return {
+        sites = {
             "center": center,
             "head": head,
             "labellum": labellum,
@@ -351,6 +362,8 @@ class BodyBatch:
             "tarsi_l": self.pos + lft * p.tarsus_lateral,
             "tarsi_r": self.pos - lft * p.tarsus_lateral,
         }
+        self._sites = (key, sites)
+        return sites
 
     # --- checkpoint --------------------------------------------------------------------------------------
 

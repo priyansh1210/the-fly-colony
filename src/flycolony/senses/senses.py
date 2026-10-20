@@ -31,7 +31,7 @@ from flycolony.config import project_root
 from flycolony.registry import Registry
 from flycolony.senses.layout import SensoryLayout
 from flycolony.world.entities import TASTANTS
-from flycolony.world.world import WorldGroup
+from flycolony.world.world import HUMIDITY, TEMPERATURE, WorldGroup
 
 SUCROSE, BITTER, SALT = (TASTANTS.index(t) for t in ("sucrose", "bitter", "salt"))
 DIM = 3  # registry-ok: 3D vectors
@@ -135,6 +135,35 @@ class SenseBatch:
         self.thermo_gain = g("senses.thermo.gain_hz_per_c_s")
         self.thermo_tau = g("senses.thermo.tau_s")
         self.hygro_gain = g("senses.hygro.gain_hz_per_rh")
+        # Vectorised adaptation: per-channel parameters, masked to the adapting channels.
+        adapting = [
+            self.params[n] is not None and layout.channels[n].sense != "mechano"
+            for n in self.chan_names
+        ]
+        ps = [
+            self.params[n] or ChannelParams(0.0, 0.0, 1.0, 1.0, 1.0, 1.0) for n in self.chan_names
+        ]
+        self.adapting = torch.tensor(adapting, device=device).view(1, -1, 1)
+        vec = lambda xs: torch.tensor(xs, dtype=f32, device=device).view(1, -1, 1)  # noqa: E731
+        self.max_rate = vec([q.max_rate for q in ps])
+        self.spont_adapt = vec([q.spont for q in ps])  # equals self.spont where adapting
+        self.keep = vec([1 - q.adapt_frac for q in ps])
+        self.adapt_tau = np.array([q.adapt_tau_s for q in ps])
+        self._decay: dict[float, tuple[torch.Tensor, torch.Tensor]] = {}
+        self.smell_cols = torch.tensor(self.smell_idx, device=device)
+        # Taste channels with a transduction rule, in a fixed order, and their drive columns.
+        self.taste_rules = [
+            (name, self.params[name])
+            for name in ("sugar", "bitter", "water", "low_salt", "high_salt")
+            if name in self.taste_idx and self.params[name] is not None
+        ]
+        self.taste_cols = torch.tensor(
+            [self.taste_idx[name] for name, _ in self.taste_rules], device=device
+        )
+        kinds = {c.spec["channel"]: c.spec["kind"] for c in self._thermo_chans()}
+        self.thermo_rules = [(i, kinds[name]) for name, i in self.thermo_idx.items()]
+        self.gravity = torch.tensor([0.0, 0.0, -1.0], dtype=torch.float64, device=device)
+        self.n_odor = len(odors)
         self.n = 0
         self._alloc(0)
 
@@ -169,8 +198,14 @@ class SenseBatch:
         drive = torch.zeros(n, c, 2, dtype=torch.float32, device=self.device)
         sites = body.sites()
         self._taste(world, body, sites, drive, intero or {})
-        self._smell(world, body, sites, drive)
-        self._thermo(world, body, sites, drive, dt)
+        # One field query for every air sensor: left antenna, right antenna, palps.
+        palp_pos = sites["head"] - body.up * self.palp_drop
+        sensors = [sites["antenna_l"], sites["antenna_r"], palp_pos]
+        pts = torch.cat(sensors)
+        air = world.fields.sample(body.world.repeat(len(sensors)), pts).float()
+        air = air.view(len(sensors), n, -1)
+        self._smell(air[..., : self.n_odor], drive)
+        self._thermo(world, air, drive, dt)
         rates = self._adapt_and_rate(drive, dt)
         out = rates[:, self.neuron_chan, self.neuron_side]
         if self.jo is not None:
@@ -178,34 +213,34 @@ class SenseBatch:
         return out
 
     def _taste(self, world, body, sites, drive, intero) -> None:
+        if not self.taste_rules:
+            return
         comp = world.composition()  # [W, K, T]
-        lft = body.left
-        conc = []
-        for _s, sign in ((0, 1.0), (1, -1.0)):  # left / right labellum half
-            p = sites["labellum"] + lft * (sign * self.labellum_half_width)
-            k = world.patches.contains(body.world, p)
-            c = comp[body.world, k.clamp_min(0)] * (k >= 0).unsqueeze(-1)
-            conc.append((c.float(), (k >= 0).float()))
-        gains = self._route_gains(intero, body.n)
-        for side, (c, wet) in enumerate(conc):
-            for name, i in self.taste_idx.items():
-                p = self.params[name]
-                if p is None:
-                    continue
-                if name == "sugar":
-                    x = hill(c[:, SUCROSE], p.half, p.hill_n)
-                elif name == "bitter":
-                    x = hill(c[:, BITTER], p.half, p.hill_n)
-                elif name == "water":  # ppk28: on liquid contact, inhibited by osmolality
-                    osm = c[:, SUCROSE] + c[:, BITTER] + 2 * c[:, SALT]
-                    x = wet * self.water_half_osm / (self.water_half_osm + osm)
-                elif name == "low_salt":
-                    x = hill(c[:, SALT].clamp_max(self.salt_low_max), p.half, p.hill_n)
-                elif name == "high_salt":
-                    x = hill(c[:, SALT], p.half, p.hill_n)
-                else:
-                    continue
-                drive[:, i, side] = x * gains.get(name, 1.0)
+        n = body.n
+        off = body.left * self.labellum_half_width
+        pts = torch.cat([sites["labellum"] + off, sites["labellum"] - off])  # left, right half
+        wld = body.world.repeat(2)
+        k = world.patches.contains(wld, pts)
+        wet = k >= 0
+        c = (comp[wld, k.clamp_min(0)] * wet.unsqueeze(-1)).float().view(2, n, -1).transpose(0, 1)
+        wet = wet.float().view(2, n).T  # [N, 2]
+        gains = self._route_gains(intero, n)
+        xs = []
+        for name, p in self.taste_rules:
+            if name == "sugar":
+                x = hill(c[..., SUCROSE], p.half, p.hill_n)
+            elif name == "bitter":
+                x = hill(c[..., BITTER], p.half, p.hill_n)
+            elif name == "water":  # ppk28: on liquid contact, inhibited by osmolality
+                osm = c[..., SUCROSE] + c[..., BITTER] + 2 * c[..., SALT]
+                x = wet * self.water_half_osm / (self.water_half_osm + osm)
+            elif name == "low_salt":
+                x = hill(c[..., SALT].clamp_max(self.salt_low_max), p.half, p.hill_n)
+            else:  # high_salt
+                x = hill(c[..., SALT], p.half, p.hill_n)
+            gain = gains.get(name)
+            xs.append(x if gain is None else x * gain.unsqueeze(-1))
+        drive[:, self.taste_cols] = torch.stack(xs, 1)
 
     def _route_gains(self, intero: dict[str, torch.Tensor], n: int) -> dict[str, torch.Tensor]:
         """Sensory-layer route gains (SENSE-R-032): only catalogued sense_channel routes."""
@@ -222,36 +257,23 @@ class SenseBatch:
             out[ch] = g.clamp_min(0)
         return out
 
-    def _smell(self, world, body, sites, drive) -> None:
+    def _smell(self, odor: torch.Tensor, drive) -> None:
+        """odor [sensor, N, O]: concentrations at the left antenna, right antenna and palps."""
         if not self.smell_idx:
             return
-        palp_pos = sites["head"] - body.up * self.palp_drop
-        samples = [world.odor_at(body.world, sites[k]).float() for k in ("antenna_l", "antenna_r")]
-        palp = world.odor_at(body.world, palp_pos).float()
-        idx = torch.tensor(self.smell_idx, device=self.device)
-        for side, conc in enumerate(samples):
-            act = hill(conc, self.odor_half, self.odor_n)  # [N, O]
-            pal = hill(palp, self.odor_half, self.odor_n)
-            x = act @ self.tuning.T  # [N, G]
-            xp = pal @ self.tuning.T
-            x = torch.where(self.palp.unsqueeze(0), xp, x)
-            drive[:, idx, side] = x
+        x = hill(odor, self.odor_half, self.odor_n) @ self.tuning.T  # [3, N, G]
+        x = torch.where(self.palp, x[2:], x[:2])  # palp glomeruli sample at the palps
+        drive[:, self.smell_cols] = x.permute(1, 2, 0)
 
-    def _thermo(self, world, body, sites, drive, dt) -> None:
-        temps, hums = [], []
-        for k in ("antenna_l", "antenna_r"):
-            t, h = world.air_at(body.world, sites[k])
-            temps.append(t.float())
-            hums.append(h.float())
-        temp = torch.stack(temps, -1)  # [N, 2]
-        hum = torch.stack(hums, -1)
+    def _thermo(self, world, air, drive, dt) -> None:
+        temp = air[:2, :, world.fields.index(TEMPERATURE)].T  # [N, 2] (left, right antenna)
+        hum = air[:2, :, world.fields.index(HUMIDITY)].T
         prev = torch.where(torch.isnan(self.prev_temp), temp, self.prev_temp)
         rate = (temp - prev) / dt  # °C/s
         a = float(np.exp(-dt / self.thermo_tau))
         self.phasic = self.phasic * a + rate * (1 - a)
         self.prev_temp = temp
-        for name, i in self.thermo_idx.items():
-            kind = next(c["kind"] for c in self._thermo_specs() if c["channel"] == name)
+        for i, kind in self.thermo_rules:
             if kind == "phasic_up":
                 drive[:, i] = (self.phasic * self.thermo_gain).clamp_min(0)
             elif kind == "phasic_down":
@@ -261,22 +283,21 @@ class SenseBatch:
             elif kind == "tonic_moist":
                 drive[:, i] = hum * self.hygro_gain
 
-    def _thermo_specs(self) -> list[dict]:
-        return [c.spec for c in self.layout.channels.values() if c.sense == "thermo"]
+    def _thermo_chans(self) -> list:
+        return [c for c in self.layout.channels.values() if c.sense == "thermo"]
 
     def _adapt_and_rate(self, drive: torch.Tensor, dt: float) -> torch.Tensor:
         """Rates [N, C, 2] = spont + max · (drive − adaptation), adaptation tracks the drive."""
-        rates = self.spont.view(1, -1, 1).expand_as(drive).clone()
-        for i, name in enumerate(self.chan_names):
-            p = self.params[name]
-            if p is None or self.layout.channels[name].sense == "mechano":
-                continue
-            d = drive[:, i]
-            a = float(np.exp(-dt / p.adapt_tau_s))
-            target = d * (1 - p.adapt_frac)
-            self.adapt[:, i] = self.adapt[:, i] * a + target * (1 - a)
-            rates[:, i] = (p.spont + p.max_rate * (d - self.adapt[:, i])).clamp(0, p.max_rate)
-        return rates
+        if dt not in self._decay:
+            a = np.exp(-dt / self.adapt_tau)
+            f32 = lambda v: torch.tensor(v, dtype=torch.float32, device=self.device)  # noqa: E731
+            self._decay[dt] = (f32(a).view(1, -1, 1), f32(1 - a).view(1, -1, 1))
+        a, b = self._decay[dt]
+        adapt = self.adapt * a + drive * self.keep * b
+        self.adapt = torch.where(self.adapting, adapt, self.adapt)
+        rate = (self.spont_adapt + self.max_rate * (drive - adapt)).clamp_min(0)
+        rate = torch.minimum(rate, self.max_rate)
+        return torch.where(self.adapting, rate, self.spont.view(1, -1, 1))
 
     def _jo(self, world, body, sites) -> torch.Tensor:
         """JO-C/E rates per neuron from arista deflection (wind + self-motion + gravity)."""
@@ -287,7 +308,7 @@ class SenseBatch:
             (body.mode == AIRBORNE).unsqueeze(-1), body.vel, body.fwd * body.speed.unsqueeze(-1)
         )
         v_rel = air - own  # air velocity relative to the head (mm/s)
-        g = torch.tensor([0.0, 0.0, -1.0], dtype=v_rel.dtype, device=self.device)
+        g = self.gravity
         defl = []
         for sign in (1.0, -1.0):  # left, right arista: forward-outward axes (mirror images)
             ax = body.fwd * np.cos(self.arista_angle) + body.left * (

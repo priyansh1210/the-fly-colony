@@ -98,6 +98,32 @@ class MotorBatch:
                 for n in names:
                     trig += group_members[n].tolist()
         self.trigger_ids = torch.tensor(sorted(set(trig)), dtype=torch.int64, device=device)
+        # Vectorised form of the table: group → primitive input weights (left/one side summed,
+        # right side for LR primitives), per-primitive constants and the command superposition.
+        f64, n_p = torch.float64, len(self.prims)
+        w_in = np.zeros((len(group_names), n_p))
+        w_right = np.zeros_like(w_in)
+        n_cols = np.ones(n_p)
+        sign = np.zeros((n_p, len(COMMANDS)))
+        for i, p in enumerate(self.prims):
+            if p.lr:
+                w_in[p.cols[0], i] = w_right[p.cols[1], i] = 1.0
+            else:
+                w_in[p.cols, i] = 1.0
+                n_cols[i] = len(p.cols)
+            sign[i, COMMANDS.index(p.command)] = p.sign
+        t = lambda v, dt=f64: torch.tensor(v, dtype=dt, device=device)  # noqa: E731
+        self._w_in, self._w_right, self._n_cols = t(w_in), t(w_right), t(n_cols)
+        self._sign = t(sign)
+        col = lambda k: t([getattr(p, k) for p in self.prims])  # noqa: E731
+        self._thr, self._half, self._max, self._cost = (
+            col(k) for k in ("threshold", "half", "max", "cost")
+        )
+        self._lr = col("lr")
+        self._trig_n = t([p.trigger_spikes for p in self.prims], torch.int64)
+        self._trig = self._trig_n > 0
+        self._lat = t([p.latency for p in self.prims], torch.int64)
+        self._prim_ix = torch.arange(n_p, device=device)
         self.ingest_min_extension = float(g("motor.ingest.min_extension"))
         self.groom_walk_factor = float(g("motor.groom.walk_factor"))
         self.n = 0
@@ -133,44 +159,28 @@ class MotorBatch:
         n = rates.shape[0]
         self.resize(n)
         r = rates.double()
-        now = torch.zeros(n, len(self.prims), dtype=torch.float64, device=self.device)
-        for i, p in enumerate(self.prims):
-            if p.trigger_spikes:
-                now[:, i] = (self.spikes >= p.trigger_spikes).double()
-                continue
-            if p.lr:
-                left = self._sat(r[:, p.cols[0]], p)
-                right = self._sat(r[:, p.cols[1]], p)
-                now[:, i] = p.max * (left - right)
-            else:
-                now[:, i] = p.max * self._sat(r[:, p.cols].mean(1), p)
+        left = self._sat((r @ self._w_in) / self._n_cols)  # one-sided: mean over its groups
+        right = self._sat(r @ self._w_right) * self._lr
+        now = self._max * (left - right)
+        now = torch.where(self._trig, (self.spikes.unsqueeze(1) >= self._trig_n).double(), now)
         self.spikes.zero_()
         # Latency line: write now, read each primitive's delayed value.
         depth = self.history.shape[0]
         self.history[self.head] = now
-        out = torch.stack(
-            [self.history[(self.head - p.latency) % depth, :, i] for i, p in enumerate(self.prims)],
-            1,
-        )
+        out = self.history[(self.head - self._lat) % depth, :, self._prim_ix].T  # [N, P]
         self.head = (self.head + 1) % depth
         return self._combine(out)
 
-    @staticmethod
-    def _sat(rate: torch.Tensor, p: Prim) -> torch.Tensor:
-        x = ((rate - p.threshold) / p.half).clamp_min(0)
+    def _sat(self, rate: torch.Tensor) -> torch.Tensor:
+        x = ((rate - self._thr) / self._half).clamp_min(0)
         return x / (1 + x)
 
     def _combine(self, out: torch.Tensor) -> MotorOutput:
-        n = out.shape[0]
-        z = torch.zeros(n, dtype=torch.float64, device=self.device)
-        acc = {c: z.clone() for c in COMMANDS}
-        act: dict[str, torch.Tensor] = {}
-        effort = z.clone()
-        for i, p in enumerate(self.prims):
-            v = out[:, i] * p.sign
-            act[p.name] = out[:, i]
-            acc[p.command] = acc[p.command] + v  # superposition (MOTOR-R-003)
-            effort = effort + out[:, i].abs() * p.cost
+        acc = dict(
+            zip(COMMANDS, ((out @ self._sign).T), strict=True)
+        )  # superposition (MOTOR-R-003)
+        effort = out.abs() @ self._cost
+        act = dict(zip((p.name for p in self.prims), out.T, strict=True))
         groom = acc["groom"].clamp(0, 1)
         speed = acc["speed"] * (1 - groom * (1 - self.groom_walk_factor))  # forelegs busy
         cmd = Commands(

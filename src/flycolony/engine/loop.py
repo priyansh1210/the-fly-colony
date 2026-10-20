@@ -144,10 +144,10 @@ class ClosedLoop:
             & (self.bodies.yaw_rate.abs() < self.move_threshold)
         )
         want = self.physio.intake(self.clock, dt, out.pump, can)
-        taken = torch.zeros_like(want)
         if bool((want > 0).any()):
-            idx = (want > 0).nonzero().squeeze(1)
-            taken[idx] = self.world.patches.ingest(self.bodies.world[idx], slot[idx], want[idx])
+            taken = self.world.patches.ingest(self.bodies.world, slot, want)
+        else:
+            taken = torch.zeros_like(want)
         self.physio.step(self.clock, dt, out.effort, quiet, taken, sucrose)
         for obs in self.observers:
             obs(self)

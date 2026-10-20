@@ -177,18 +177,31 @@ class Patches:
         Handles several flies on one patch in a fixed order (sorted by fly index) so the result
         does not depend on GPU scheduling.
         """
-        taken = torch.zeros_like(volume)
-        for i in range(volume.shape[0]):  # few feeding flies per step; ordered, deterministic
-            w, k = int(world[i]), int(slot[i])
-            if k < 0 or not bool(self.active[w, k]) or int(self.stage[w, k]) == DEPLETED:
-                continue
-            v = torch.minimum(volume[i], self.volume[w, k])
-            self.volume[w, k] -= v
-            self.ingested[w, k] += v
-            taken[i] = v
-            if float(self.volume[w, k]) <= 0:
-                self.stage[w, k] = DEPLETED
-                self.dirty = True
+        if volume.numel() == 0:
+            return torch.zeros_like(volume)
+        k = slot.clamp_min(0)
+        ok = (slot >= 0) & self.active[world, k] & (self.stage[world, k] != DEPLETED)
+        req = torch.where(ok, volume, torch.zeros_like(volume))
+        # Fixed fly order: each fly takes what is left after the lower-indexed flies on its patch.
+        key = torch.where(ok, world * self.active.shape[1] + k, torch.full_like(k, -1))
+        n = volume.shape[0]
+        same = (key.unsqueeze(1) == key.unsqueeze(0)) & ok.unsqueeze(0)
+        before = torch.ones(n, n, dtype=torch.bool, device=volume.device).tril(-1)
+        ahead = ((same & before) * req.unsqueeze(0)).sum(1)  # asked for by earlier flies
+        total = (same * req.unsqueeze(0)).sum(1)  # asked for by all flies on the patch
+        left = self.volume[world, k]
+        taken = torch.minimum((left - ahead).clamp_min(0), req)
+        # Every fly on a patch computes the same new patch values, so the scattered writes of
+        # duplicates agree and the result does not depend on GPU scheduling.
+        flat = (world * self.active.shape[1] + k)[ok]
+        new = (left - total).clamp_min(0)[ok]
+        took = (left[ok] - new).clamp_min(0)
+        self.ingested.view(-1)[flat] = self.ingested.view(-1)[flat] + took
+        self.volume.view(-1)[flat] = new
+        gone = new <= 0
+        if bool(gone.any()):
+            self.stage.view(-1)[flat[gone]] = DEPLETED
+            self.dirty = True
         return taken
 
     def emission(self, life_s: float) -> torch.Tensor:

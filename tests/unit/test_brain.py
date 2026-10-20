@@ -228,6 +228,26 @@ def test_graded_coupling_and_dynamics(tmp_path, registry):
     assert int(b.last[0, 3]) < 0
 
 
+def test_graded_update_is_independent_of_chunking(tmp_path, registry, monkeypatch):
+    """Fly chunks of the graded update give bit-identical coupling (fixed-point integer sums)."""
+    from flycolony.brain import engine
+
+    p = params(registry)
+    edges = [(0, 1, 10.0), (0, 2, -3.0), (3, 1, 7.0), (3, 2, 2.0), (2, 1, 5.0)]
+    tpl = tiny_template(tmp_path, edges, 4, graded=(0, 3))
+    b = batch(tpl, p, graded=True)
+    for i in range(5):
+        b.add(FlyBrainSpec(f"f{i}", i + 1))
+    b.u[:, 0] = torch.linspace(1.0, 9.0, 5) + p.graded_v_thresh - p.v_rest
+    b.u[:, 3] = torch.linspace(4.0, 0.5, 5) + p.graded_v_thresh - p.v_rest
+    held = []
+    for chunk in (1 << 30, 1):  # all flies at once; one fly per chunk
+        monkeypatch.setattr(engine, "GRADED_CHUNK_BYTES", chunk)
+        b._update_graded()
+        held.append(b.graded_in.clone())
+    assert torch.equal(held[0], held[1]) and bool((held[0] != 0).any())
+
+
 # --- T-BRAIN-U-007: output rates ----------------------------------------------------------
 
 

@@ -17,7 +17,7 @@ Units: mm, s, concentrations in amount per mm³ (species-specific amount unit), 
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 import torch
 
@@ -70,6 +70,9 @@ class Grid:
         }
         self.volume = self.cell**3  # registry-ok: 3D cell layout
         self.area = self.cell**2
+        # Constants for point queries (built once: no host→device copies per query).
+        self._origin = torch.tensor(self.origin, dtype=torch.float64, device=device)
+        self._hi = torch.tensor(self.shape, device=device) - 1
 
     def centers(self) -> torch.Tensor:
         nx, ny, nz = self.shape
@@ -82,10 +85,8 @@ class Grid:
 
     def cell_of(self, p: torch.Tensor) -> torch.Tensor:
         """Integer cell index (clamped to the grid) of points [..., 3] → [..., 3]."""
-        o = torch.tensor(self.origin, dtype=p.dtype, device=p.device)
-        hi = torch.tensor(self.shape, device=p.device) - 1
-        idx = torch.floor((p - o) / self.cell).long()
-        return torch.minimum(idx.clamp_min(0), hi)
+        idx = torch.floor((p - self._origin.to(p.dtype)) / self.cell).long()
+        return torch.minimum(idx.clamp_min(0), self._hi)
 
     def boundary_inflow(self, vents: list[Vent]) -> dict[str, torch.Tensor]:
         """Normal velocity on each domain-boundary face (into the domain > 0), per side.
@@ -155,9 +156,12 @@ class Wind:
     v: torch.Tensor
     w: torch.Tensor
     residual: float = 0.0
+    _max_speed: float | None = field(default=None, init=False, repr=False)
 
     def max_speed(self) -> float:
-        return float(max(self.u.abs().max(), self.v.abs().max(), self.w.abs().max()))
+        if self._max_speed is None:  # the faces never change after the solve
+            self._max_speed = float(max(self.u.abs().max(), self.v.abs().max(), self.w.abs().max()))
+        return self._max_speed
 
     def at(self, grid: Grid, p: torch.Tensor) -> torch.Tensor:
         """Wind vector at points [..., 3]: cell-centre average of the face velocities (piecewise)."""
@@ -272,6 +276,11 @@ class Fields:
         self.source = torch.zeros(shape, dtype=f64, device=dev)  # amount per s per cell
         self.relax_target = torch.zeros(shape, dtype=f64, device=dev)
         self.relax_rate = torch.zeros(shape, dtype=f64, device=dev)  # 1/s, 0 = no relaxation
+        self._diff_max = float(self.diff.max()) if self.diff.numel() else 0.0
+        # The 8 trilinear corners as index offsets [8, 3] and a mask of which are the upper ones.
+        corners = [(dx, dy, dz) for dx in (0, 1) for dy in (0, 1) for dz in (0, 1)]
+        self._corners = torch.tensor(corners, device=dev)
+        self._upper = self._corners.bool()
 
     def index(self, name: str) -> int:
         return self.names.index(name)
@@ -280,7 +289,7 @@ class Fields:
         """Sub-steps needed for stability (CFL ≤ max_cfl, diffusion number ≤ max_diff)."""
         h = self.grid.cell
         cfl = self.wind.max_speed() * dt / h
-        dn = float(self.diff.max()) * dt / (h * h) if self.diff.numel() else 0.0
+        dn = self._diff_max * dt / (h * h)
         return max(1, math.ceil(cfl / max_cfl), math.ceil(dn / max_diff))
 
     def step(self, dt: float, *, max_cfl: float, max_diff: float) -> None:
@@ -345,26 +354,14 @@ class Fields:
     def sample(self, world: torch.Tensor, p: torch.Tensor) -> torch.Tensor:
         """Trilinear concentration at points p [P, 3] in worlds `world` [P] → [P, S]."""
         g = self.grid
-        o = torch.tensor(g.origin, dtype=torch.float64, device=p.device)
-        x = (p.double() - o) / g.cell - 0.5  # in cell-centre index units
-        n = torch.tensor(g.shape, device=p.device)
+        x = (p.double() - g._origin) / g.cell - 0.5  # in cell-centre index units
         i0 = torch.floor(x).long()
-        t = x - i0
-        out = torch.zeros(p.shape[0], len(self.species), dtype=torch.float64, device=p.device)
-        for dx in (0, 1):
-            for dy in (0, 1):
-                for dz in (0, 1):
-                    idx = torch.minimum(
-                        (i0 + torch.tensor([dx, dy, dz], device=p.device)).clamp_min(0), n - 1
-                    )
-                    w = (
-                        (t[:, 0] if dx else 1 - t[:, 0])
-                        * (t[:, 1] if dy else 1 - t[:, 1])
-                        * (t[:, 2] if dz else 1 - t[:, 2])
-                    )
-                    vals = self.c[world, :, idx[:, 0], idx[:, 1], idx[:, 2]]  # [P, S]
-                    out += vals * w.unsqueeze(-1)
-        return out
+        t = (x - i0).unsqueeze(1)  # [P, 1, 3]
+        idx = torch.minimum((i0.unsqueeze(1) + self._corners).clamp_min(0), g._hi)  # [P, 8, 3]
+        f = torch.where(self._upper, t, 1 - t)  # per-axis weights [P, 8, 3]
+        w = f[..., 0] * f[..., 1] * f[..., 2]  # [P, 8]
+        vals = self.c[world.unsqueeze(1), :, idx[..., 0], idx[..., 1], idx[..., 2]]  # [P, 8, S]
+        return (vals * w.unsqueeze(-1)).sum(1)
 
     def state_dict(self) -> dict[str, torch.Tensor]:
         return {
