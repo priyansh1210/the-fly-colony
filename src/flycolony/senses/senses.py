@@ -154,9 +154,12 @@ class SenseBatch:
         # Taste channels with a transduction rule, in a fixed order, and their drive columns.
         self.taste_rules = [
             (name, self.params[name])
-            for name in ("sugar", "bitter", "water", "low_salt", "high_salt")
+            for name in ("sugar", "bitter", "water", "sugar_low_salt", "high_salt")
             if name in self.taste_idx and self.params[name] is not None
         ]
+        mixed = layout.channels.get("sugar_low_salt")
+        key = mixed.spec.get("sucrose_params") if mixed is not None else None
+        self.mixed_sucrose = ChannelParams.from_registry(reg, key) if key else None
         self.taste_cols = torch.tensor(
             [self.taste_idx[name] for name, _ in self.taste_rules], device=device
         )
@@ -234,8 +237,13 @@ class SenseBatch:
             elif name == "water":  # ppk28: on liquid contact, inhibited by osmolality
                 osm = c[..., SUCROSE] + c[..., BITTER] + 2 * c[..., SALT]
                 x = wet * self.water_half_osm / (self.water_half_osm + osm)
-            elif name == "low_salt":
+            elif name == "sugar_low_salt":  # Gr64f-like: low salt and sucrose, larger term
                 x = hill(c[..., SALT].clamp_max(self.salt_low_max), p.half, p.hill_n)
+                q = self.mixed_sucrose
+                if q is not None:
+                    xs_ = hill(c[..., SUCROSE], q.half, q.hill_n)
+                    g = gains.get("sugar")  # hunger sensitises the sucrose response (route)
+                    x = torch.maximum(x, xs_ if g is None else xs_ * g.unsqueeze(-1))
             else:  # high_salt
                 x = hill(c[..., SALT], p.half, p.hill_n)
             gain = gains.get(name)

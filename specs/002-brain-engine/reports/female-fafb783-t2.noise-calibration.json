@@ -1,0 +1,152 @@
+{
+  "spec": "002 BRAIN-R-013 background-noise calibration (Phase 2)",
+  "template": "female-fafb783-t2",
+  "rule": "largest brain.noise.w with central spiking mean in [1.0, 4.0] Hz and no runaway; rate fixed at brain.noise.rate = 100.0 Hz",
+  "amendment": "2026-10-21, decided by the project owner after the first scan: the Kenyon-cell criterion (mean <= 0.5 Hz) was dropped because only a fully silent brain met it (0.5 mV gave 0 Hz everywhere, against the registry's 1-5 Hz central target). The KC rate is reported as a known limitation (in vivo ~0.1 Hz; the model has uniform LIF parameters and no APL feedback).",
+  "first_scan_2026_10_21": {
+    "rule": "central mean <= 4 Hz and KC mean <= 0.5 Hz and no runaway",
+    "chosen_noise_w_mv": 0.5,
+    "central_mean_hz_by_w": {
+      "1.5": 23.78,
+      "1.25": 22.12,
+      "1.0": 20.73,
+      "0.9": 18.18,
+      "0.8": 10.78,
+      "0.7": 4.98,
+      "0.6": 1.9,
+      "0.5": 0.0,
+      "0.4": 0.0,
+      "0.3": 0.0
+    },
+    "kc_mean_hz_by_w": {
+      "1.5": 59.15,
+      "1.25": 56.35,
+      "1.0": 53.67,
+      "0.9": 47.26,
+      "0.8": 27.92,
+      "0.7": 12.81,
+      "0.6": 4.88,
+      "0.5": 0.0,
+      "0.4": 0.0,
+      "0.3": 0.0
+    }
+  },
+  "sources": [
+    "State of Brain Emulation Report 2025, arXiv:2510.15745 (whole-brain mean <= ~4 Hz)",
+    "Turner, Bazhenov & Laurent (2008) J Neurophysiol 99:734 (KC 0.1 +/- 0.4 Hz; reported only)"
+  ],
+  "condition": {
+    "flies": 8,
+    "warmup_s": 0.5,
+    "measured_s": 2.0,
+    "dt_ms": 0.5,
+    "neurons": {
+      "central_spiking": 32381,
+      "kc_spiking": 5177
+    }
+  },
+  "scan": [
+    {
+      "noise_w_mv": 1.5,
+      "central_mean_hz": 23.78468662178438,
+      "central_median_hz": 2.5,
+      "central_silent_frac": 0.14879095766035638,
+      "kc_mean_hz": 59.15309300753332,
+      "all_spiking_mean_hz": 12.628232630592336,
+      "runaway_events": 0,
+      "meets_rule": false
+    },
+    {
+      "noise_w_mv": 1.0,
+      "central_mean_hz": 20.726873011951454,
+      "central_median_hz": 0.0625,
+      "central_silent_frac": 0.45881844291405455,
+      "kc_mean_hz": 53.669258257678194,
+      "all_spiking_mean_hz": 9.887787784979736,
+      "runaway_events": 0,
+      "meets_rule": false
+    },
+    {
+      "noise_w_mv": 0.8,
+      "central_mean_hz": 10.77550685587227,
+      "central_median_hz": 0.0,
+      "central_silent_frac": 0.5898829560544764,
+      "kc_mean_hz": 27.919173749275643,
+      "all_spiking_mean_hz": 5.126222756135233,
+      "runaway_events": 0,
+      "meets_rule": false
+    },
+    {
+      "noise_w_mv": 0.7,
+      "central_mean_hz": 4.981777508415429,
+      "central_median_hz": 0.0,
+      "central_silent_frac": 0.6356196535005095,
+      "kc_mean_hz": 12.811497971798339,
+      "all_spiking_mean_hz": 2.4022001359718024,
+      "runaway_events": 0,
+      "meets_rule": false
+    },
+    {
+      "noise_w_mv": 0.68,
+      "central_mean_hz": 1.8815779315030419,
+      "central_median_hz": 0.0,
+      "central_silent_frac": 0.6587505018374973,
+      "kc_mean_hz": 4.663475468418003,
+      "all_spiking_mean_hz": 0.9822626103945823,
+      "runaway_events": 0,
+      "meets_rule": true
+    },
+    {
+      "noise_w_mv": 0.66,
+      "central_mean_hz": 1.4668690744572435,
+      "central_median_hz": 0.0,
+      "central_silent_frac": 0.6663784317964239,
+      "kc_mean_hz": 3.6489279505505117,
+      "all_spiking_mean_hz": 0.776596183548732,
+      "runaway_events": 0,
+      "meets_rule": true
+    },
+    {
+      "noise_w_mv": 0.64,
+      "central_mean_hz": 0.07609207559988883,
+      "central_median_hz": 0.0,
+      "central_silent_frac": 0.9533677156357123,
+      "kc_mean_hz": 0.0,
+      "all_spiking_mean_hz": 0.1309124632018059,
+      "runaway_events": 0,
+      "meets_rule": false
+    },
+    {
+      "noise_w_mv": 0.62,
+      "central_mean_hz": 0.4577877459003737,
+      "central_median_hz": 0.0,
+      "central_silent_frac": 0.6833328186282079,
+      "kc_mean_hz": 1.0326806065288778,
+      "all_spiking_mean_hz": 0.28980888041081965,
+      "runaway_events": 0,
+      "meets_rule": false
+    },
+    {
+      "noise_w_mv": 0.6,
+      "central_mean_hz": 1.895227911429542,
+      "central_median_hz": 0.0,
+      "central_silent_frac": 0.6743460671381366,
+      "kc_mean_hz": 4.876448715472281,
+      "all_spiking_mean_hz": 0.9265909030903883,
+      "runaway_events": 0,
+      "meets_rule": true
+    },
+    {
+      "noise_w_mv": 0.5,
+      "central_mean_hz": 0.0007527562459466972,
+      "central_median_hz": 0.0,
+      "central_silent_frac": 0.996726475402242,
+      "kc_mean_hz": 0.0,
+      "all_spiking_mean_hz": 0.011036157938509063,
+      "runaway_events": 0,
+      "meets_rule": false
+    }
+  ],
+  "chosen_noise_w_mv": 0.68,
+  "previous_noise_w_mv": 1.5
+}

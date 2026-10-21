@@ -8,8 +8,9 @@ taste:
      citation: "Gr66a bitter GRNs. Moon S.J. et al. (2006) Curr Biol 16:1812; Meunier N. et al. (2003) J Neurobiol 56:139"}
   - {channel: water, group: taste.labellar.water, stimulus: water, params: senses.taste.water,
      citation: "ppk28 water GRNs, inhibited by osmolality. Cameron P. et al. (2010) PNAS 107:2"}
-  - {channel: low_salt, group: taste.labellar.sugar_low_salt, stimulus: salt_low, params: senses.taste.low_salt,
-     citation: "Low-salt attractive GRNs. Zhang Y.V. et al. (2013) Science 340:1334"}
+  - {channel: sugar_low_salt, group: taste.labellar.sugar_low_salt, stimulus: [salt_low, sucrose],
+     params: senses.taste.low_salt, sucrose_params: senses.taste.sugar,
+     citation: "Sugar/low-salt GRNs (Engert S. et al. (2022) eLife 11:e78110 sub-class sugar/low_salt): low salt activates Gr64f sugar GRNs (Jaeger A.H. et al. (2018) eLife 7:e37167; Zhang Y.V. et al. (2013) Science 340:1334). Response = larger of the low-salt and sucrose terms (ASSUMPTION)."}
   - {channel: high_salt, group: taste.labellar.high_salt_heavy_metal, stimulus: salt_high, params: senses.taste.high_salt,
      citation: "High-salt aversive GRNs. Zhang Y.V. et al. (2013) Science 340:1334; Jaeger A.H. et al. (2018) eLife 7:e37167"}
   - {channel: glutamate, group: taste.labellar.glutamate, stimulus: none, params: null,

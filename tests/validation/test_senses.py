@@ -63,6 +63,10 @@ def test_taste_channels_are_specific(registry, layout):  # T-SENSE-V-001, SENSE-
     # Water cells respond to liquid contact, less with solutes.
     water = _mean(r, layout, "water")
     assert water[0] > water[2]
+    # Sugar/low-salt GRNs (Gr64f-like) answer sucrose as well as low salt.
+    mixed = _mean(r, layout, "sugar_low_salt")
+    spont_mixed = registry.get("senses.taste.low_salt.spont_hz")
+    assert mixed[0] > 5 * spont_mixed and mixed[2] == spont_mixed
 
 
 def test_hunger_raises_sugar_response(registry, layout):  # T-SENSE-V-008, SENSE-AC-08
