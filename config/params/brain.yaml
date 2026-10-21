@@ -115,16 +115,21 @@ entries:
       owner: "002"
     owner_spec: "002"
   - id: brain.noise.w
-    value: 1.5
+    value: 1.4
     units: mV
     valid_range: [0, 100]
     assumption:
       rationale: >-
-        Membrane kick per background event. With brain.noise.rate the mean depolarisation is
-        rate x w x tau_m = 3 mV, below the 7 mV rest-to-threshold gap, so neurons fire on
-        fluctuations and recurrent input. Scanned 2026-10-12 on female-fafb783-t2 (production
-        model, 0.5 s): median 2 Hz over spiking neurons, 39% silent, mean 10 Hz, no runaway
-        (100 Hz x 1.0 mV gave 81% silent; 200 Hz x 1.0 mV a 12 Hz mean). Paired with brain.noise.rate.
+        Membrane kick per background event, calibrated 2026-10-21 by tools/calibrate_noise.py on
+        female-fafb783-t2 (production model with brain.electrical.excitatory_pairs, at rest,
+        8 flies, 3 s warm-up, 2 s measured): the largest kick in the scan whose central-brain mean
+        lies in the registry's 1-5 Hz target band, capped at 4 Hz (metabolic upper bound on the
+        whole-brain mean, State of Brain Emulation Report 2025, arXiv:2510.15745). Result: central mean
+        3.6 Hz (median 1.1 Hz, 11% silent), per-fly 3.58-3.64 Hz, Kenyon cells 0.13 Hz (in vivo
+        0.1 +/- 0.4, Turner et al. 2008 J Neurophysiol 99:734), no runaway. Report:
+        specs/002-brain-engine/reports/female-fafb783-t2.noise-calibration.json. The previous 1.5 mV
+        (2026-10-12, 0.5 s scan without the electrical-pair rule) put every brain in a
+        self-sustained ~24 Hz state. Paired with brain.noise.rate.
       owner: "002"
     owner_spec: "002"
 
@@ -277,6 +282,27 @@ entries:
       where: APL inhibition of Kenyon cells is graded and spatially local (non-spiking signalling); BRAIN-OQ-02 literature list
     owner_spec: "002"
     notes: Central-brain types simulated as graded units in addition to the template's flyvis types (BRAIN-OQ-02).
+  - id: brain.electrical.excitatory_pairs
+    value: ["ALLN>ALPN"]
+    units: cell-class pairs
+    source:
+      authors: Yaksi E., Wilson R.I.
+      year: 2010
+      doi: 10.1016/j.neuron.2010.08.041
+      where: >-
+        Paired eLN-PN recordings: the connection passes depolarizing and hyperpolarizing
+        signals, is not reduced by blocking chemical transmission and is abolished by a
+        gap-junction (shakB) mutation; eLN chemical output targets inhibitory LNs. See also
+        Huang J. et al. (2010) Neuron 67:1021 (doi 10.1016/j.neuron.2010.08.025), electrical plus
+        a cholinergic component.
+    owner_spec: "002"
+    notes: >-
+      Production variant only (the reference variant keeps every chemical edge). Chemical edges
+      from excitatory antennal-lobe local neurons onto projection neurons get weight 0, because
+      that coupling is electrical and the connectome has no gap junctions (not modelled: a known
+      limitation). Found 2026-10-21: these edges (summed weight ~44k, as large as all ORN->PN
+      input) make the resting brain ignite into a self-sustained ~20 Hz state; see
+      specs/002-brain-engine/reports/female-fafb783-t2.ignition-diagnostic.json.
   - id: brain.graded.max_rate
     value: 300.0
     units: Hz

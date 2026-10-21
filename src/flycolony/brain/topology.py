@@ -43,6 +43,25 @@ class Topology:
         return sum(t.numel() * t.element_size() for t in ts)
 
 
+def electrical_edges(template: BrainTemplate, pairs: tuple[str, ...]) -> np.ndarray:
+    """Edge indices of chemical edges from excitatory PRE_CLASS onto POST_CLASS neurons."""
+    e = template.edges
+    neurons = template.neurons
+    indptr = np.asarray(e["indptr"], dtype=np.int64)
+    pre = np.repeat(np.arange(neurons.height, dtype=np.int64), np.diff(indptr))
+    post = np.asarray(e["indices"], dtype=np.int64)
+    cls = neurons["cell_class"].fill_null("").to_numpy()
+    excitatory = neurons["sign"].to_numpy() > 0
+    hit = np.zeros(post.size, dtype=bool)
+    for pair in pairs:
+        a, sep, b = pair.partition(">")
+        if not sep or not a.strip() or not b.strip():
+            raise ValueError(f"electrical pair {pair!r} must look like 'PRE_CLASS>POST_CLASS'")
+        src = (cls == a.strip()) & excitatory
+        hit |= src[pre] & (cls[post] == b.strip())
+    return np.flatnonzero(hit)
+
+
 def build_topology(
     template: BrainTemplate,
     device: torch.device,
@@ -53,6 +72,7 @@ def build_topology(
     weight_scale: float | np.ndarray = 1.0,
     extra_graded: tuple[str, ...] = (),
     graded_tau_ms: dict[str, float] | None = None,
+    electrical_pairs: tuple[str, ...] = (),
 ) -> Topology:
     """Move a template's connectivity to `device`.
 
@@ -62,6 +82,9 @@ def build_topology(
     `extra_graded` lists central-brain types simulated as graded units (BRAIN-OQ-02).
     `weight_scale` is the cross-dataset normalization (CONN-R-031): 1 for FAFB; for MaleCNS a
     scalar or one factor per postsynaptic neuron (see build.weight_scale).
+    `electrical_pairs` lists "PRE_CLASS>POST_CLASS" cell-class pairs whose coupling is electrical:
+    chemical edges from excitatory PRE_CLASS neurons onto POST_CLASS neurons get weight 0
+    (gap junctions are not in the connectome and not modelled).
     """
     if weight_dtype not in WEIGHT_DTYPES:
         raise ValueError(f"weight dtype {weight_dtype!r}; use one of {sorted(WEIGHT_DTYPES)}")
@@ -74,6 +97,8 @@ def build_topology(
     weight = (np.asarray(e["weight"], dtype=np.float64) * (w_per_synapse * scale)).astype(
         np.float32
     )
+    if electrical_pairs:
+        weight[electrical_edges(template, electrical_pairs)] = 0.0
     if graded:
         is_graded = (neurons["model"] == "graded").to_numpy()
         is_graded |= neurons["cell_type"].is_in(list(extra_graded)).fill_null(False).to_numpy()

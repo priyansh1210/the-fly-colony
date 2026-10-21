@@ -19,6 +19,12 @@ fire ~2.5x the central mean at every kick, so only a fully silent brain met it (
 everywhere), which violates the 1-5 Hz target. The KC rate is now measured and reported as a known
 model limitation (no cell-type thresholds, no APL feedback), not used for the choice.
 
+Second scan (same day, before brain.electrical.excitatory_pairs): the in-band 8-fly mean at
+0.68 mV was a mixture of near-silent and ignited (~20 Hz) brains, and ignition is irreversible and
+can start seconds into a run (specs/002-brain-engine/reports/<template>.ignition-diagnostic.json).
+Since the electrical-pair rule the scan therefore warms up for 3 s and records per-fly central
+means, so a two-state population shows up as a wide per-fly spread.
+
 Writes specs/002-brain-engine/reports/<template>.noise-calibration.json.
 """
 
@@ -43,13 +49,13 @@ from flycolony.registry import Registry
 CENTRAL_MIN_HZ = 1.0
 CENTRAL_MAX_HZ = 4.0
 KC_IN_VIVO_HZ = 0.1
-KICKS_MV = (1.5, 1.0, 0.8, 0.7, 0.68, 0.66, 0.64, 0.62, 0.6, 0.5)
+KICKS_MV = (2.0, 1.75, 1.5, 1.4, 1.3, 1.2, 1.1, 1.0, 0.9, 0.8, 0.7)
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--flies", type=int, default=8)
-    ap.add_argument("--warmup", type=float, default=0.5)
+    ap.add_argument("--warmup", type=float, default=3.0)
     ap.add_argument("--seconds", type=float, default=2.0)
     a = ap.parse_args()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # device-ok: tool
@@ -77,12 +83,15 @@ def main() -> None:
         b.taps.append(lambda _b, _t, s, c=counts: c.index_add_(0, s, torch.ones_like(s)))
         steps = round(a.seconds * MS_PER_S / setup.dt)
         events += b.run(steps)
-        rate = (counts.view(b.batch_size, b.n).double().mean(0) / a.seconds).cpu().numpy()
+        per_fly = (counts.view(b.batch_size, b.n).double() / a.seconds).cpu().numpy()
+        rate = per_fly.mean(0)
+        fly_central = per_fly[:, central].mean(1)
         row = {
             "noise_w_mv": w,
             "central_mean_hz": float(rate[central].mean()),
             "central_median_hz": float(np.median(rate[central])),
             "central_silent_frac": float((rate[central] == 0).mean()),
+            "central_per_fly_hz": [round(float(x), 3) for x in fly_central],
             "kc_mean_hz": float(rate[kc].mean()),
             "all_spiking_mean_hz": float(rate[spiking].mean()),
             "runaway_events": sum(e.kind == "brain.runaway" for e in events),
@@ -95,7 +104,8 @@ def main() -> None:
         print(
             f"w={w:4.2f} mV  central mean {row['central_mean_hz']:6.2f} Hz  median"
             f" {row['central_median_hz']:5.2f}  silent {row['central_silent_frac']:.2f}"
-            f"  KC {row['kc_mean_hz']:5.2f} Hz  runaway {row['runaway_events']}"
+            f"  KC {row['kc_mean_hz']:5.2f} Hz  flies {fly_central.min():.2f}-{fly_central.max():.2f}"
+            f"  runaway {row['runaway_events']}"
             f"  {'ok' if row['meets_rule'] else '-'}",
             flush=True,
         )
@@ -145,6 +155,18 @@ def main() -> None:
                 "0.3": 0.0,
             },
         },
+        "second_scan_2026_10_21": {
+            "note": "before brain.electrical.excitatory_pairs; chose 0.68 mV, not applied (two-state)",
+            "central_mean_hz_by_w": {
+                "0.7": 4.98,
+                "0.68": 1.88,
+                "0.66": 1.47,
+                "0.64": 0.08,
+                "0.62": 0.46,
+                "0.6": 1.90,
+            },
+        },
+        "electrical_pairs": list(reg.get("brain.electrical.excitatory_pairs")),
         "sources": [
             "State of Brain Emulation Report 2025, arXiv:2510.15745 (whole-brain mean <= ~4 Hz)",
             "Turner, Bazhenov & Laurent (2008) J Neurophysiol 99:734 (KC 0.1 +/- 0.4 Hz; reported only)",

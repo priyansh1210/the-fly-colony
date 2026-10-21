@@ -476,6 +476,39 @@ def test_graded_time_constants_per_type(tmp_path, registry):  # BRAIN-R-014 (fly
     assert float(b.e_m[2]) == pytest.approx(math.exp(-0.1 / p.tau_m), rel=1e-6)  # spiking C2
 
 
+def test_electrical_pairs_drop_only_excitatory_chemical_edges(
+    tmp_path, registry
+):  # 002 gap junctions
+    from dataclasses import replace
+
+    import polars as pl
+
+    from flycolony.brain.topology import build_topology
+
+    p = params(registry)
+    # 0 excitatory LN, 1 inhibitory LN, 2 PN, 3 other
+    edges = [(0, 2, 5.0), (0, 1, 4.0), (1, 2, -3.0), (0, 3, 2.0), (3, 2, 1.0)]
+    tpl = tiny_template(tmp_path, edges, 4)
+    tpl = replace(
+        tpl,
+        neurons=tpl.neurons.with_columns(
+            pl.Series("cell_class", ["ALLN", "ALLN", "ALPN", None]),
+            pl.Series("sign", [1, -1, 1, 1], dtype=pl.Int8),
+        ),
+    )
+    cpu = torch.device("cpu")  # device-ok: test
+    base = build_topology(tpl, cpu, w_per_synapse=p.w_syn, graded=False)
+    cut = build_topology(
+        tpl, cpu, w_per_synapse=p.w_syn, graded=False, electrical_pairs=("ALLN>ALPN",)
+    )
+    changed = (base.weight != cut.weight).nonzero().flatten().tolist()
+    pre = np.repeat(np.arange(4), np.diff(tpl.edges["indptr"]))
+    assert [(int(pre[i]), int(tpl.edges["indices"][i])) for i in changed] == [(0, 2)]
+    assert float(cut.weight[changed[0]]) == 0.0
+    with pytest.raises(ValueError, match="PRE_CLASS>POST_CLASS"):
+        build_topology(tpl, cpu, w_per_synapse=p.w_syn, graded=False, electrical_pairs=("ALLN",))
+
+
 def test_agreement_excludes_driven_neurons():  # BRAIN-R-081 metric
     from flycolony.brain.assays import agreement
 
