@@ -1,0 +1,762 @@
+{
+  "brain_dt_ms": 0.5,
+  "config_hash": "3d17abfb058b77e8ccbdf1504f389491167c1d30a44b751e0daf7dac68713a35",
+  "gate": "plume",
+  "gates_hash": "653ad411dfeac173a6a30dc7232bb8c5c0e1d34a31ec63262ba80de5e3935345",
+  "id": "MOTOR-AC-04",
+  "model_hash": "91bfcb55864d8f60a3a5b5f35fd14b3557f48d9d7faa6fcf653280c555b95348",
+  "passed": false,
+  "pipeline_version": "fc3858a7ea42",
+  "protocol": {
+    "arena": {
+      "height": 30,
+      "kind": "box",
+      "size_x": 160,
+      "size_y": 50
+    },
+    "condition": {
+      "source": {
+        "medium": "vinegar_source",
+        "x": 15.0,
+        "y": 25.0
+      }
+    },
+    "control": {},
+    "id": "MOTOR-AC-04",
+    "outcome": "reach",
+    "reach_mm": 15.0,
+    "seconds": 30.0,
+    "start": {
+      "heading_deg": "random",
+      "x": 140.0,
+      "y": 25.0
+    },
+    "test": "fisher_greater",
+    "wind_mm_s": 300.0
+  },
+  "registry_hash": "b6a94acf85a36ac7ebb2ab027ec7147d48d744f4afcdbdf27896a743074ce5c2",
+  "status": "run",
+  "summary": {
+    "alpha": 0.01,
+    "condition": {
+      "fraction": 0.0,
+      "n": 50,
+      "successes": 0
+    },
+    "control": {
+      "fraction": 0.0,
+      "n": 50,
+      "successes": 0
+    },
+    "min_fraction": null,
+    "p_value": 1.0,
+    "passed": false,
+    "test": "fisher_greater"
+  },
+  "template": "female-fafb783-t2",
+  "trials": [
+    {
+      "arm": "condition",
+      "heading": 3.775462925227831,
+      "min_distance_mm": 124.2501291387235,
+      "seed": 103000,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 0.38299996396912656,
+      "min_distance_mm": 125.6198943689441,
+      "seed": 103001,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 5.028832142976837,
+      "min_distance_mm": 125.28298898727489,
+      "seed": 103002,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 2.1595844024825697,
+      "min_distance_mm": 120.78563859677845,
+      "seed": 103003,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 1.3122640418813247,
+      "min_distance_mm": 124.33104623676746,
+      "seed": 103004,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 3.7611357092183693,
+      "min_distance_mm": 124.26836946757767,
+      "seed": 103005,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 4.017697020621713,
+      "min_distance_mm": 124.42578707409696,
+      "seed": 103006,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 4.219268457115075,
+      "min_distance_mm": 124.57648319001993,
+      "seed": 103007,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 5.87264600314663,
+      "min_distance_mm": 125.82572777192672,
+      "seed": 103008,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 2.051468303799384,
+      "min_distance_mm": 124.00034208586513,
+      "seed": 103009,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 1.6818547851196652,
+      "min_distance_mm": 123.96933855657981,
+      "seed": 103010,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 3.73910888829199,
+      "min_distance_mm": 124.25696962290898,
+      "seed": 103011,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 1.2036572747799934,
+      "min_distance_mm": 124.6031684720932,
+      "seed": 103012,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 0.8948570814445241,
+      "min_distance_mm": 124.4708623729001,
+      "seed": 103013,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 1.7089219508648463,
+      "min_distance_mm": 124.08134353068326,
+      "seed": 103014,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 3.60351312701833,
+      "min_distance_mm": 124.14754916791296,
+      "seed": 103015,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 4.308928546199813,
+      "min_distance_mm": 124.64940532949291,
+      "seed": 103016,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 4.466231201565546,
+      "min_distance_mm": 124.78374162649466,
+      "seed": 103017,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 2.6279667808300258,
+      "min_distance_mm": 124.03005481373273,
+      "seed": 103018,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 4.539837174983756,
+      "min_distance_mm": 124.84862136818805,
+      "seed": 103019,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 5.492718430665056,
+      "min_distance_mm": 125.63479026451533,
+      "seed": 103020,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 1.8040695082933769,
+      "min_distance_mm": 124.01300734153025,
+      "seed": 103021,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 3.3725191212023655,
+      "min_distance_mm": 124.0525676830473,
+      "seed": 103022,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 4.402550250061062,
+      "min_distance_mm": 124.72853063947075,
+      "seed": 103023,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 1.3912035180045603,
+      "min_distance_mm": 124.34946082340517,
+      "seed": 103024,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 5.393311500906106,
+      "min_distance_mm": 125.5685062966788,
+      "seed": 103025,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 5.198280712888784,
+      "min_distance_mm": 125.42282231700861,
+      "seed": 103026,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 1.4677456715336443,
+      "min_distance_mm": 124.21114859913479,
+      "seed": 103027,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 4.315196253628597,
+      "min_distance_mm": 124.65461462698202,
+      "seed": 103028,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 4.927476344733085,
+      "min_distance_mm": 125.1951771736711,
+      "seed": 103029,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 5.438974355675443,
+      "min_distance_mm": 125.59969065752706,
+      "seed": 103030,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 5.101334324154407,
+      "min_distance_mm": 125.34405777259981,
+      "seed": 103031,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 3.8980043832421916,
+      "min_distance_mm": 124.13900929105615,
+      "seed": 103032,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 2.095567891027417,
+      "min_distance_mm": 124.0507687020417,
+      "seed": 103033,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 3.715777493335501,
+      "min_distance_mm": 117.24724703564524,
+      "seed": 103034,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 3.505999218500869,
+      "min_distance_mm": 124.1595124533947,
+      "seed": 103035,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 1.9650693823024319,
+      "min_distance_mm": 124.02912858621856,
+      "seed": 103036,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 4.925430132602153,
+      "min_distance_mm": 125.19338051216762,
+      "seed": 103037,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 0.5860850529906196,
+      "min_distance_mm": 125.73313131566985,
+      "seed": 103038,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 0.38039489386954073,
+      "min_distance_mm": 125.82931980661839,
+      "seed": 103039,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 5.767835576210569,
+      "min_distance_mm": 125.7513925738349,
+      "seed": 103040,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 3.5650299982612403,
+      "min_distance_mm": 124.05535104090414,
+      "seed": 103041,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 0.9168864179069564,
+      "min_distance_mm": 125.02099297701858,
+      "seed": 103042,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 1.4132208974792395,
+      "min_distance_mm": 125.14438835040181,
+      "seed": 103043,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 1.306891328994398,
+      "min_distance_mm": 124.00187752015847,
+      "seed": 103044,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 3.2294747502695285,
+      "min_distance_mm": 114.94512543582915,
+      "seed": 103045,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 3.312774007990118,
+      "min_distance_mm": 124.0214690441829,
+      "seed": 103046,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 3.322805174388664,
+      "min_distance_mm": 124.10586126285803,
+      "seed": 103047,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 3.2280981692121324,
+      "min_distance_mm": 124.02882729819879,
+      "seed": 103048,
+      "success": false
+    },
+    {
+      "arm": "condition",
+      "heading": 6.112590964598492,
+      "min_distance_mm": 125.88702832657432,
+      "seed": 103049,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 4.017829893036301,
+      "min_distance_mm": 124.09406796243637,
+      "seed": 103500,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 2.7714282922691478,
+      "min_distance_mm": 123.738434160693,
+      "seed": 103501,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 4.724618225913664,
+      "min_distance_mm": 125.01424542241669,
+      "seed": 103502,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 3.2187754008416327,
+      "min_distance_mm": 123.86246750727356,
+      "seed": 103503,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 0.9292468108084389,
+      "min_distance_mm": 125.25097117845276,
+      "seed": 103504,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 6.1052062775557365,
+      "min_distance_mm": 125.88588400371277,
+      "seed": 103505,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 3.537738707933838,
+      "min_distance_mm": 124.01662732574003,
+      "seed": 103506,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 0.7780839728296859,
+      "min_distance_mm": 125.31297600677946,
+      "seed": 103507,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 4.612529947276482,
+      "min_distance_mm": 124.91348605244494,
+      "seed": 103508,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 3.927789004016796,
+      "min_distance_mm": 124.31505013888048,
+      "seed": 103509,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 3.0551834977530374,
+      "min_distance_mm": 124.08140422407756,
+      "seed": 103510,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 4.011216617920425,
+      "min_distance_mm": 124.41712995975901,
+      "seed": 103511,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 5.85890850641478,
+      "min_distance_mm": 125.82074853522789,
+      "seed": 103512,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 1.340489615913429,
+      "min_distance_mm": 125.20851460697293,
+      "seed": 103513,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 6.051581627153513,
+      "min_distance_mm": 125.87613918101148,
+      "seed": 103514,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 5.634090962893664,
+      "min_distance_mm": 125.71814543209183,
+      "seed": 103515,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 0.09260404121604802,
+      "min_distance_mm": 125.8961533684049,
+      "seed": 103516,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 4.002807663369703,
+      "min_distance_mm": 124.41550884760031,
+      "seed": 103517,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 6.2394847735593855,
+      "min_distance_mm": 125.89914686696348,
+      "seed": 103518,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 1.584827262043265,
+      "min_distance_mm": 123.89089540198763,
+      "seed": 103519,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 5.5312869942423895,
+      "min_distance_mm": 125.65885796170619,
+      "seed": 103520,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 4.196904361698253,
+      "min_distance_mm": 124.558800343205,
+      "seed": 103521,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 1.7876386725140887,
+      "min_distance_mm": 123.47231619369167,
+      "seed": 103522,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 0.9374177238652044,
+      "min_distance_mm": 124.2606182692307,
+      "seed": 103523,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 2.0746950963636803,
+      "min_distance_mm": 123.92147560703539,
+      "seed": 103524,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 0.35837348323215806,
+      "min_distance_mm": 125.84321762348061,
+      "seed": 103525,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 5.1287292415306895,
+      "min_distance_mm": 125.36667672233006,
+      "seed": 103526,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 3.6145160888085193,
+      "min_distance_mm": 124.19946004826596,
+      "seed": 103527,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 3.2838115383028463,
+      "min_distance_mm": 124.10915202540008,
+      "seed": 103528,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 0.5014532732038235,
+      "min_distance_mm": 125.78802650399001,
+      "seed": 103529,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 5.2491972632380905,
+      "min_distance_mm": 125.4626402478594,
+      "seed": 103530,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 3.88035258242807,
+      "min_distance_mm": 124.33424437985718,
+      "seed": 103531,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 3.238007370751496,
+      "min_distance_mm": 124.03400503721991,
+      "seed": 103532,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 3.86293856754819,
+      "min_distance_mm": 124.32524922897518,
+      "seed": 103533,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 4.609835088956955,
+      "min_distance_mm": 124.8939919349114,
+      "seed": 103534,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 3.4428840094852897,
+      "min_distance_mm": 124.14082861925081,
+      "seed": 103535,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 4.932846693567278,
+      "min_distance_mm": 125.19988869936117,
+      "seed": 103536,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 0.3234184131451908,
+      "min_distance_mm": 125.8529822269767,
+      "seed": 103537,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 3.040229507990438,
+      "min_distance_mm": 123.98158134151026,
+      "seed": 103538,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 2.3616302569902494,
+      "min_distance_mm": 123.89440369922055,
+      "seed": 103539,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 3.1985254155803533,
+      "min_distance_mm": 124.04322133496005,
+      "seed": 103540,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 2.9334451883222674,
+      "min_distance_mm": 124.0863800435607,
+      "seed": 103541,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 5.6096865472812585,
+      "min_distance_mm": 125.70473310037653,
+      "seed": 103542,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 4.384671330208696,
+      "min_distance_mm": 124.71321621936661,
+      "seed": 103543,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 3.436763799120519,
+      "min_distance_mm": 115.57843819617258,
+      "seed": 103544,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 1.346238346455893,
+      "min_distance_mm": 124.09668312708324,
+      "seed": 103545,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 4.219942576749797,
+      "min_distance_mm": 124.56745734572192,
+      "seed": 103546,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 0.15489348094536615,
+      "min_distance_mm": 125.8881449705672,
+      "seed": 103547,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 2.296602216748393,
+      "min_distance_mm": 123.92382502418882,
+      "seed": 103548,
+      "success": false
+    },
+    {
+      "arm": "control",
+      "heading": 4.739342985513348,
+      "min_distance_mm": 125.02749280633297,
+      "seed": 103549,
+      "success": false
+    }
+  ],
+  "trials_per_arm": 50,
+  "vision_mode": "luminance",
+  "wall_s": 10268.5
+}

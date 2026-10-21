@@ -1,0 +1,13 @@
+{
+  "config_hash": "3d17abfb058b77e8ccbdf1504f389491167c1d30a44b751e0daf7dac68713a35",
+  "gate": "looming",
+  "gates_hash": "653ad411dfeac173a6a30dc7232bb8c5c0e1d34a31ec63262ba80de5e3935345",
+  "id": "MOTOR-AC-03",
+  "model_hash": "91bfcb55864d8f60a3a5b5f35fd14b3557f48d9d7faa6fcf653280c555b95348",
+  "passed": false,
+  "pipeline_version": "fc3858a7ea42",
+  "reason": "needs the FlyWire visual-column map (004 S8; data/raw/flywire_columns/)",
+  "registry_hash": "b6a94acf85a36ac7ebb2ab027ec7147d48d744f4afcdbdf27896a743074ce5c2",
+  "status": "blocked",
+  "template": "female-fafb783-t2"
+}
