@@ -9,55 +9,54 @@
       5031
     ],
     "arena": "20 x 20 x 30 mm box per fly, no food, odor or wind, daylight, sated",
-    "warmup_s": 0.5,
+    "warmup_s": 3.0,
     "measured_s": 2.0,
-    "brain_dt_ms": 0.5,
-    "note": "measured once, under the pre-calibration thresholds (current_threshold_hz); applied to config/params/motor.yaml without further iteration"
+    "brain_dt_ms": 0.5
   },
-  "fraction_of_steps_moving": 0.259234375,
+  "fraction_of_steps_moving": 0.3168828125,
   "primitives": {
     "walk_forward": {
       "groups": [
         "walk.forward"
       ],
-      "mean_hz": 7.0356384546817825,
-      "p50_hz": 4.590838432312012,
-      "p99_hz": 32.86142520904538,
-      "max_hz": 49.59527587890625,
-      "current_threshold_hz": 10.0,
-      "calibrated_threshold_hz": 33.0
+      "mean_hz": 12.23611551620609,
+      "p50_hz": 9.964836597442627,
+      "p99_hz": 40.5479222869873,
+      "max_hz": 63.96565246582031,
+      "current_threshold_hz": 33.0,
+      "calibrated_threshold_hz": 41.0
     },
     "walk_backward": {
       "groups": [
         "walk.backward"
       ],
-      "mean_hz": 5.425898567642112e-07,
-      "p50_hz": 0.0,
-      "p99_hz": 5.769272775069112e-07,
-      "max_hz": 0.00035070936428382993,
-      "current_threshold_hz": 10.0,
-      "calibrated_threshold_hz": 0.5
+      "mean_hz": 0.9515547409565237,
+      "p50_hz": 0.07768925279378891,
+      "p99_hz": 9.465832290649413,
+      "max_hz": 19.96525001525879,
+      "current_threshold_hz": 0.5,
+      "calibrated_threshold_hz": 9.5
     },
     "steer": {
       "groups": [
         "walk.steer.L",
         "walk.steer.R"
       ],
-      "mean_hz": 27.96368897609432,
-      "p50_hz": 24.601215362548828,
-      "p99_hz": 72.8945450592041,
-      "max_hz": 97.87333679199219,
-      "current_threshold_hz": 10.0,
-      "calibrated_threshold_hz": 73.0
+      "mean_hz": 23.57056511785454,
+      "p50_hz": 21.915882110595703,
+      "p99_hz": 59.798651237487796,
+      "max_hz": 82.58967590332031,
+      "current_threshold_hz": 73.0,
+      "calibrated_threshold_hz": 60.0
     },
     "escape": {
       "groups": [
         "escape.takeoff"
       ],
-      "mean_hz": 1.7459499514431565e-06,
-      "p50_hz": 0.0,
-      "p99_hz": 1.0413544259790797e-05,
-      "max_hz": 0.0008313949801959097,
+      "mean_hz": 0.8533599311897458,
+      "p50_hz": 0.0008193811518140137,
+      "p99_hz": 10.723673906326278,
+      "max_hz": 24.75244903564453,
       "current_threshold_hz": 0.0,
       "calibrated_threshold_hz": null,
       "note": "spike-triggered (one GF spike); not rate-calibrated"
@@ -66,45 +65,45 @@
       "groups": [
         "flight.landing"
       ],
-      "mean_hz": 13.475523026388604,
-      "p50_hz": 12.82505989074707,
-      "p99_hz": 28.764000301361072,
-      "max_hz": 40.646751403808594,
-      "current_threshold_hz": 10.0,
-      "calibrated_threshold_hz": 29.0
+      "mean_hz": 5.474416725082861,
+      "p50_hz": 4.642357349395752,
+      "p99_hz": 18.00028734207151,
+      "max_hz": 31.346023559570312,
+      "current_threshold_hz": 29.0,
+      "calibrated_threshold_hz": 18.5
     },
     "proboscis": {
       "groups": [
         "feeding.proboscis_extension"
       ],
-      "mean_hz": 1.1410855423037272,
-      "p50_hz": 0.025672201067209244,
-      "p99_hz": 12.141552343368495,
-      "max_hz": 29.16486930847168,
-      "current_threshold_hz": 5.0,
-      "calibrated_threshold_hz": 12.5
+      "mean_hz": 14.560038861957244,
+      "p50_hz": 1.8023340106010437,
+      "p99_hz": 92.0953761291504,
+      "max_hz": 108.67862701416016,
+      "current_threshold_hz": 12.5,
+      "calibrated_threshold_hz": 92.5
     },
     "ingestion": {
       "groups": [
         "feeding.ingestion"
       ],
-      "mean_hz": 4.722191722283634,
-      "p50_hz": 2.196559190750122,
-      "p99_hz": 27.525335369110095,
-      "max_hz": 34.45598602294922,
-      "current_threshold_hz": 5.0,
-      "calibrated_threshold_hz": 28.0
+      "mean_hz": 16.134372966520022,
+      "p50_hz": 11.87596321105957,
+      "p99_hz": 41.14755001068115,
+      "max_hz": 46.74725341796875,
+      "current_threshold_hz": 28.0,
+      "calibrated_threshold_hz": 41.5
     },
     "groom_antenna": {
       "groups": [
         "groom.antenna"
       ],
-      "mean_hz": 0.04552830917658634,
-      "p50_hz": 0.0,
-      "p99_hz": 1.5441030263900757,
-      "max_hz": 9.851654052734375,
-      "current_threshold_hz": 10.0,
-      "calibrated_threshold_hz": 2.0
+      "mean_hz": 4.460611333533853,
+      "p50_hz": 2.1878851652145386,
+      "p99_hz": 24.62600849151611,
+      "max_hz": 34.61714553833008,
+      "current_threshold_hz": 2.0,
+      "calibrated_threshold_hz": 25.0
     }
   }
 }
