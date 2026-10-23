@@ -4,7 +4,7 @@
   "gate": "feeding",
   "gates_hash": "653ad411dfeac173a6a30dc7232bb8c5c0e1d34a31ec63262ba80de5e3935345",
   "id": "MOTOR-AC-01",
-  "model_hash": "91bfcb55864d8f60a3a5b5f35fd14b3557f48d9d7faa6fcf653280c555b95348",
+  "model_hash": "33384e6981ae06d216a6de395f59126fcd3505ac5ba7708b76e20ab36c58c14b",
   "passed": false,
   "pipeline_version": "fc3858a7ea42",
   "protocol": {
@@ -28,22 +28,22 @@
     "seconds": 2.0,
     "test": "fisher_greater"
   },
-  "registry_hash": "b6a94acf85a36ac7ebb2ab027ec7147d48d744f4afcdbdf27896a743074ce5c2",
+  "registry_hash": "e102b01a249983966fe0ada8cfc78ccd5e5c113bfb1e5c0170504fa96a9acc52",
   "status": "run",
   "summary": {
     "alpha": 0.01,
     "condition": {
-      "fraction": 0.08,
+      "fraction": 0.0,
       "n": 50,
-      "successes": 4
+      "successes": 0
     },
     "control": {
-      "fraction": 0.02,
+      "fraction": 0.0,
       "n": 50,
-      "successes": 1
+      "successes": 0
     },
     "min_fraction": 0.6,
-    "p_value": 0.18108924294491305,
+    "p_value": 1.0,
     "passed": false,
     "test": "fisher_greater"
   },
@@ -53,7 +53,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.2620202757624025,
+      "max_extension": 0.014613963818157489,
       "seed": 100000,
       "success": false
     },
@@ -61,7 +61,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.34721932459951826,
+      "max_extension": 0.023437470390994444,
       "seed": 100001,
       "success": false
     },
@@ -69,7 +69,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.172658165364996,
+      "max_extension": 0.0,
       "seed": 100002,
       "success": false
     },
@@ -77,7 +77,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.26929181786703976,
+      "max_extension": 0.0,
       "seed": 100003,
       "success": false
     },
@@ -85,23 +85,23 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.44559120200098656,
+      "max_extension": 0.07851359803870368,
       "seed": 100004,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 0.0,
-      "ingested_mm3": 2.1284603540113013e-05,
-      "max_extension": 0.5274944563417445,
+      "ingested_mm3": 0.0,
+      "max_extension": 0.07968751594571273,
       "seed": 100005,
-      "success": true
+      "success": false
     },
     {
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.3387544049001606,
+      "max_extension": 0.0,
       "seed": 100006,
       "success": false
     },
@@ -117,7 +117,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.012305959804925399,
+      "max_extension": 0.0,
       "seed": 100008,
       "success": false
     },
@@ -125,7 +125,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.14866516594904328,
+      "max_extension": 0.0028709640258776747,
       "seed": 100009,
       "success": false
     },
@@ -133,7 +133,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.17849372943080288,
+      "max_extension": 0.0,
       "seed": 100010,
       "success": false
     },
@@ -141,7 +141,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.15273893418427517,
+      "max_extension": 0.0,
       "seed": 100011,
       "success": false
     },
@@ -149,7 +149,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.18260849253896155,
+      "max_extension": 0.0,
       "seed": 100012,
       "success": false
     },
@@ -157,7 +157,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.2745953518326201,
+      "max_extension": 0.0,
       "seed": 100013,
       "success": false
     },
@@ -165,7 +165,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.2722374323803105,
+      "max_extension": 0.0,
       "seed": 100014,
       "success": false
     },
@@ -173,23 +173,23 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.8360299023470895,
+      "max_extension": 0.004761583632609215,
       "seed": 100015,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 0.0,
-      "ingested_mm3": 0.003609086572597893,
-      "max_extension": 0.8375208655579593,
+      "ingested_mm3": 0.0,
+      "max_extension": 0.11492777371316625,
       "seed": 100016,
-      "success": true
+      "success": false
     },
     {
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.3707469037336822,
+      "max_extension": 0.0,
       "seed": 100017,
       "success": false
     },
@@ -197,7 +197,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.0,
+      "max_extension": 0.004450884178139414,
       "seed": 100018,
       "success": false
     },
@@ -205,7 +205,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.4008305859818005,
+      "max_extension": 0.0,
       "seed": 100019,
       "success": false
     },
@@ -213,23 +213,23 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.06125953641380643,
+      "max_extension": 0.0,
       "seed": 100020,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 0.0,
-      "ingested_mm3": 0.001167827631683263,
-      "max_extension": 0.5578304647134044,
+      "ingested_mm3": 0.0,
+      "max_extension": 0.0,
       "seed": 100021,
-      "success": true
+      "success": false
     },
     {
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.2748187700527514,
+      "max_extension": 0.5188094487725353,
       "seed": 100022,
       "success": false
     },
@@ -237,7 +237,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.5349897822022628,
+      "max_extension": 0.0004900910971922546,
       "seed": 100023,
       "success": false
     },
@@ -245,7 +245,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.4491914403095565,
+      "max_extension": 0.0,
       "seed": 100024,
       "success": false
     },
@@ -253,7 +253,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.19162801802067148,
+      "max_extension": 0.12302840802192572,
       "seed": 100025,
       "success": false
     },
@@ -261,7 +261,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.33440205249844607,
+      "max_extension": 0.0,
       "seed": 100026,
       "success": false
     },
@@ -269,7 +269,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.33315423680841744,
+      "max_extension": 0.09832878576798605,
       "seed": 100027,
       "success": false
     },
@@ -277,7 +277,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.039720118255587,
+      "max_extension": 0.019023162631967624,
       "seed": 100028,
       "success": false
     },
@@ -285,7 +285,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.45127911952353983,
+      "max_extension": 0.14810822635678988,
       "seed": 100029,
       "success": false
     },
@@ -293,7 +293,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.05679281567279567,
+      "max_extension": 0.0,
       "seed": 100030,
       "success": false
     },
@@ -301,23 +301,23 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.06712015729800296,
+      "max_extension": 0.0,
       "seed": 100031,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 0.0,
-      "ingested_mm3": 0.0002091437960719345,
-      "max_extension": 0.730419151054595,
+      "ingested_mm3": 0.0,
+      "max_extension": 0.0,
       "seed": 100032,
-      "success": true
+      "success": false
     },
     {
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.0,
+      "max_extension": 0.09568759638389869,
       "seed": 100033,
       "success": false
     },
@@ -325,7 +325,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.06012534858064798,
+      "max_extension": 0.0,
       "seed": 100034,
       "success": false
     },
@@ -333,7 +333,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.15473838818460506,
+      "max_extension": 0.3794530245679723,
       "seed": 100035,
       "success": false
     },
@@ -341,7 +341,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.11321790577530504,
+      "max_extension": 0.0,
       "seed": 100036,
       "success": false
     },
@@ -349,7 +349,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.002820555871793769,
+      "max_extension": 0.0,
       "seed": 100037,
       "success": false
     },
@@ -357,7 +357,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.042703257498449755,
+      "max_extension": 0.12460472724531825,
       "seed": 100038,
       "success": false
     },
@@ -365,7 +365,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.04400602871101274,
+      "max_extension": 0.0,
       "seed": 100039,
       "success": false
     },
@@ -373,7 +373,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.15366917070980685,
+      "max_extension": 0.0,
       "seed": 100040,
       "success": false
     },
@@ -381,7 +381,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.17580232496123793,
+      "max_extension": 0.0,
       "seed": 100041,
       "success": false
     },
@@ -389,7 +389,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.034869369265397104,
+      "max_extension": 0.0020948668235168605,
       "seed": 100042,
       "success": false
     },
@@ -397,7 +397,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.3933580968983155,
+      "max_extension": 0.0,
       "seed": 100043,
       "success": false
     },
@@ -405,7 +405,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.1560050108139275,
+      "max_extension": 0.0,
       "seed": 100044,
       "success": false
     },
@@ -413,7 +413,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.2746856414805731,
+      "max_extension": 0.0,
       "seed": 100045,
       "success": false
     },
@@ -421,7 +421,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.2647566474529648,
+      "max_extension": 0.0,
       "seed": 100046,
       "success": false
     },
@@ -429,7 +429,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.43739283251232564,
+      "max_extension": 0.0,
       "seed": 100047,
       "success": false
     },
@@ -437,7 +437,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.17704140747767944,
+      "max_extension": 0.005756172971347154,
       "seed": 100048,
       "success": false
     },
@@ -445,7 +445,7 @@
       "arm": "condition",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.2993339099167967,
+      "max_extension": 0.0,
       "seed": 100049,
       "success": false
     },
@@ -453,7 +453,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.058995148156820665,
+      "max_extension": 0.05486838056160347,
       "seed": 100500,
       "success": false
     },
@@ -461,7 +461,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.0659224620854456,
+      "max_extension": 0.0,
       "seed": 100501,
       "success": false
     },
@@ -469,7 +469,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.06756476404099039,
+      "max_extension": 0.0,
       "seed": 100502,
       "success": false
     },
@@ -477,7 +477,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.0,
+      "max_extension": 0.011416761991058115,
       "seed": 100503,
       "success": false
     },
@@ -485,7 +485,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.0,
+      "max_extension": 0.07310927895235857,
       "seed": 100504,
       "success": false
     },
@@ -501,7 +501,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.043336950106954486,
+      "max_extension": 0.0,
       "seed": 100506,
       "success": false
     },
@@ -509,7 +509,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.33273187249839453,
+      "max_extension": 0.17975838484490364,
       "seed": 100507,
       "success": false
     },
@@ -525,7 +525,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.016321649939037692,
+      "max_extension": 0.0,
       "seed": 100509,
       "success": false
     },
@@ -533,7 +533,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.04648024240072274,
+      "max_extension": 0.05025670788244506,
       "seed": 100510,
       "success": false
     },
@@ -541,7 +541,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.074083052911436,
+      "max_extension": 0.0,
       "seed": 100511,
       "success": false
     },
@@ -557,7 +557,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.009543472174441667,
+      "max_extension": 0.02448954908351505,
       "seed": 100513,
       "success": false
     },
@@ -565,7 +565,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.0008008713092811507,
+      "max_extension": 0.05660331969059322,
       "seed": 100514,
       "success": false
     },
@@ -573,7 +573,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.32815462165226067,
+      "max_extension": 0.0,
       "seed": 100515,
       "success": false
     },
@@ -581,7 +581,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.0,
+      "max_extension": 0.05058825301844995,
       "seed": 100516,
       "success": false
     },
@@ -597,7 +597,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.049447267141185365,
+      "max_extension": 0.0,
       "seed": 100518,
       "success": false
     },
@@ -605,7 +605,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.0,
+      "max_extension": 0.09608692352805712,
       "seed": 100519,
       "success": false
     },
@@ -613,7 +613,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.06003176956424334,
+      "max_extension": 0.005958396926763445,
       "seed": 100520,
       "success": false
     },
@@ -621,7 +621,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.02943885799852124,
+      "max_extension": 0.05706473839355359,
       "seed": 100521,
       "success": false
     },
@@ -629,7 +629,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.05252320567797343,
+      "max_extension": 0.014903399044825398,
       "seed": 100522,
       "success": false
     },
@@ -637,7 +637,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.06338847733357252,
+      "max_extension": 0.0,
       "seed": 100523,
       "success": false
     },
@@ -645,7 +645,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.03998242570525128,
+      "max_extension": 0.0,
       "seed": 100524,
       "success": false
     },
@@ -653,7 +653,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.07078269672231177,
+      "max_extension": 0.0,
       "seed": 100525,
       "success": false
     },
@@ -661,7 +661,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.13113111343112258,
+      "max_extension": 0.03399415383871968,
       "seed": 100526,
       "success": false
     },
@@ -669,7 +669,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.0,
+      "max_extension": 0.0666189564761337,
       "seed": 100527,
       "success": false
     },
@@ -677,7 +677,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.05462479629820335,
+      "max_extension": 0.03328752845870873,
       "seed": 100528,
       "success": false
     },
@@ -685,7 +685,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.0014436556764352857,
+      "max_extension": 0.0,
       "seed": 100529,
       "success": false
     },
@@ -693,7 +693,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.8356912842344958,
+      "max_extension": 0.0,
       "seed": 100530,
       "success": false
     },
@@ -701,7 +701,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.04560094368149792,
+      "max_extension": 0.0,
       "seed": 100531,
       "success": false
     },
@@ -709,7 +709,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.18176051839587706,
+      "max_extension": 0.0,
       "seed": 100532,
       "success": false
     },
@@ -717,23 +717,23 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.05571187152491468,
+      "max_extension": 0.0,
       "seed": 100533,
       "success": false
     },
     {
       "arm": "control",
       "heading": 0.0,
-      "ingested_mm3": 0.001747874161916492,
-      "max_extension": 0.8378688036415238,
+      "ingested_mm3": 0.0,
+      "max_extension": 0.01884817825705884,
       "seed": 100534,
-      "success": true
+      "success": false
     },
     {
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.0,
+      "max_extension": 0.014741112013763012,
       "seed": 100535,
       "success": false
     },
@@ -741,7 +741,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.06835074955422378,
+      "max_extension": 0.0,
       "seed": 100536,
       "success": false
     },
@@ -749,7 +749,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.05451344556888648,
+      "max_extension": 0.0010345603053758432,
       "seed": 100537,
       "success": false
     },
@@ -757,7 +757,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.21736647165674589,
+      "max_extension": 0.007015678778498459,
       "seed": 100538,
       "success": false
     },
@@ -765,7 +765,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.06575880615441135,
+      "max_extension": 0.03806758204707003,
       "seed": 100539,
       "success": false
     },
@@ -781,7 +781,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.09423911877188827,
+      "max_extension": 0.0,
       "seed": 100541,
       "success": false
     },
@@ -789,7 +789,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.0,
+      "max_extension": 0.03557698938856852,
       "seed": 100542,
       "success": false
     },
@@ -797,7 +797,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.1309837923922729,
+      "max_extension": 0.06756724375761591,
       "seed": 100543,
       "success": false
     },
@@ -805,7 +805,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.12804677411239196,
+      "max_extension": 0.047047342083699185,
       "seed": 100544,
       "success": false
     },
@@ -813,7 +813,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.022001686406273206,
+      "max_extension": 0.007926588353555352,
       "seed": 100545,
       "success": false
     },
@@ -821,7 +821,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.015796245634742915,
+      "max_extension": 0.0,
       "seed": 100546,
       "success": false
     },
@@ -829,7 +829,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.04178022986844694,
+      "max_extension": 0.0,
       "seed": 100547,
       "success": false
     },
@@ -837,7 +837,7 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.11979055603177079,
+      "max_extension": 0.0,
       "seed": 100548,
       "success": false
     },
@@ -845,12 +845,12 @@
       "arm": "control",
       "heading": 0.0,
       "ingested_mm3": 0.0,
-      "max_extension": 0.11268535592221836,
+      "max_extension": 0.04231120817817257,
       "seed": 100549,
       "success": false
     }
   ],
   "trials_per_arm": 50,
   "vision_mode": "luminance",
-  "wall_s": 643.6
+  "wall_s": 561.5
 }

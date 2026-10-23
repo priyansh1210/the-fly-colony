@@ -4,7 +4,7 @@
   "gate": "plume",
   "gates_hash": "653ad411dfeac173a6a30dc7232bb8c5c0e1d34a31ec63262ba80de5e3935345",
   "id": "MOTOR-AC-04",
-  "model_hash": "91bfcb55864d8f60a3a5b5f35fd14b3557f48d9d7faa6fcf653280c555b95348",
+  "model_hash": "33384e6981ae06d216a6de395f59126fcd3505ac5ba7708b76e20ab36c58c14b",
   "passed": false,
   "pipeline_version": "fc3858a7ea42",
   "protocol": {
@@ -34,7 +34,7 @@
     "test": "fisher_greater",
     "wind_mm_s": 300.0
   },
-  "registry_hash": "b6a94acf85a36ac7ebb2ab027ec7147d48d744f4afcdbdf27896a743074ce5c2",
+  "registry_hash": "e102b01a249983966fe0ada8cfc78ccd5e5c113bfb1e5c0170504fa96a9acc52",
   "status": "run",
   "summary": {
     "alpha": 0.01,
@@ -58,14 +58,14 @@
     {
       "arm": "condition",
       "heading": 3.775462925227831,
-      "min_distance_mm": 124.2501291387235,
+      "min_distance_mm": 117.55572525851025,
       "seed": 103000,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 0.38299996396912656,
-      "min_distance_mm": 125.6198943689441,
+      "min_distance_mm": 125.83524240434006,
       "seed": 103001,
       "success": false
     },
@@ -79,35 +79,35 @@
     {
       "arm": "condition",
       "heading": 2.1595844024825697,
-      "min_distance_mm": 120.78563859677845,
+      "min_distance_mm": 120.7600619948742,
       "seed": 103003,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 1.3122640418813247,
-      "min_distance_mm": 124.33104623676746,
+      "min_distance_mm": 125.2331182843225,
       "seed": 103004,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 3.7611357092183693,
-      "min_distance_mm": 124.26836946757767,
+      "min_distance_mm": 117.57499814764762,
       "seed": 103005,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 4.017697020621713,
-      "min_distance_mm": 124.42578707409696,
+      "min_distance_mm": 119.77718386494631,
       "seed": 103006,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 4.219268457115075,
-      "min_distance_mm": 124.57648319001993,
+      "min_distance_mm": 123.44558774717868,
       "seed": 103007,
       "success": false
     },
@@ -121,77 +121,77 @@
     {
       "arm": "condition",
       "heading": 2.051468303799384,
-      "min_distance_mm": 124.00034208586513,
+      "min_distance_mm": 119.52869114484415,
       "seed": 103009,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 1.6818547851196652,
-      "min_distance_mm": 123.96933855657981,
+      "min_distance_mm": 124.57865793863361,
       "seed": 103010,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 3.73910888829199,
-      "min_distance_mm": 124.25696962290898,
+      "min_distance_mm": 117.3958537645735,
       "seed": 103011,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 1.2036572747799934,
-      "min_distance_mm": 124.6031684720932,
+      "min_distance_mm": 125.32586720144677,
       "seed": 103012,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 0.8948570814445241,
-      "min_distance_mm": 124.4708623729001,
+      "min_distance_mm": 125.56292206343406,
       "seed": 103013,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 1.7089219508648463,
-      "min_distance_mm": 124.08134353068326,
+      "min_distance_mm": 123.46469881810629,
       "seed": 103014,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 3.60351312701833,
-      "min_distance_mm": 124.14754916791296,
+      "min_distance_mm": 116.49349709595371,
       "seed": 103015,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 4.308928546199813,
-      "min_distance_mm": 124.64940532949291,
+      "min_distance_mm": 123.23949000250842,
       "seed": 103016,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 4.466231201565546,
-      "min_distance_mm": 124.78374162649466,
+      "min_distance_mm": 123.68098825391304,
       "seed": 103017,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 2.6279667808300258,
-      "min_distance_mm": 124.03005481373273,
+      "min_distance_mm": 116.8370111064456,
       "seed": 103018,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 4.539837174983756,
-      "min_distance_mm": 124.84862136818805,
+      "min_distance_mm": 124.7570114055228,
       "seed": 103019,
       "success": false
     },
@@ -205,35 +205,35 @@
     {
       "arm": "condition",
       "heading": 1.8040695082933769,
-      "min_distance_mm": 124.01300734153025,
+      "min_distance_mm": 122.25612702766865,
       "seed": 103021,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 3.3725191212023655,
-      "min_distance_mm": 124.0525676830473,
+      "min_distance_mm": 115.27580526900218,
       "seed": 103022,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 4.402550250061062,
-      "min_distance_mm": 124.72853063947075,
+      "min_distance_mm": 123.26710982579975,
       "seed": 103023,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 1.3912035180045603,
-      "min_distance_mm": 124.34946082340517,
+      "min_distance_mm": 125.1638985918316,
       "seed": 103024,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 5.393311500906106,
-      "min_distance_mm": 125.5685062966788,
+      "min_distance_mm": 125.56275172055777,
       "seed": 103025,
       "success": false
     },
@@ -247,14 +247,14 @@
     {
       "arm": "condition",
       "heading": 1.4677456715336443,
-      "min_distance_mm": 124.21114859913479,
+      "min_distance_mm": 122.92339070079183,
       "seed": 103027,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 4.315196253628597,
-      "min_distance_mm": 124.65461462698202,
+      "min_distance_mm": 122.5468299785915,
       "seed": 103028,
       "success": false
     },
@@ -275,42 +275,42 @@
     {
       "arm": "condition",
       "heading": 5.101334324154407,
-      "min_distance_mm": 125.34405777259981,
+      "min_distance_mm": 125.34354089588902,
       "seed": 103031,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 3.8980043832421916,
-      "min_distance_mm": 124.13900929105615,
+      "min_distance_mm": 118.79662716076106,
       "seed": 103032,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 2.095567891027417,
-      "min_distance_mm": 124.0507687020417,
+      "min_distance_mm": 120.05541453296264,
       "seed": 103033,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 3.715777493335501,
-      "min_distance_mm": 117.24724703564524,
+      "min_distance_mm": 117.21989416134493,
       "seed": 103034,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 3.505999218500869,
-      "min_distance_mm": 124.1595124533947,
+      "min_distance_mm": 116.03576457865957,
       "seed": 103035,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 1.9650693823024319,
-      "min_distance_mm": 124.02912858621856,
+      "min_distance_mm": 122.5067223849121,
       "seed": 103036,
       "success": false
     },
@@ -324,77 +324,77 @@
     {
       "arm": "condition",
       "heading": 0.5860850529906196,
-      "min_distance_mm": 125.73313131566985,
+      "min_distance_mm": 125.75078645554314,
       "seed": 103038,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 0.38039489386954073,
-      "min_distance_mm": 125.82931980661839,
+      "min_distance_mm": 125.67483479994915,
       "seed": 103039,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 5.767835576210569,
-      "min_distance_mm": 125.7513925738349,
+      "min_distance_mm": 125.77701939690989,
       "seed": 103040,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 3.5650299982612403,
-      "min_distance_mm": 124.05535104090414,
+      "min_distance_mm": 116.19557535955099,
       "seed": 103041,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 0.9168864179069564,
-      "min_distance_mm": 125.02099297701858,
+      "min_distance_mm": 125.54949719607669,
       "seed": 103042,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 1.4132208974792395,
-      "min_distance_mm": 125.14438835040181,
+      "min_distance_mm": 125.14325482316039,
       "seed": 103043,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 1.306891328994398,
-      "min_distance_mm": 124.00187752015847,
+      "min_distance_mm": 125.23778094401887,
       "seed": 103044,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 3.2294747502695285,
-      "min_distance_mm": 114.94512543582915,
+      "min_distance_mm": 115.25282345735617,
       "seed": 103045,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 3.312774007990118,
-      "min_distance_mm": 124.0214690441829,
+      "min_distance_mm": 115.09669339769236,
       "seed": 103046,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 3.322805174388664,
-      "min_distance_mm": 124.10586126285803,
+      "min_distance_mm": 115.10970875601768,
       "seed": 103047,
       "success": false
     },
     {
       "arm": "condition",
       "heading": 3.2280981692121324,
-      "min_distance_mm": 124.02882729819879,
+      "min_distance_mm": 115.27038173773792,
       "seed": 103048,
       "success": false
     },
@@ -408,35 +408,35 @@
     {
       "arm": "control",
       "heading": 4.017829893036301,
-      "min_distance_mm": 124.09406796243637,
+      "min_distance_mm": 119.77849141196262,
       "seed": 103500,
       "success": false
     },
     {
       "arm": "control",
       "heading": 2.7714282922691478,
-      "min_distance_mm": 123.738434160693,
+      "min_distance_mm": 115.89114033420122,
       "seed": 103501,
       "success": false
     },
     {
       "arm": "control",
       "heading": 4.724618225913664,
-      "min_distance_mm": 125.01424542241669,
+      "min_distance_mm": 125.01406889577937,
       "seed": 103502,
       "success": false
     },
     {
       "arm": "control",
       "heading": 3.2187754008416327,
-      "min_distance_mm": 123.86246750727356,
+      "min_distance_mm": 114.95765154012035,
       "seed": 103503,
       "success": false
     },
     {
       "arm": "control",
       "heading": 0.9292468108084389,
-      "min_distance_mm": 125.25097117845276,
+      "min_distance_mm": 125.54066457373722,
       "seed": 103504,
       "success": false
     },
@@ -450,42 +450,42 @@
     {
       "arm": "control",
       "heading": 3.537738707933838,
-      "min_distance_mm": 124.01662732574003,
+      "min_distance_mm": 116.07732190605438,
       "seed": 103506,
       "success": false
     },
     {
       "arm": "control",
       "heading": 0.7780839728296859,
-      "min_distance_mm": 125.31297600677946,
+      "min_distance_mm": 125.64262188708634,
       "seed": 103507,
       "success": false
     },
     {
       "arm": "control",
       "heading": 4.612529947276482,
-      "min_distance_mm": 124.91348605244494,
+      "min_distance_mm": 124.6393320223635,
       "seed": 103508,
       "success": false
     },
     {
       "arm": "control",
       "heading": 3.927789004016796,
-      "min_distance_mm": 124.31505013888048,
+      "min_distance_mm": 118.97428359372162,
       "seed": 103509,
       "success": false
     },
     {
       "arm": "control",
       "heading": 3.0551834977530374,
-      "min_distance_mm": 124.08140422407756,
+      "min_distance_mm": 114.93107609870748,
       "seed": 103510,
       "success": false
     },
     {
       "arm": "control",
       "heading": 4.011216617920425,
-      "min_distance_mm": 124.41712995975901,
+      "min_distance_mm": 119.75009663666442,
       "seed": 103511,
       "success": false
     },
@@ -499,7 +499,7 @@
     {
       "arm": "control",
       "heading": 1.340489615913429,
-      "min_distance_mm": 125.20851460697293,
+      "min_distance_mm": 125.19790392757534,
       "seed": 103513,
       "success": false
     },
@@ -520,14 +520,14 @@
     {
       "arm": "control",
       "heading": 0.09260404121604802,
-      "min_distance_mm": 125.8961533684049,
+      "min_distance_mm": 125.89617129620078,
       "seed": 103516,
       "success": false
     },
     {
       "arm": "control",
       "heading": 4.002807663369703,
-      "min_distance_mm": 124.41550884760031,
+      "min_distance_mm": 119.64745429404493,
       "seed": 103517,
       "success": false
     },
@@ -541,7 +541,7 @@
     {
       "arm": "control",
       "heading": 1.584827262043265,
-      "min_distance_mm": 123.89089540198763,
+      "min_distance_mm": 124.98823011695731,
       "seed": 103519,
       "success": false
     },
@@ -555,28 +555,28 @@
     {
       "arm": "control",
       "heading": 4.196904361698253,
-      "min_distance_mm": 124.558800343205,
+      "min_distance_mm": 121.09864016069625,
       "seed": 103521,
       "success": false
     },
     {
       "arm": "control",
       "heading": 1.7876386725140887,
-      "min_distance_mm": 123.47231619369167,
+      "min_distance_mm": 123.93465178805809,
       "seed": 103522,
       "success": false
     },
     {
       "arm": "control",
       "heading": 0.9374177238652044,
-      "min_distance_mm": 124.2606182692307,
+      "min_distance_mm": 125.53478028289628,
       "seed": 103523,
       "success": false
     },
     {
       "arm": "control",
       "heading": 2.0746950963636803,
-      "min_distance_mm": 123.92147560703539,
+      "min_distance_mm": 121.52660863981019,
       "seed": 103524,
       "success": false
     },
@@ -597,21 +597,21 @@
     {
       "arm": "control",
       "heading": 3.6145160888085193,
-      "min_distance_mm": 124.19946004826596,
+      "min_distance_mm": 116.50221952071797,
       "seed": 103527,
       "success": false
     },
     {
       "arm": "control",
       "heading": 3.2838115383028463,
-      "min_distance_mm": 124.10915202540008,
+      "min_distance_mm": 115.08413789352534,
       "seed": 103528,
       "success": false
     },
     {
       "arm": "control",
       "heading": 0.5014532732038235,
-      "min_distance_mm": 125.78802650399001,
+      "min_distance_mm": 125.7899403666737,
       "seed": 103529,
       "success": false
     },
@@ -625,35 +625,35 @@
     {
       "arm": "control",
       "heading": 3.88035258242807,
-      "min_distance_mm": 124.33424437985718,
+      "min_distance_mm": 118.57468886214049,
       "seed": 103531,
       "success": false
     },
     {
       "arm": "control",
       "heading": 3.238007370751496,
-      "min_distance_mm": 124.03400503721991,
+      "min_distance_mm": 114.9937708122514,
       "seed": 103532,
       "success": false
     },
     {
       "arm": "control",
       "heading": 3.86293856754819,
-      "min_distance_mm": 124.32524922897518,
+      "min_distance_mm": 118.4137065620024,
       "seed": 103533,
       "success": false
     },
     {
       "arm": "control",
       "heading": 4.609835088956955,
-      "min_distance_mm": 124.8939919349114,
+      "min_distance_mm": 124.65954250872532,
       "seed": 103534,
       "success": false
     },
     {
       "arm": "control",
       "heading": 3.4428840094852897,
-      "min_distance_mm": 124.14082861925081,
+      "min_distance_mm": 115.55155970409021,
       "seed": 103535,
       "success": false
     },
@@ -667,49 +667,49 @@
     {
       "arm": "control",
       "heading": 0.3234184131451908,
-      "min_distance_mm": 125.8529822269767,
+      "min_distance_mm": 125.85366414198867,
       "seed": 103537,
       "success": false
     },
     {
       "arm": "control",
       "heading": 3.040229507990438,
-      "min_distance_mm": 123.98158134151026,
+      "min_distance_mm": 114.95323324472719,
       "seed": 103538,
       "success": false
     },
     {
       "arm": "control",
       "heading": 2.3616302569902494,
-      "min_distance_mm": 123.89440369922055,
+      "min_distance_mm": 118.93131599708337,
       "seed": 103539,
       "success": false
     },
     {
       "arm": "control",
       "heading": 3.1985254155803533,
-      "min_distance_mm": 124.04322133496005,
+      "min_distance_mm": 114.9173433066881,
       "seed": 103540,
       "success": false
     },
     {
       "arm": "control",
       "heading": 2.9334451883222674,
-      "min_distance_mm": 124.0863800435607,
+      "min_distance_mm": 115.20238162517202,
       "seed": 103541,
       "success": false
     },
     {
       "arm": "control",
       "heading": 5.6096865472812585,
-      "min_distance_mm": 125.70473310037653,
+      "min_distance_mm": 125.68001606887296,
       "seed": 103542,
       "success": false
     },
     {
       "arm": "control",
       "heading": 4.384671330208696,
-      "min_distance_mm": 124.71321621936661,
+      "min_distance_mm": 123.0599551706388,
       "seed": 103543,
       "success": false
     },
@@ -723,28 +723,28 @@
     {
       "arm": "control",
       "heading": 1.346238346455893,
-      "min_distance_mm": 124.09668312708324,
+      "min_distance_mm": 125.20348227816591,
       "seed": 103545,
       "success": false
     },
     {
       "arm": "control",
       "heading": 4.219942576749797,
-      "min_distance_mm": 124.56745734572192,
+      "min_distance_mm": 121.6580622426009,
       "seed": 103546,
       "success": false
     },
     {
       "arm": "control",
       "heading": 0.15489348094536615,
-      "min_distance_mm": 125.8881449705672,
+      "min_distance_mm": 125.88930176053218,
       "seed": 103547,
       "success": false
     },
     {
       "arm": "control",
       "heading": 2.296602216748393,
-      "min_distance_mm": 123.92382502418882,
+      "min_distance_mm": 119.13460985917976,
       "seed": 103548,
       "success": false
     },
@@ -758,5 +758,5 @@
   ],
   "trials_per_arm": 50,
   "vision_mode": "luminance",
-  "wall_s": 10268.5
+  "wall_s": 9380.0
 }

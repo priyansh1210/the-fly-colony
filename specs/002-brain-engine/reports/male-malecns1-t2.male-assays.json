@@ -164,8 +164,8 @@
     "mode": "per_type",
     "type_clip": 4.0
   },
-  "model_hash": "91bfcb55864d8f60a3a5b5f35fd14b3557f48d9d7faa6fcf653280c555b95348",
+  "model_hash": "33384e6981ae06d216a6de395f59126fcd3505ac5ba7708b76e20ab36c58c14b",
   "passed": true,
-  "pipeline_version": "153ee52cb657-dirty",
+  "pipeline_version": "8a29d10f11df",
   "stimulus_mapping": "female Shiu lists -> same cell types (MaleCNS->FlyWire match, else same name), same side (mirrored when a male readout neuron is truncated), same count per type"
 }

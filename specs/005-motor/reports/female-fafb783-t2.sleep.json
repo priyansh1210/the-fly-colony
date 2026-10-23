@@ -4,7 +4,7 @@
   "gate": "sleep",
   "gates_hash": "653ad411dfeac173a6a30dc7232bb8c5c0e1d34a31ec63262ba80de5e3935345",
   "id": "MOTOR-AC-05",
-  "model_hash": "91bfcb55864d8f60a3a5b5f35fd14b3557f48d9d7faa6fcf653280c555b95348",
+  "model_hash": "33384e6981ae06d216a6de395f59126fcd3505ac5ba7708b76e20ab36c58c14b",
   "passed": false,
   "pipeline_version": "fc3858a7ea42",
   "protocol": {
@@ -44,7 +44,7 @@
     },
     "test": "mannwhitney_greater"
   },
-  "registry_hash": "b6a94acf85a36ac7ebb2ab027ec7147d48d744f4afcdbdf27896a743074ce5c2",
+  "registry_hash": "e102b01a249983966fe0ada8cfc78ccd5e5c113bfb1e5c0170504fa96a9acc52",
   "status": "run",
   "summary": {
     "alpha": 0.01,
@@ -667,5 +667,5 @@
   ],
   "trials_per_arm": 50,
   "vision_mode": "luminance",
-  "wall_s": 24073.2
+  "wall_s": 22350.9
 }
