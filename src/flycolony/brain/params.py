@@ -27,6 +27,8 @@ REGISTRY_IDS = (
     "brain.syn.tau",
     "brain.syn.delay",
     "brain.syn.w_per_synapse",
+    "brain.syn.depression.keep",
+    "brain.syn.depression.tau_rec",
     "brain.input.w_poisson",
     "brain.input.driven_t_ref",
     "brain.noise.rate",
@@ -90,11 +92,14 @@ class NeuronParams:
     max_gain_change: float
     max_population_rate: float
     safety_window: float
+    depression_keep: float
+    depression_tau_rec: float
 
     @classmethod
     def from_registry(cls, reg: Registry, *, reference: bool = False) -> NeuronParams:
         """Read every brain parameter. `reference=True` switches off background noise, as in the
-        Shiu et al. model, where only stimulated neurons receive input."""
+        Shiu et al. model, where only stimulated neurons receive input, and short-term synaptic
+        depression, which that model does not have."""
         reg.require(list(REGISTRY_IDS))
         g = reg.get
         return cls(
@@ -129,6 +134,8 @@ class NeuronParams:
             max_gain_change=float(g("brain.trace.max_gain_change")),
             max_population_rate=float(g("brain.safety.max_population_rate")),
             safety_window=float(g("brain.safety.window")),
+            depression_keep=1.0 if reference else float(g("brain.syn.depression.keep")),
+            depression_tau_rec=float(g("brain.syn.depression.tau_rec")),
         )
 
 

@@ -637,3 +637,60 @@ def test_photoreceptor_input_depolarises_and_checkpoints(tmp_path, registry):  #
     b.run(50)
     c.run(50)
     assert torch.equal(b.u, c.u) and torch.equal(c.photo_in, b.photo_in)
+
+
+def test_short_term_depression_scales_spikes_and_recovers(tmp_path, registry):
+    """Presynaptic depression (brain.syn.depression.*): exact recovery, off in reference mode."""
+    tpl = tiny_template(tmp_path, [(0, 1, 1.0), (2, 1, 1.0)], 3)
+    keep, tau = 0.78, 893.0
+    p = params(registry, depression_keep=keep, depression_tau_rec=tau)
+    b = batch(tpl, p)
+    b.add(FlyBrainSpec("x", 2))
+    b.add(FlyBrainSpec("a", 1))
+    sent = []
+    deliver = b._deliver
+    b._deliver = lambda flat, eff: (
+        sent.extend(zip(flat.tolist(), eff.tolist(), strict=True)),
+        deliver(flat, eff),
+    )
+    gap = 50  # steps between spikes of neuron 0 (> refractory)
+    for _ in range(3):
+        fire(b, "a", [0])
+        b.run(gap)
+    a = b.slot("a")
+    effs = [e for f, e in sent if f == a * b.n]
+    elapsed = gap * b.dt
+    a1 = 1 - (1 - keep) * math.exp(-elapsed / tau)
+    a2 = 1 - (1 - keep * a1) * math.exp(-elapsed / tau)
+    assert effs == pytest.approx([1.0, a1, a2], rel=1e-6)
+    # Mid-queue checkpoint: queued efficacies and resources survive a round trip.
+    fire(b, "a", [0, 2])
+    b.step()
+    tensors, meta = b.state_dict()
+    c = batch(tpl, p)
+    c.load_state_dict(tensors, meta)
+    b.remove("x")
+    c.remove("x")
+    b.run(30)
+    c.run(30)
+    assert state_hash(b) == state_hash(c)
+    assert float(b.res[0, 0]) < keep
+    # Reference parameters have no depression: every spike has efficacy 1.
+    r = batch(tpl, params(registry))
+    r.add(FlyBrainSpec("a", 1))
+    for _ in range(3):
+        fire(r, "a", [0])
+        r.run(gap)
+    assert float(r.res[0, 0]) == 1.0
+
+
+def test_max_synapses_caps_connection_strength_keeping_sign(tmp_path, registry):
+    from flycolony.brain.topology import build_topology
+
+    p = params(registry)
+    tpl = tiny_template(tmp_path, [(0, 1, 451.0), (1, 0, -300.0), (0, 2, 40.0)], 3)
+    cpu = torch.device("cpu")  # device-ok: test
+    topo = build_topology(tpl, cpu, w_per_synapse=p.w_syn, graded=False, max_synapses=100.0)
+    assert topo.weight.tolist() == pytest.approx(
+        [100 * p.w_syn, 40 * p.w_syn, -100 * p.w_syn], rel=1e-6
+    )

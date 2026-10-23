@@ -73,6 +73,7 @@ def build_topology(
     extra_graded: tuple[str, ...] = (),
     graded_tau_ms: dict[str, float] | None = None,
     electrical_pairs: tuple[str, ...] = (),
+    max_synapses: float | None = None,
 ) -> Topology:
     """Move a template's connectivity to `device`.
 
@@ -85,6 +86,7 @@ def build_topology(
     `electrical_pairs` lists "PRE_CLASS>POST_CLASS" cell-class pairs whose coupling is electrical:
     chemical edges from excitatory PRE_CLASS neurons onto POST_CLASS neurons get weight 0
     (gap junctions are not in the connectome and not modelled).
+    `max_synapses` caps each connection's synapse count (sign kept) before scaling.
     """
     if weight_dtype not in WEIGHT_DTYPES:
         raise ValueError(f"weight dtype {weight_dtype!r}; use one of {sorted(WEIGHT_DTYPES)}")
@@ -94,9 +96,10 @@ def build_topology(
     scale = np.asarray(weight_scale, dtype=np.float64)
     if scale.ndim:
         scale = scale[np.asarray(e["indices"])]  # per postsynaptic neuron
-    weight = (np.asarray(e["weight"], dtype=np.float64) * (w_per_synapse * scale)).astype(
-        np.float32
-    )
+    count = np.asarray(e["weight"], dtype=np.float64)
+    if max_synapses is not None:
+        count = np.clip(count, -max_synapses, max_synapses)
+    weight = (count * (w_per_synapse * scale)).astype(np.float32)
     if electrical_pairs:
         weight[electrical_edges(template, electrical_pairs)] = 0.0
     if graded:

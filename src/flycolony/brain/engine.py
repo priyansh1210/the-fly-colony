@@ -7,7 +7,8 @@ One step follows Brian2's schedule for the reference model, so reference mode re
 3. threshold (spiking units only);
 4. synaptic delivery of the spikes emitted ``delay`` steps ago, held graded coupling, sensory
    Poisson drive and background noise;
-5. reset of the neurons that spiked, which are then queued for delivery.
+5. reset of the neurons that spiked, which are then queued for delivery with their current
+   outgoing efficacy (short-term depression, production only).
 
 The membrane potential is stored relative to each neuron's rest (``u = v - v_rest``).
 
@@ -103,7 +104,7 @@ class BrainBatch:
 
     STATE_FIELDS = (
         "u", "g", "last", "next_noise", "theta", "vrest", "pre", "post", "ref", "graded_in",
-        "rates", "plastic", "keys", "spike_window", "sense_rate", "photo_in",
+        "rates", "plastic", "keys", "spike_window", "sense_rate", "photo_in", "res",
     )  # fmt: skip
 
     def __init__(
@@ -176,6 +177,9 @@ class BrainBatch:
         self._acc = torch.zeros(0, dtype=torch.int64, device=dev)
         # Delivery queue: spikes emitted at step s are delivered at step s + delay.
         self.queue: list[torch.Tensor] = [self._empty() for _ in range(max(1, self.k.delay_steps))]
+        # Outgoing efficacy of each queued spike (all ones without depression).
+        self.depressing = params.depression_keep < 1.0
+        self.queue_eff: list[torch.Tensor] = [self._empty_eff() for _ in self.queue]
         self._drive_events: _Events | None = None
         self._noise_events: _Events | None = None
         # Closed-loop sensory input (004 §2): none until attach_senses().
@@ -186,6 +190,9 @@ class BrainBatch:
 
     def _empty(self) -> torch.Tensor:
         return torch.empty(0, dtype=torch.int64, device=self.device)
+
+    def _empty_eff(self) -> torch.Tensor:
+        return torch.empty(0, dtype=torch.float32, device=self.device)
 
     def _alloc(self, b: int) -> None:
         n, dev, f32 = self.n, self.device, torch.float32
@@ -207,6 +214,8 @@ class BrainBatch:
         n_p = int(self.photo_ids.numel()) if hasattr(self, "photo_ids") else 0
         self.sense_rate = torch.zeros(b, n_s, dtype=f32, device=dev)
         self.photo_in = torch.zeros(b, n_p, dtype=f32, device=dev)
+        # Short-term depression: outgoing efficacy right after each neuron's last spike.
+        self.res = torch.ones(b, n, dtype=f32, device=dev)
         self.drive: dict[str, tuple[torch.Tensor, torch.Tensor]] = {}
         self._drive_flat = self._empty()
         self._drive_p = torch.empty(0, dtype=torch.float64, device=dev)
@@ -263,6 +272,7 @@ class BrainBatch:
             "spike_window": torch.zeros((), dtype=torch.int64, device=dev),
             "sense_rate": torch.zeros(self.sense_ids.numel(), device=dev),
             "photo_in": torch.zeros(self.photo_ids.numel(), device=dev),
+            "res": torch.ones(n, device=dev),
         }
         b = self.batch_size
         for name, value in row.items():
@@ -297,7 +307,9 @@ class BrainBatch:
         self.fly_ids.pop(b)
         remap = torch.full((old_b,), -1, dtype=torch.int64, device=self.device)
         remap[keep] = torch.arange(keep.numel(), device=self.device)
-        self.queue = [self._remap(q, remap)[1] for q in self.queue]
+        remapped = [self._remap(q, remap) for q in self.queue]
+        self.queue = [nq for _, nq in remapped]
+        self.queue_eff = [e[ok] for (ok, _), e in zip(remapped, self.queue_eff, strict=True)]
         if self._noise_events is not None:
             ev = self._noise_events
             t, f = self._unpack(ev)
@@ -515,7 +527,11 @@ class BrainBatch:
             if t % k.graded_every == 0:
                 self._update_graded()
             self.g = torch.where(self._open.view_as(nr), self.g + self.graded_in, self.g)
-        self._deliver(self.queue[slot] if k.delay_steps else spikes)
+        eff = self._efficacy(t, spikes)
+        if k.delay_steps:
+            self._deliver(self.queue[slot], self.queue_eff[slot])
+        else:
+            self._deliver(spikes, eff)
         if self.photo_in.numel():
             gv = self.g.view(-1)
             flat = (
@@ -544,6 +560,7 @@ class BrainBatch:
         self.last.view(-1)[spikes] = t
         if k.delay_steps:
             self.queue[slot] = spikes
+            self.queue_eff[slot] = eff
         events = self._after_spikes(t, spikes)
         for tap in self.taps:
             tap(self, t, spikes)
@@ -556,8 +573,25 @@ class BrainBatch:
             events += self.step()
         return events
 
-    def _deliver(self, flat: torch.Tensor) -> None:
-        """Event-driven propagation of spikes (flat fly*n + neuron indices) into g (BRAIN-R-051)."""
+    def _efficacy(self, t: int, spikes: torch.Tensor) -> torch.Tensor:
+        """Outgoing efficacy of the spikes emitted at step t, and the depression they cause.
+
+        Presynaptic short-term depression (brain.syn.depression.*): the efficacy recovers towards 1
+        exactly between spikes, A = 1 - (1 - A_after_last) * exp(-elapsed / tau_rec), scales every
+        edge of the spike, and is multiplied by `keep` after it. Must run before `last` is set.
+        """
+        if not self.depressing:
+            return torch.ones(spikes.shape, dtype=torch.float32, device=self.device)
+        p = self.params
+        elapsed = (t - self.last.view(-1)[spikes]).to(torch.float32) * self.dt
+        rest = self.res.view(-1)[spikes]
+        a = 1.0 - (1.0 - rest) * torch.exp(-elapsed / p.depression_tau_rec)
+        self.res.view(-1)[spikes] = a * p.depression_keep
+        return a
+
+    def _deliver(self, flat: torch.Tensor, eff: torch.Tensor) -> None:
+        """Event-driven propagation of spikes (flat fly*n + neuron indices, with their outgoing
+        efficacy) into g (BRAIN-R-051)."""
         if flat.numel() == 0:
             return
         n = self.n
@@ -570,7 +604,7 @@ class BrainBatch:
             s = self.slot_of_edge[edge]
             m = s >= 0
             w = torch.where(m, self.plastic.view(-1)[fe * self.n_plastic + s.clamp_min(0)], w)
-        w = w * self.pre.view(-1)[flat][which]
+        w = w * (self.pre.view(-1)[flat] * eff)[which]
         self._accumulate(fe * n + self.topo.indices[edge], w)
 
     def _accumulate(self, target: torch.Tensor, value_mv: torch.Tensor) -> None:
@@ -685,6 +719,7 @@ class BrainBatch:
         tensors["queue"] = (
             torch.cat(self.queue).cpu() if self.queue else torch.empty(0, dtype=torch.int64)
         )
+        tensors["queue_eff"] = torch.cat(self.queue_eff).cpu() if self.queue_eff else torch.empty(0)
         drive = {}
         for fid, (ids, p) in self.drive.items():
             tensors[f"drive.{fid}.ids"] = ids.cpu()
@@ -726,11 +761,19 @@ class BrainBatch:
             self._sense_salt = self._salt[self.sense_ids]
             self._photo_steady()
         for name in self.STATE_FIELDS:
+            if name == "res" and name not in tensors:  # checkpoints from before depression
+                self.res = torch.ones_like(tensors["u"], device=dev)
+                continue
             setattr(self, name, tensors[name].to(dev).clone())
         self.step_count = int(meta["step"])
         q = tensors["queue"].to(dev)
         self.queue = list(torch.split(q, meta["queue_lengths"])) if meta["queue_lengths"] else []
         self.queue = [x.clone() for x in self.queue]
+        if "queue_eff" in tensors:
+            qe = tensors["queue_eff"].to(dev)
+            self.queue_eff = [x.clone() for x in torch.split(qe, meta["queue_lengths"])]
+        else:  # checkpoints from before short-term depression
+            self.queue_eff = [torch.ones(x.shape, device=dev) for x in self.queue]
         self.drive = {
             fid: (tensors[f"drive.{fid}.ids"].to(dev), tensors[f"drive.{fid}.p"].to(dev))
             for fid in meta["drive"]

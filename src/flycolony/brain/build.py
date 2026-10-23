@@ -109,11 +109,12 @@ def topology(
     scale = weight_scale(template, reg)
     extra = tuple(reg.get("brain.graded.extra_cell_types")) if graded else ()
     pairs = tuple(reg.get("brain.electrical.excitatory_pairs")) if graded else ()
+    cap = float(reg.get("brain.syn.max_synapses")) if graded else None
     taus = flyvis_time_constants() if graded else {}
     scale_key = (
         scale if isinstance(scale, float) else (reg.get("conn.norm.male_mode"), scale.tobytes())
     )
-    key = (template.template_id, str(device), w_syn, scale_key, graded, extra, pairs, weights)
+    key = (template.template_id, str(device), w_syn, scale_key, graded, extra, pairs, cap, weights)
     if key not in _TOPOLOGY_CACHE:
         _TOPOLOGY_CACHE[key] = build_topology(
             template,
@@ -125,6 +126,7 @@ def topology(
             extra_graded=extra,
             graded_tau_ms=taus,
             electrical_pairs=pairs,
+            max_synapses=cap,
         )
     return _TOPOLOGY_CACHE[key]
 
