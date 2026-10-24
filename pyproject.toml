@@ -60,12 +60,15 @@ markers = [
     "data: needs downloaded datasets under data/raw (skipped when absent)",
     "gpu: needs a CUDA device (skipped when absent)",
     "perf: performance test",
+    "emergence: Phase-2 emergence gate reports (005; run `colony gates run` first)",
 ]
 
 [tool.ruff]
 line-length = 100
 target-version = "py312"
 src = ["src", "tests"]
+# Archived one-off diagnostic scripts (agent memory), kept as written.
+extend-exclude = ["docs/agent-memory"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]

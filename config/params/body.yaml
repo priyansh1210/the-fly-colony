@@ -1,0 +1,196 @@
+# Parameter Registry: body (owner spec 003). Schema: flycolony.registry.Entry.
+# Units: mm, s, rad.
+
+entries:
+  - id: body.size.length_mm
+    value: 2.5
+    units: mm
+    valid_range: [0.5, 10]
+    source:
+      authors: "Demerec M."
+      year: 1950
+      where: "Biology of Drosophila (adult body length ~2.5 mm)"
+    owner_spec: "003"
+  - id: body.size.stand_height_mm
+    value: 0.5
+    units: mm
+    valid_range: [0.05, 3]
+    assumption:
+      rationale: "Thorax centre height above the substrate when standing (leg posture)."
+      owner: "003"
+    owner_spec: "003"
+  - id: body.size.head_offset_mm
+    value: 0.9
+    units: mm
+    valid_range: [0.1, 3]
+    assumption:
+      rationale: "Head centre forward of the thorax centre (anatomical proportion)."
+      owner: "003"
+    owner_spec: "003"
+  - id: body.size.head_height_mm
+    value: 0.55
+    units: mm
+    valid_range: [0.05, 3]
+    assumption:
+      rationale: "Head centre height above the substrate when standing."
+      owner: "003"
+    owner_spec: "003"
+  - id: body.sites.antenna_forward_mm
+    value: 0.25
+    units: mm
+    valid_range: [0, 2]
+    assumption:
+      rationale: "Antenna base forward of the head centre."
+      owner: "003"
+    owner_spec: "003"
+  - id: body.sites.antenna_lateral_mm
+    value: 0.12
+    units: mm
+    valid_range: [0, 2]
+    assumption:
+      rationale: "Half-distance between the two aristae bases."
+      owner: "003"
+    owner_spec: "003"
+  - id: body.sites.antenna_height_mm
+    value: 0.15
+    units: mm
+    valid_range: [0, 2]
+    assumption:
+      rationale: "Antenna base above the head centre."
+      owner: "003"
+    owner_spec: "003"
+  - id: body.sites.eye_lateral_mm
+    value: 0.3
+    units: mm
+    valid_range: [0, 2]
+    assumption:
+      rationale: "Half the head width (eye centres)."
+      owner: "003"
+    owner_spec: "003"
+  - id: body.sites.tarsus_lateral_mm
+    value: 0.8
+    units: mm
+    valid_range: [0, 3]
+    assumption:
+      rationale: "Lateral reach of the leg tips (grouped tarsal contact sites)."
+      owner: "003"
+    owner_spec: "003"
+  - id: body.proboscis.length_mm
+    value: 0.5
+    units: mm
+    valid_range: [0.1, 2]
+    assumption:
+      rationale: "Proboscis reach when fully extended (within the anatomical range)."
+      owner: "003"
+    owner_spec: "003"
+  - id: body.proboscis.angle_rad
+    value: 0.8
+    units: rad
+    valid_range: [0, 1.6]
+    assumption:
+      rationale: "Extension direction below the horizontal."
+      owner: "003"
+    owner_spec: "003"
+  - id: body.proboscis.rest_drop_mm
+    value: 0.35
+    units: mm
+    valid_range: [0, 1]
+    assumption:
+      rationale: "Labellum tip below the head centre when retracted; it touches a drop deeper than ~0.2 mm, as a fly standing at a drop does."
+      owner: "003"
+    owner_spec: "003"
+  - id: body.proboscis.tau_s
+    value: 0.03
+    units: s
+    valid_range: [0.001, 1]
+    assumption:
+      rationale: "Proboscis extension time constant (PER completes within ~100 ms)."
+      owner: "003"
+    owner_spec: "003"
+  - id: body.walk.max_speed_mm_s
+    value: 20.0
+    units: mm/s
+    valid_range: [1, 100]
+    source:
+      authors: "Strauss R., Heisenberg M."
+      year: 1993
+      where: "J Comp Physiol A 172:45, walking speeds up to ~2 cm/s; spec BODY-R-002"
+    owner_spec: "003"
+  - id: body.walk.max_back_speed_mm_s
+    value: 5.0
+    units: mm/s
+    valid_range: [0.1, 50]
+    source:
+      authors: "Bidaye S.S. et al."
+      year: 2014
+      where: "Science 344:97, backward walking slower than forward"
+    owner_spec: "003"
+  - id: body.walk.max_yaw_rad_s
+    value: 10.0
+    units: rad/s
+    valid_range: [0.1, 100]
+    source:
+      authors: "Rayshubskiy A. et al."
+      year: 2020
+      where: "bioRxiv 10.1101/2020.04.04.024703, walking turns up to several hundred deg/s"
+    owner_spec: "003"
+  - id: body.jump.speed_mm_s
+    value: 500.0
+    units: mm/s
+    valid_range: [10, 5000]
+    source:
+      authors: "Card G., Dickinson M.H."
+      year: 2008
+      where: "J Exp Biol 211:341, escape take-off velocities ~0.5 m/s"
+    owner_spec: "003"
+  - id: body.jump.angle_rad
+    value: 0.8
+    units: rad
+    valid_range: [0, 1.6]
+    source:
+      authors: "Card G., Dickinson M.H."
+      year: 2008
+      where: "J Exp Biol 211:341, steep take-off angle (~45 deg)"
+    owner_spec: "003"
+  - id: body.jump.duration_s
+    value: 0.01
+    units: s
+    valid_range: [0.001, 0.1]
+    source:
+      authors: "von Reyn C.R. et al."
+      year: 2014
+      where: "Nat Neurosci 17:962, short-mode take-off leg extension ~5-10 ms"
+    owner_spec: "003"
+  - id: body.flight.gravity_mm_s2
+    value: 9810.0
+    units: mm/s^2
+    valid_range: [9000, 10000]
+    source:
+      authors: "CODATA"
+      year: 2018
+      where: "standard gravity 9.80665 m/s^2"
+    owner_spec: "003"
+  - id: body.flight.drag_per_s
+    value: 20.0
+    units: 1/s
+    valid_range: [0.1, 1000]
+    assumption:
+      rationale: "Linear drag of a passive (non-flying) fly; terminal sink speed g/k ~ 0.5 m/s. Flight thrust is not yet mappable (005 §2)."
+      owner: "003"
+    owner_spec: "003"
+  - id: body.injury.impact_mm_s
+    value: 1500.0
+    units: mm/s
+    valid_range: [10, 100000]
+    assumption:
+      rationale: "Impact speed above which a crash landing gives injury points."
+      owner: "003"
+    owner_spec: "003"
+  - id: body.injury.impact_landing_mm_s
+    value: 3000.0
+    units: mm/s
+    valid_range: [10, 100000]
+    assumption:
+      rationale: "Impact threshold with the legs extended for landing."
+      owner: "003"
+    owner_spec: "003"

@@ -159,3 +159,30 @@ datasets:
       - name: Neuprint_Meta.csv   # ROI hierarchy and primaryRois (non-overlapping neuropil set)
         url: https://storage.googleapis.com/flyem-male-cns/v1.0/database/neuprint-inputs/Neuprint_Meta.csv
         sha256: 227ff1e873881a1ab124b10aa51ada94012773ddb9c4ad986e5cc83df8d360f7   # pinned after first verified fetch, 2026-10-12
+
+  door_v2:
+    title: DoOR 2.0 - Database of Odorant Responses (DoOR.data)
+    version: commit db323a496577c4b4a72b5c2fcd1859e07521ffb5 (2.0.1.9001)
+    homepage: https://github.com/ropensci/DoOR.data
+    license:
+      name: CC BY-SA 4.0
+      url: https://creativecommons.org/licenses/by-sa/4.0/
+      status: verified
+      checked: "2026-10-13"
+      evidence: DESCRIPTION file of the repository ("License CC BY-SA 4.0")
+      restrictions: >-
+        Share-alike. Tables derived from DoOR (config/senses/door_tuning.yaml) carry the same
+        license and attribution.
+      attribution: >-
+        Münch D., Galizia C.G. (2016) DoOR 2.0 - Comprehensive Mapping of Drosophila melanogaster
+        Odorant Responses, Sci Rep 6:21841, doi:10.1038/srep21841.
+    files:
+      - name: door_response_matrix.csv
+        url: https://raw.githubusercontent.com/ropensci/DoOR.data/db323a496577c4b4a72b5c2fcd1859e07521ffb5/data/door_response_matrix.csv
+        sha256: bc2aa5414ff54d3a1399f5fe171e154bcadc754bcf323a3c27711a54f70848e2   # pinned after first verified fetch, 2026-10-13
+      - name: door_mappings.csv
+        url: https://raw.githubusercontent.com/ropensci/DoOR.data/db323a496577c4b4a72b5c2fcd1859e07521ffb5/data/door_mappings.csv
+        sha256: 1197c492e769b1b587c907c5b750ffa2507d7e6c9fe9dfcb2ee8603871e00912   # pinned after first verified fetch, 2026-10-13
+      - name: odor.csv
+        url: https://raw.githubusercontent.com/ropensci/DoOR.data/db323a496577c4b4a72b5c2fcd1859e07521ffb5/data/odor.csv
+        sha256: a31d1841cf90ce23ec149760a5efa38eae02de7820bb2300c3a7dba221745940   # pinned after first verified fetch, 2026-10-13

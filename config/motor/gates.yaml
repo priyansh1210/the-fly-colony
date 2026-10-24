@@ -1,0 +1,62 @@
+# Phase-2 emergence gate protocols (spec 005 §5, design §6). Read by flycolony.engine.gates.
+# Every trial starts from world stimuli only (MOTOR-R-020): arena, food/odor, wind, light, the
+# fly's starting pose and its physiological history. Nothing here touches the brain or the motor
+# readout, except the AC-07 clamp, which is that gate's stated test condition.
+# Pass criteria are the spec's proposals (MOTOR-AC table); α and n are shared.
+version: 1
+alpha: 0.01            # one-sided significance level
+trials: 50             # per condition (n >= 50, distinct seeds and individuals)
+max_batch: 32          # worlds stepped together (one fly per world); memory bound only
+seed_base: 100000      # trial seeds: seed_base + 1000 * gate index + trial (+ 500 for the control)
+
+drop: {radius_mm: 2.0, height_mm: 0.4, volume_mm3: 5.0}   # PER-assay drop under the labellum
+
+gates:
+  feeding:
+    id: MOTOR-AC-01
+    arena: {kind: box, size_x: 20, size_y: 20, height: 10}
+    seconds: 2.0
+    condition: {medium: sucrose_100mM, hours_since_meal: 24}
+    control: {medium: water, hours_since_meal: 0}
+    outcome: feeding            # max proboscis extension > gate.feed.min_extension and ingested > 0
+    test: fisher_greater        # condition > control
+    min_fraction: 0.6           # condition success rate (AC-01)
+  bitter:
+    id: MOTOR-AC-02
+    arena: {kind: box, size_x: 20, size_y: 20, height: 10}
+    seconds: 2.0
+    condition: {medium: sucrose_bitter, hours_since_meal: 24}
+    control: {medium: sucrose_100mM, hours_since_meal: 24}
+    outcome: feeding
+    test: fisher_less           # condition < control
+  looming:
+    id: MOTOR-AC-03
+    blocked: "needs the FlyWire visual-column map (004 S8; data/raw/flywire_columns/)"
+  plume:
+    id: MOTOR-AC-04
+    arena: {kind: box, size_x: 160, size_y: 50, height: 30}
+    wind_mm_s: 300.0            # 0.3 m/s along +x (inflow at x = 0)
+    seconds: 30.0
+    start: {x: 140.0, y: 25.0, heading_deg: random}
+    condition: {source: {medium: vinegar_source, x: 15.0, y: 25.0}}
+    control: {}
+    outcome: reach              # head within reach_mm of the source position at any time
+    reach_mm: 15.0
+    test: fisher_greater
+  sleep:
+    id: MOTOR-AC-05
+    arena: {kind: box, size_x: 60, size_y: 60, height: 10}
+    seconds: 75.0               # 30 fly-min at D = 3600
+    food: [{medium: sucrose_100mM, x: 15.0, y: 30.0}, {medium: water, x: 45.0, y: 30.0}]
+    start: {x: 30.0, y: 15.0, heading_deg: random}
+    condition: {fly_hour: 0.0, hours_awake: 12}    # night, high pressure
+    control: {fly_hour: 12.0, hours_awake: 0}      # day, low pressure
+    outcome: sleep_minutes      # fly-minutes in immobility bouts >= life.sleep.bout_fly_min
+    test: mannwhitney_greater
+  no_self_motion:
+    id: MOTOR-AC-07
+    arena: {kind: box, size_x: 20, size_y: 20, height: 10}
+    seconds: 10.0
+    condition: {clamp_motor: true}
+    outcome: at_rest            # no primitive active and the body never moves
+    test: all

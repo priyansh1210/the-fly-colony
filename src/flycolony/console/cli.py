@@ -15,11 +15,13 @@ template_app = typer.Typer(help="BrainTemplates (connectome packages).", no_args
 registry_app = typer.Typer(help="Parameter Registry.", no_args_is_help=True)
 hardware_app = typer.Typer(help="Hardware detection and limits.", no_args_is_help=True)
 brain_app = typer.Typer(help="Brain engine validation (spec 002).", no_args_is_help=True)
+gates_app = typer.Typer(help="Phase-2 emergence gates (spec 005).", no_args_is_help=True)
 app.add_typer(data_app, name="data")
 app.add_typer(template_app, name="template")
 app.add_typer(registry_app, name="registry")
 app.add_typer(hardware_app, name="hardware")
 app.add_typer(brain_app, name="brain")
+app.add_typer(gates_app, name="gates")
 
 
 def _paths() -> dict[str, Path]:
@@ -286,6 +288,47 @@ def brain_male(device: str = typer.Option(None), trials: int = typer.Option(None
             f"type-side r={a['type_side_pearson']:.3f}{' (mirrored)' if a['mirrored'] else ''}  {'PASS' if a['pass'] else 'FAIL'}"
         )
     typer.echo(f"report: {publish(male, 'male-assays', rec)}")
+
+
+# --- emergence gates -----------------------------------------------------------------------
+
+
+@gates_app.command("run")
+def gates_run(
+    gate: list[str] = typer.Option(
+        None, help="Gate names (default: all in config/motor/gates.yaml)"
+    ),
+    trials: int = typer.Option(None, help="Trials per condition (default: gates.yaml, n >= 50)"),
+    device: str = typer.Option(None),
+) -> None:
+    """Run emergence gates in full and write specs/005-motor/reports/<template>.<gate>.json."""
+    from flycolony.engine.gates import load_gates, report_path, run_gate
+    from flycolony.registry import Registry
+
+    cfg = load_all()["colony.yaml"]
+    reg = Registry.load()
+    tpl = _template("female")
+    dev = _device(device)
+    names = gate or list(load_gates()["gates"])
+    failed = False
+    for name in names:
+        rep = run_gate(name, tpl, cfg, reg, dev, trials=trials, progress=typer.echo)
+        if rep["status"] == "blocked":
+            typer.echo(f"{name} ({rep['id']}): BLOCKED - {rep['reason']}")
+            failed = True
+            continue
+        s = rep["summary"]
+        if "condition" in s and "control" in s:
+            c, k = s["condition"], s["control"]
+            detail = f"condition {c} vs control {k}, p={s['p_value']:.3g}"
+        else:
+            detail = f"{s['successes']}/{s['n']} trials"
+        typer.echo(
+            f"{name} ({rep['id']}): {'PASS' if rep['passed'] else 'FAIL'} - {detail}"
+            f" -> {report_path(tpl.template_id, name)}"
+        )
+        failed |= not rep["passed"]
+    raise typer.Exit(1 if failed else 0)
 
 
 if __name__ == "__main__":

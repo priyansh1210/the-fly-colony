@@ -78,6 +78,61 @@ entries:
       doi: 10.1038/s41586-024-07763-9
       where: model.py default_params w_syn (the model's single free parameter)
     owner_spec: "002"
+  - id: brain.syn.max_synapses
+    value: 250.0
+    units: synapses per connection
+    valid_range: [1, 100000]
+    assumption:
+      rationale: >-
+        Calibrated at rest only (tools/calibrate_cap.py, 2026-10-23, decided by the project owner):
+        the largest scanned cap (450, 400, ..., 100) with no neuron outside the antennal-lobe
+        network still firing >= 10 Hz once background input and AL output are switched off. Without
+        a cap 33 neurons (a CB0216-centred premotor cluster, MN9, DNge022, ...) latch through
+        reciprocal connections of up to ~450 synapses each way, because the model's synapses
+        neither depress nor adapt; at 250 none do (1159 edges capped; central rest mean unchanged at
+        3.6 Hz; MN9 at rest 116 -> 19 Hz). No direct citation for the value; Liu et al. (2022)
+        Curr Biol 32:559, doi 10.1016/j.cub.2021.11.056, show connection strength follows synapse density
+        rather than raw count, so raw counts overstate the largest connections. Report:
+        specs/002-brain-engine/reports/female-fafb783-t2.synapse-cap-calibration.json.
+      owner: "002"
+    owner_spec: "002"
+    notes: Production variant only; caps the signed synapse count of each connection before scaling.
+  - id: brain.syn.depression.keep
+    value: 1.0
+    units: fraction
+    valid_range: [0, 1]
+    source: &nagel_std
+      authors: Nagel K.I., Hong E.J., Wilson R.I.
+      year: 2015
+      doi: 10.1038/nn.3895
+      where: >-
+        Fig. 1c, ORN->PN EPSCs during 10 Hz ORN stimulation fit by the simple depression model
+        (Methods, Eq. 1: A -> f*A at each presynaptic spike, A recovers towards 1 with time
+        constant tau): f = 0.78, tau = 893 ms.
+    owner_spec: "002"
+    notes: >-
+      DISABLED (1.0 = no depression) since 2026-10-23: with the measured value 0.78 applied to
+      every spiking neuron, sustained responses become ~50 ms transients and the sugar->MN9
+      validation fails (1 s mean 10.8 Hz vs 11.3 Hz at rest); the project owner chose the
+      rest-calibrated brain.syn.max_synapses instead. The cited value stays here: f = 0.78.
+      Production variant only (the reference variant has no depression, as in Shiu et al.). Each
+      spiking neuron's outgoing efficacy A (1 at rest) scales the weight of every spike it sends;
+      after the spike A is multiplied by this value. Applied to every spiking neuron, an
+      extrapolation from the one central Drosophila synapse with a measured single-exponential fit
+      (a known limitation). Added 2026-10-22: without any depression or adaptation, reciprocally
+      connected excitatory pairs latch (826 pairs with >= 40 synapses each way; e.g. CB0216 L<->R,
+      451/455 synapses, latches at ~130 Hz and holds MN9 at ~100 Hz at rest). Steady-state
+      efficacy at a constant rate r: (1 - e)/(1 - keep*e), e = exp(-1/(r*tau_rec)): 0.59 at 4 Hz,
+      0.35 at 10 Hz, 0.04 at 130 Hz.
+  - id: brain.syn.depression.tau_rec
+    value: 893.0
+    units: ms
+    valid_range: [1, 10000]
+    source: *nagel_std
+    owner_spec: "002"
+    notes: >-
+      Recovery time constant of the outgoing efficacy, integrated exactly between spikes:
+      A(t) = 1 - (1 - A_after_last_spike) * exp(-elapsed / tau_rec).
 
   # --- external input (BRAIN-R-013, BRAIN-R-016) ---------------------------------------------
   - id: brain.input.w_poisson
@@ -115,16 +170,21 @@ entries:
       owner: "002"
     owner_spec: "002"
   - id: brain.noise.w
-    value: 1.5
+    value: 1.4
     units: mV
     valid_range: [0, 100]
     assumption:
       rationale: >-
-        Membrane kick per background event. With brain.noise.rate the mean depolarisation is
-        rate x w x tau_m = 3 mV, below the 7 mV rest-to-threshold gap, so neurons fire on
-        fluctuations and recurrent input. Scanned 2026-10-12 on female-fafb783-t2 (production
-        model, 0.5 s): median 2 Hz over spiking neurons, 39% silent, mean 10 Hz, no runaway
-        (100 Hz x 1.0 mV gave 81% silent; 200 Hz x 1.0 mV a 12 Hz mean). Paired with brain.noise.rate.
+        Membrane kick per background event, calibrated 2026-10-21 by tools/calibrate_noise.py on
+        female-fafb783-t2 (production model with brain.electrical.excitatory_pairs, at rest,
+        8 flies, 3 s warm-up, 2 s measured): the largest kick in the scan whose central-brain mean
+        lies in the registry's 1-5 Hz target band, capped at 4 Hz (metabolic upper bound on the
+        whole-brain mean, State of Brain Emulation Report 2025, arXiv:2510.15745). Result: central mean
+        3.6 Hz (median 1.1 Hz, 11% silent), per-fly 3.58-3.64 Hz, Kenyon cells 0.13 Hz (in vivo
+        0.1 +/- 0.4, Turner et al. 2008 J Neurophysiol 99:734), no runaway. Report:
+        specs/002-brain-engine/reports/female-fafb783-t2.noise-calibration.json. The previous 1.5 mV
+        (2026-10-12, 0.5 s scan without the electrical-pair rule) put every brain in a
+        self-sustained ~24 Hz state. Paired with brain.noise.rate.
       owner: "002"
     owner_spec: "002"
 
@@ -277,6 +337,27 @@ entries:
       where: APL inhibition of Kenyon cells is graded and spatially local (non-spiking signalling); BRAIN-OQ-02 literature list
     owner_spec: "002"
     notes: Central-brain types simulated as graded units in addition to the template's flyvis types (BRAIN-OQ-02).
+  - id: brain.electrical.excitatory_pairs
+    value: ["ALLN>ALPN"]
+    units: cell-class pairs
+    source:
+      authors: Yaksi E., Wilson R.I.
+      year: 2010
+      doi: 10.1016/j.neuron.2010.08.041
+      where: >-
+        Paired eLN-PN recordings: the connection passes depolarizing and hyperpolarizing
+        signals, is not reduced by blocking chemical transmission and is abolished by a
+        gap-junction (shakB) mutation; eLN chemical output targets inhibitory LNs. See also
+        Huang J. et al. (2010) Neuron 67:1021 (doi 10.1016/j.neuron.2010.08.025), electrical plus
+        a cholinergic component.
+    owner_spec: "002"
+    notes: >-
+      Production variant only (the reference variant keeps every chemical edge). Chemical edges
+      from excitatory antennal-lobe local neurons onto projection neurons get weight 0, because
+      that coupling is electrical and the connectome has no gap junctions (not modelled: a known
+      limitation). Found 2026-10-21: these edges (summed weight ~44k, as large as all ORN->PN
+      input) make the resting brain ignite into a self-sustained ~20 Hz state; see
+      specs/002-brain-engine/reports/female-fafb783-t2.ignition-diagnostic.json.
   - id: brain.graded.max_rate
     value: 300.0
     units: Hz

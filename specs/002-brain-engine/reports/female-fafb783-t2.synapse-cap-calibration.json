@@ -1,0 +1,262 @@
+{
+  "spec": "002 per-connection synapse cap calibration (Phase 2)",
+  "template": "female-fafb783-t2",
+  "rule": "largest brain.syn.max_synapses in [450.0, 400.0, 350.0, 300.0, 250.0, 200.0, 150.0, 100.0] with no neuron outside the antennal-lobe network (ALLN, ALPN, ALIN, ALON, olfactory, hygrosensory, thermosensory) still firing >= 10.0 Hz in any fly 0.5-1.0 s after the background input is switched off (after 3.0 s at rest), and no runaway",
+  "decision": "2026-10-23, project owner: cap per-connection synapse counts, calibrated at rest only, instead of global short-term depression (which failed the sugar->MN9 validation). The cap value has no direct citation; Liu et al. (2022) Curr Biol 32:559, doi 10.1016/j.cub.2021.11.056 show connection strength follows synapse density, not raw count, so raw counts overstate the largest connections.",
+  "known_limitation": "the antennal-lobe network is self-sustained at every cap (excitatory LN chemical loops); reported as self_sustained_in_al",
+  "condition": {
+    "flies": 8,
+    "warmup_s": 3.0,
+    "settle_s": 0.5,
+    "measure_s": 0.5,
+    "dt_ms": 0.1,
+    "noise_w_mv": 1.4,
+    "depression_keep": 1.0
+  },
+  "first_scan_2026_10_23": {
+    "note": "background off only; AL output not silenced (confounded, see amendment)",
+    "self_sustained_outside_al_by_cap": {
+      "none": 154,
+      "450": 167,
+      "400": 157,
+      "350": 173,
+      "300": 164,
+      "250": 135,
+      "200": 160,
+      "150": 152,
+      "100": 139
+    },
+    "rest_mn9_hz_by_cap": {
+      "none": 115.8,
+      "450": 115.7,
+      "400": 112.2,
+      "350": 88.6,
+      "300": 49.6,
+      "250": 18.7,
+      "200": 11.25,
+      "150": 3.25,
+      "100": 3.5
+    }
+  },
+  "scan": [
+    {
+      "max_synapses": null,
+      "edges_capped": 0,
+      "self_sustained_outside_al": 33,
+      "self_sustained_in_al": 0,
+      "outside_al_types": {
+        "CB0891": 2,
+        "CB0807": 2,
+        "CB0572": 2,
+        "CB0489": 2,
+        "DNge022": 2,
+        "CB0701": 2,
+        "CB0909": 2,
+        "CB0912": 2,
+        "DNge137": 2,
+        "CB0750": 2,
+        "DNge078": 2,
+        "CB0904": 2,
+        "CB0462": 2,
+        "CB0216": 2,
+        "CB0568": 1,
+        "DNg12_e": 1,
+        "DNge069": 1,
+        "CB0832": 1,
+        "CB0774": 1
+      },
+      "outside_al_super_class": {
+        "central": 19,
+        "descending": 8,
+        "motor": 6
+      },
+      "rest_central_mean_hz": 3.6318983354436245,
+      "rest_mn9_hz": 115.75,
+      "runaway_events": 0,
+      "meets_rule": false
+    },
+    {
+      "max_synapses": 450.0,
+      "edges_capped": 210,
+      "self_sustained_outside_al": 33,
+      "self_sustained_in_al": 0,
+      "outside_al_types": {
+        "CB0891": 2,
+        "CB0807": 2,
+        "CB0572": 2,
+        "CB0489": 2,
+        "DNge022": 2,
+        "CB0701": 2,
+        "CB0909": 2,
+        "CB0912": 2,
+        "DNge137": 2,
+        "CB0750": 2,
+        "DNge078": 2,
+        "CB0904": 2,
+        "CB0462": 2,
+        "CB0216": 2,
+        "CB0568": 1,
+        "DNg12_e": 1,
+        "DNge069": 1,
+        "CB0832": 1,
+        "CB0774": 1
+      },
+      "outside_al_super_class": {
+        "central": 19,
+        "descending": 8,
+        "motor": 6
+      },
+      "rest_central_mean_hz": 3.668466847842871,
+      "rest_mn9_hz": 115.6875,
+      "runaway_events": 0,
+      "meets_rule": false
+    },
+    {
+      "max_synapses": 400.0,
+      "edges_capped": 310,
+      "self_sustained_outside_al": 30,
+      "self_sustained_in_al": 0,
+      "outside_al_types": {
+        "CB0891": 2,
+        "CB0807": 2,
+        "CB0572": 2,
+        "DNge022": 2,
+        "CB0701": 2,
+        "CB0909": 2,
+        "CB0912": 2,
+        "DNge137": 2,
+        "CB0750": 2,
+        "DNge078": 2,
+        "CB0904": 2,
+        "CB0462": 2,
+        "CB0216": 2,
+        "CB0489": 1,
+        "DNge069": 1,
+        "CB0832": 1,
+        "CB0774": 1
+      },
+      "outside_al_super_class": {
+        "central": 17,
+        "descending": 7,
+        "motor": 6
+      },
+      "rest_central_mean_hz": 3.6420470337543622,
+      "rest_mn9_hz": 112.1875,
+      "runaway_events": 0,
+      "meets_rule": false
+    },
+    {
+      "max_synapses": 350.0,
+      "edges_capped": 443,
+      "self_sustained_outside_al": 29,
+      "self_sustained_in_al": 0,
+      "outside_al_types": {
+        "CB0891": 2,
+        "CB0807": 2,
+        "CB0572": 2,
+        "DNge022": 2,
+        "CB0701": 2,
+        "CB0909": 2,
+        "CB0912": 2,
+        "DNge137": 2,
+        "CB0750": 2,
+        "DNge078": 2,
+        "CB0904": 2,
+        "CB0462": 2,
+        "CB0216": 2,
+        "CB0489": 1,
+        "DNge069": 1,
+        "CB0774": 1
+      },
+      "outside_al_super_class": {
+        "central": 16,
+        "descending": 7,
+        "motor": 6
+      },
+      "rest_central_mean_hz": 3.6384067817547328,
+      "rest_mn9_hz": 88.625,
+      "runaway_events": 0,
+      "meets_rule": false
+    },
+    {
+      "max_synapses": 300.0,
+      "edges_capped": 676,
+      "self_sustained_outside_al": 25,
+      "self_sustained_in_al": 0,
+      "outside_al_types": {
+        "CB0891": 2,
+        "CB0807": 2,
+        "CB0572": 2,
+        "DNge022": 2,
+        "CB0701": 2,
+        "CB0909": 2,
+        "CB0912": 2,
+        "CB0750": 2,
+        "CB0904": 2,
+        "CB0462": 2,
+        "CB0216": 2,
+        "DNge137": 1,
+        "DNge078": 1,
+        "CB0774": 1
+      },
+      "outside_al_super_class": {
+        "central": 15,
+        "descending": 4,
+        "motor": 6
+      },
+      "rest_central_mean_hz": 3.6235253698156327,
+      "rest_mn9_hz": 49.5625,
+      "runaway_events": 0,
+      "meets_rule": false
+    },
+    {
+      "max_synapses": 250.0,
+      "edges_capped": 1159,
+      "self_sustained_outside_al": 0,
+      "self_sustained_in_al": 0,
+      "outside_al_types": {},
+      "outside_al_super_class": {},
+      "rest_central_mean_hz": 3.621803681171057,
+      "rest_mn9_hz": 18.6875,
+      "runaway_events": 0,
+      "meets_rule": true
+    },
+    {
+      "max_synapses": 200.0,
+      "edges_capped": 2190,
+      "self_sustained_outside_al": 0,
+      "self_sustained_in_al": 0,
+      "outside_al_types": {},
+      "outside_al_super_class": {},
+      "rest_central_mean_hz": 3.644884345758315,
+      "rest_mn9_hz": 11.25,
+      "runaway_events": 0,
+      "meets_rule": true
+    },
+    {
+      "max_synapses": 150.0,
+      "edges_capped": 5222,
+      "self_sustained_outside_al": 0,
+      "self_sustained_in_al": 0,
+      "outside_al_types": {},
+      "outside_al_super_class": {},
+      "rest_central_mean_hz": 3.619684382817084,
+      "rest_mn9_hz": 3.25,
+      "runaway_events": 0,
+      "meets_rule": true
+    },
+    {
+      "max_synapses": 100.0,
+      "edges_capped": 15441,
+      "self_sustained_outside_al": 0,
+      "self_sustained_in_al": 0,
+      "outside_al_types": {},
+      "outside_al_super_class": {},
+      "rest_central_mean_hz": 3.5042347364195052,
+      "rest_mn9_hz": 3.5,
+      "runaway_events": 0,
+      "meets_rule": true
+    }
+  ],
+  "chosen_max_synapses": 250.0
+}

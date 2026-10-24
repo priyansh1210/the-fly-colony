@@ -1,0 +1,53 @@
+# Sense channels -> I/O-map groups -> transduction class (spec 004 §3-§6). Every Poisson-driven
+# sensory neuron belongs to exactly one channel. Parameters are registry ids (config/params/senses.yaml).
+version: 1
+taste:
+  - {channel: sugar, group: taste.labellar.sugar, stimulus: sucrose, params: senses.taste.sugar,
+     citation: "Gr5a/Gr64f sugar GRNs. Dahanukar A. et al. (2007) Nat Neurosci 10:1265; Engert S. et al. (2022) eLife 11:e78110"}
+  - {channel: bitter, group: taste.labellar.bitter, stimulus: bitter, params: senses.taste.bitter,
+     citation: "Gr66a bitter GRNs. Moon S.J. et al. (2006) Curr Biol 16:1812; Meunier N. et al. (2003) J Neurobiol 56:139"}
+  - {channel: water, group: taste.labellar.water, stimulus: water, params: senses.taste.water,
+     citation: "ppk28 water GRNs, inhibited by osmolality. Cameron P. et al. (2010) PNAS 107:2"}
+  - {channel: sugar_low_salt, group: taste.labellar.sugar_low_salt, stimulus: [salt_low, sucrose],
+     params: senses.taste.low_salt, sucrose_params: senses.taste.sugar,
+     citation: "Sugar/low-salt GRNs (Engert S. et al. (2022) eLife 11:e78110 sub-class sugar/low_salt): low salt activates Gr64f sugar GRNs (Jaeger A.H. et al. (2018) eLife 7:e37167; Zhang Y.V. et al. (2013) Science 340:1334). Response = larger of the low-salt and sucrose terms (ASSUMPTION)."}
+  - {channel: high_salt, group: taste.labellar.high_salt_heavy_metal, stimulus: salt_high, params: senses.taste.high_salt,
+     citation: "High-salt aversive GRNs. Zhang Y.V. et al. (2013) Science 340:1334; Jaeger A.H. et al. (2018) eLife 7:e37167"}
+  - {channel: glutamate, group: taste.labellar.glutamate, stimulus: none, params: null,
+     citation: "No glutamate in Phase-2 food chemistry: simulated, undriven."}
+  - {channel: putative_attractive, group: taste.labellar.putative_attractive, stimulus: none, params: null,
+     citation: "Unknown ligand (Engert et al. 2022): simulated, undriven."}
+  - {channel: putative_aversive, group: taste.labellar.putative_aversive, stimulus: none, params: null,
+     citation: "Unknown ligand (Engert et al. 2022): simulated, undriven."}
+smell:
+  prefix: olfaction.orn.
+  params: senses.smell
+  palp_glomeruli: [va4, vc1, vc2, vm7d, va7l, vm5v]   # palp ORNs: Couto A. et al. (2005) Curr Biol 15:1535
+mechano:
+  - {channel: jo_ce, group: mechano.jo.wind_gravity, params: senses.jo.ce,
+     citation: "JO-C/E sustained deflection (wind, gravity). Kamikouchi A. et al. (2009) Nature 458:165; Yorozu S. et al. (2009) Nature 458:201"}
+  - {channel: jo_ab, group: mechano.jo.auditory, params: senses.jo.ab,
+     citation: "JO-A/B vibration (near-field sound, Phase 5). Kamikouchi A. et al. (2009) Nature 458:165"}
+  - {channel: bristle, group: touch.head_bristle, params: senses.touch.bristle,
+     citation: "Head bristle mechanosensory neurons. Eichler K. et al. (2024) eLife"}
+thermo:
+  - {channel: hot, group: thermo.heating, kind: phasic_up, params: senses.thermo.hot,
+     citation: "Arista hot cells (VP2). Gallio M. et al. (2011) Cell 144:614; Marin E.C. et al. (2020) Curr Biol 30:3167"}
+  - {channel: cold, group: thermo.cold, kind: phasic_down, params: senses.thermo.cold,
+     citation: "Arista cold cells (VP3). Gallio M. et al. (2011) Cell 144:614; Budelli G. et al. (2019) Neuron 101:738"}
+  - {channel: dry, group: hygro.dry, kind: tonic_dry, params: senses.hygro.dry,
+     citation: "Dry cells (VP4, Ir40a/Ir93a/Ir25a). Enjin A. et al. (2016) Curr Biol 26:1352; Knecht Z.A. et al. (2017) eLife 6:e26654"}
+  - {channel: moist, group: hygro.moist, kind: tonic_moist, params: senses.hygro.moist,
+     citation: "Moist cells (VP5, Ir68a). Knecht Z.A. et al. (2017) eLife 6:e26654"}
+  - {channel: humid, group: thermo.humid, kind: none, params: null,
+     citation: "Transduction class not established for this Marin et al. 2020 group: simulated, undriven."}
+  - {channel: cooling, group: hygro.cooling, kind: none, params: null,
+     citation: "Transduction class not established for this Marin et al. 2020 group: simulated, undriven."}
+  - {channel: evaporative_cooling, group: hygro.evaporative_cooling, kind: none, params: null,
+     citation: "Transduction class not established for this Marin et al. 2020 group: simulated, undriven."}
+vision:
+  photoreceptors:
+    - {group: vision.photoreceptor.r1_6, class: r1_6}
+    - {group: vision.photoreceptor.r7, class: r7}
+    - {group: vision.photoreceptor.r8, class: r8}
+    - {group: vision.dorsal_rim, class: dorsal_rim}

@@ -1,0 +1,631 @@
+{
+ "super_class": [
+  {
+   "super_class": "central",
+   "n": 32381,
+   "ign_hz": 5.8777455915506005,
+   "quiet_hz": 0.2439156165327621,
+   "share_excess": 0.9400884306169205,
+   "frac_gt5hz": 0.2538525678638708
+  },
+  {
+   "super_class": "sensory",
+   "n": 5786,
+   "ign_hz": 1.5671897684064984,
+   "quiet_hz": 0.039598304437207785,
+   "share_excess": 0.045547061921176635,
+   "frac_gt5hz": 0.10404424472865538
+  },
+  {
+   "super_class": "descending",
+   "n": 1303,
+   "ign_hz": 1.7407214121258636,
+   "quiet_hz": 0.3666841701336996,
+   "share_excess": 0.009226088897982581,
+   "frac_gt5hz": 0.09823484267075978
+  },
+  {
+   "super_class": "visual_centrifugal",
+   "n": 524,
+   "ign_hz": 1.096793893129771,
+   "quiet_hz": 0.3295701084773001,
+   "share_excess": 0.002071705695894234,
+   "frac_gt5hz": 0.08015267175572519
+  },
+  {
+   "super_class": "optic",
+   "n": 25523,
+   "ign_hz": 0.31590330290326374,
+   "quiet_hz": 0.30597211596557905,
+   "share_excess": 0.0013061937232835112,
+   "frac_gt5hz": 0.013242957332601966
+  },
+  {
+   "super_class": "visual_projection",
+   "n": 7668,
+   "ign_hz": 0.05712050078247262,
+   "quiet_hz": 0.025110507097163882,
+   "share_excess": 0.0012648598521397385,
+   "frac_gt5hz": 0.003912363067292645
+  },
+  {
+   "super_class": "ascending",
+   "n": 1750,
+   "ign_hz": 0.040868571428571435,
+   "quiet_hz": 0.0017323308270676696,
+   "share_excess": 0.0003529326761283984,
+   "frac_gt5hz": 0.002857142857142857
+  },
+  {
+   "super_class": "motor",
+   "n": 110,
+   "ign_hz": 0.4130909090909091,
+   "quiet_hz": 0.1783732057416268,
+   "share_excess": 0.00013304950018562273,
+   "frac_gt5hz": 0.03636363636363636
+  },
+  {
+   "super_class": null,
+   "n": 14,
+   "ign_hz": 0.13714285714285718,
+   "quiet_hz": 0.003007518796992481,
+   "share_excess": 9.67711628877817e-06,
+   "frac_gt5hz": 0.0
+  },
+  {
+   "super_class": "sensory_ascending",
+   "n": 612,
+   "ign_hz": 0.0,
+   "quiet_hz": 0.0,
+   "share_excess": 0.0,
+   "frac_gt5hz": 0.0
+  },
+  {
+   "super_class": "endocrine",
+   "n": 80,
+   "ign_hz": 0.0,
+   "quiet_hz": 0.0,
+   "share_excess": 0.0,
+   "frac_gt5hz": 0.0
+  }
+ ],
+ "cell_class": [
+  {
+   "cell_class": "Kenyon_Cell",
+   "n": 5177,
+   "ign_hz": 15.212130577554568,
+   "quiet_hz": 0.4030377276008255,
+   "share_excess": 0.3950766260538781,
+   "frac_gt5hz": 0.7485029940119761
+  },
+  {
+   "cell_class": null,
+   "n": 31374,
+   "ign_hz": 1.6423203926818386,
+   "quiet_hz": 0.1561608170358963,
+   "share_excess": 0.24027581083277227,
+   "frac_gt5hz": 0.08819404602537133
+  },
+  {
+   "cell_class": "ALPN",
+   "n": 685,
+   "ign_hz": 29.590423357664235,
+   "quiet_hz": 0.7977871686515559,
+   "share_excess": 0.10163580151149613,
+   "frac_gt5hz": 0.8175182481751825
+  },
+  {
+   "cell_class": "ALLN",
+   "n": 429,
+   "ign_hz": 46.014545454545456,
+   "quiet_hz": 1.2478959636854374,
+   "share_excess": 0.09896613247972198,
+   "frac_gt5hz": 0.8787878787878788
+  },
+  {
+   "cell_class": "LHLN",
+   "n": 514,
+   "ign_hz": 24.215875486381325,
+   "quiet_hz": 0.6517714519762442,
+   "share_excess": 0.06241496993476192,
+   "frac_gt5hz": 0.8891050583657587
+  },
+  {
+   "cell_class": "olfactory",
+   "n": 2281,
+   "ign_hz": 3.0029285401139854,
+   "quiet_hz": 0.07480560234430883,
+   "share_excess": 0.03441829139880112,
+   "frac_gt5hz": 0.22753178430512933
+  },
+  {
+   "cell_class": "DAN",
+   "n": 331,
+   "ign_hz": 13.707794561933536,
+   "quiet_hz": 0.3770392749244713,
+   "share_excess": 0.022738272409087726,
+   "frac_gt5hz": 0.6072507552870091
+  },
+  {
+   "cell_class": "MBON",
+   "n": 96,
+   "ign_hz": 34.76083333333333,
+   "quiet_hz": 0.9605263157894738,
+   "share_excess": 0.016721167346632353,
+   "frac_gt5hz": 0.7395833333333334
+  },
+  {
+   "cell_class": "hygrosensory",
+   "n": 74,
+   "ign_hz": 20.943783783783786,
+   "quiet_hz": 0.5541963015647227,
+   "share_excess": 0.0077752591720511,
+   "frac_gt5hz": 0.7567567567567568
+  },
+  {
+   "cell_class": "LHCENT",
+   "n": 42,
+   "ign_hz": 24.992380952380955,
+   "quiet_hz": 0.7764411027568924,
+   "share_excess": 0.005241134861030318,
+   "frac_gt5hz": 0.5714285714285714
+  },
+  {
+   "cell_class": "CX",
+   "n": 2875,
+   "ign_hz": 0.3157147826086957,
+   "quiet_hz": 0.012206864988558353,
+   "share_excess": 0.004496582741188563,
+   "frac_gt5hz": 0.01808695652173913
+  },
+  {
+   "cell_class": "thermosensory",
+   "n": 29,
+   "ign_hz": 23.042758620689657,
+   "quiet_hz": 0.602540834845735,
+   "share_excess": 0.0033535113503244114,
+   "frac_gt5hz": 0.9310344827586207
+  }
+ ],
+ "nt_pred": [
+  {
+   "nt_pred": "acetylcholine",
+   "n": 44949,
+   "ign_hz": 2.9879143028765935,
+   "quiet_hz": 0.12549521036121639,
+   "share_excess": 0.6630220462501066,
+   "frac_gt5hz": 0.14011435182095264
+  },
+  {
+   "nt_pred": "gaba",
+   "n": 11688,
+   "ign_hz": 3.0118548939082825,
+   "quiet_hz": 0.786795273604957,
+   "share_excess": 0.13401597505300175,
+   "frac_gt5hz": 0.11849760438056126
+  },
+  {
+   "nt_pred": "glutamate",
+   "n": 16122,
+   "ign_hz": 1.7047115742463714,
+   "quiet_hz": 0.09186923393336338,
+   "share_excess": 0.133994060507146,
+   "frac_gt5hz": 0.07437042550552041
+  },
+  {
+   "nt_pred": "dopamine",
+   "n": 823,
+   "ign_hz": 9.119708383961118,
+   "quiet_hz": 0.366771119780009,
+   "share_excess": 0.037121743547305366,
+   "frac_gt5hz": 0.34993924665856624
+  },
+  {
+   "nt_pred": "serotonin",
+   "n": 1876,
+   "ign_hz": 3.071087420042644,
+   "quiet_hz": 0.08160700258107957,
+   "share_excess": 0.028900360635313534,
+   "frac_gt5hz": 0.09168443496801706
+  },
+  {
+   "nt_pred": "octopamine",
+   "n": 113,
+   "ign_hz": 5.318938053097346,
+   "quiet_hz": 0.26008383791336753,
+   "share_excess": 0.002945814007126784,
+   "frac_gt5hz": 0.23893805309734514
+  },
+  {
+   "nt_pred": null,
+   "n": 180,
+   "ign_hz": 0.0,
+   "quiet_hz": 0.0,
+   "share_excess": 0.0,
+   "frac_gt5hz": 0.0
+  }
+ ],
+ "primary_neuropil": [
+  {
+   "primary_neuropil": "MB_ML_L",
+   "n": 2046,
+   "ign_hz": 14.927233626588466,
+   "quiet_hz": 0.3856150640530946,
+   "share_excess": 0.1533179815791969,
+   "frac_gt5hz": 0.7038123167155426
+  },
+  {
+   "primary_neuropil": "LH_L",
+   "n": 956,
+   "ign_hz": 23.07489539748954,
+   "quiet_hz": 0.6132790134331645,
+   "share_excess": 0.11065565500516295,
+   "frac_gt5hz": 0.7876569037656904
+  },
+  {
+   "primary_neuropil": "MB_ML_R",
+   "n": 1770,
+   "ign_hz": 12.252790960451978,
+   "quiet_hz": 0.3322152839726435,
+   "share_excess": 0.10872895417060931,
+   "frac_gt5hz": 0.6785310734463277
+  },
+  {
+   "primary_neuropil": "LH_R",
+   "n": 878,
+   "ign_hz": 21.337858769931664,
+   "quiet_hz": 0.5958518163289773,
+   "share_excess": 0.09384691626538819,
+   "frac_gt5hz": 0.7539863325740319
+  },
+  {
+   "primary_neuropil": "AL_L",
+   "n": 1615,
+   "ign_hz": 10.181102167182662,
+   "quiet_hz": 0.2663581554505459,
+   "share_excess": 0.08251421028113325,
+   "frac_gt5hz": 0.339938080495356
+  },
+  {
+   "primary_neuropil": "AL_R",
+   "n": 1296,
+   "ign_hz": 12.265246913580247,
+   "quiet_hz": 0.33367446393762185,
+   "share_excess": 0.07968515089900628,
+   "frac_gt5hz": 0.39351851851851855
+  },
+  {
+   "primary_neuropil": "MB_CA_L",
+   "n": 605,
+   "ign_hz": 24.968595041322313,
+   "quiet_hz": 0.6503349282296651,
+   "share_excess": 0.0758163005599492,
+   "frac_gt5hz": 0.9785123966942149
+  },
+  {
+   "primary_neuropil": "MB_CA_R",
+   "n": 567,
+   "ign_hz": 20.592874779541447,
+   "quiet_hz": 0.5624802747609765,
+   "share_excess": 0.05852578897247034,
+   "frac_gt5hz": 0.9753086419753086
+  },
+  {
+   "primary_neuropil": "SLP_L",
+   "n": 1857,
+   "ign_hz": 3.1809154550350027,
+   "quiet_hz": 0.08202250375534961,
+   "share_excess": 0.029654676661724683,
+   "frac_gt5hz": 0.1836295099623048
+  },
+  {
+   "primary_neuropil": "SLP_R",
+   "n": 1939,
+   "ign_hz": 3.0038989169675094,
+   "quiet_hz": 0.08632773268912354,
+   "share_excess": 0.0291523779126547,
+   "frac_gt5hz": 0.1743166580711707
+  },
+  {
+   "primary_neuropil": "MB_VL_R",
+   "n": 197,
+   "ign_hz": 18.496243654822337,
+   "quiet_hz": 0.5033395671920919,
+   "share_excess": 0.01826594755133157,
+   "frac_gt5hz": 0.868020304568528
+  },
+  {
+   "primary_neuropil": "SMP_R",
+   "n": 1970,
+   "ign_hz": 1.851736040609137,
+   "quiet_hz": 0.0709484370825541,
+   "share_excess": 0.018078111686506564,
+   "frac_gt5hz": 0.09289340101522843
+  }
+ ],
+ "cell_type": [
+  {
+   "cell_type": "KCg-m",
+   "n": 2189,
+   "super_class": "central",
+   "nt_pred": "acetylcholine",
+   "ign_hz": 20.01560529922339,
+   "share": 0.21978462557913525
+  },
+  {
+   "cell_type": "KCab",
+   "n": 1643,
+   "super_class": "central",
+   "nt_pred": "acetylcholine",
+   "ign_hz": 20.403554473524043,
+   "share": 0.16817975395389398
+  },
+  {
+   "cell_type": "lLN1_bc",
+   "n": 30,
+   "super_class": "central",
+   "nt_pred": "dopamine",
+   "ign_hz": 103.98933333333335,
+   "share": 0.01565119506961774
+  },
+  {
+   "cell_type": "lLN2X12",
+   "n": 13,
+   "super_class": "central",
+   "nt_pred": "acetylcholine",
+   "ign_hz": 86.66461538461539,
+   "share": 0.005647378467027613
+  },
+  {
+   "cell_type": "lLN2P_a",
+   "n": 13,
+   "super_class": "central",
+   "nt_pred": "glutamate",
+   "ign_hz": 84.94769230769232,
+   "share": 0.005535831258864814
+  },
+  {
+   "cell_type": "lLN2P_b",
+   "n": 12,
+   "super_class": "central",
+   "nt_pred": "gaba",
+   "ign_hz": 88.54666666666668,
+   "share": 0.005321177197329204
+  },
+  {
+   "cell_type": "PAM08",
+   "n": 45,
+   "super_class": "central",
+   "nt_pred": "dopamine",
+   "ign_hz": 18.38577777777778,
+   "share": 0.004149833872554114
+  },
+  {
+   "cell_type": "lLN2P_c",
+   "n": 9,
+   "super_class": "central",
+   "nt_pred": "gaba",
+   "ign_hz": 90.35555555555555,
+   "share": 0.0040735018207516
+  },
+  {
+   "cell_type": "ORN_VM6v",
+   "n": 26,
+   "super_class": "sensory",
+   "nt_pred": "acetylcholine",
+   "ign_hz": 28.836923076923078,
+   "share": 0.003759386097629085
+  },
+  {
+   "cell_type": "HRN_VP1d",
+   "n": 16,
+   "super_class": "sensory",
+   "nt_pred": "acetylcholine",
+   "ign_hz": 46.715,
+   "share": 0.003748298639280283
+  },
+  {
+   "cell_type": "PAM04",
+   "n": 32,
+   "super_class": "central",
+   "nt_pred": "dopamine",
+   "ign_hz": 21.8625,
+   "share": 0.0035118602173098445
+  },
+  {
+   "cell_type": "DA1_lPN",
+   "n": 15,
+   "super_class": "central",
+   "nt_pred": "acetylcholine",
+   "ign_hz": 45.59466666666667,
+   "share": 0.003429648123995538
+  },
+  {
+   "cell_type": "ORN_D",
+   "n": 31,
+   "super_class": "sensory",
+   "nt_pred": "acetylcholine",
+   "ign_hz": 21.491612903225807,
+   "share": 0.003343313492351932
+  },
+  {
+   "cell_type": "lLN2X03",
+   "n": 6,
+   "super_class": "central",
+   "nt_pred": "serotonin",
+   "ign_hz": 102.96,
+   "share": 0.003097827183627187
+  },
+  {
+   "cell_type": "PAM10",
+   "n": 15,
+   "super_class": "central",
+   "nt_pred": "dopamine",
+   "ign_hz": 34.432,
+   "share": 0.0025917530573503662
+  },
+  {
+   "cell_type": "KCapbp-ap1",
+   "n": 280,
+   "super_class": "central",
+   "nt_pred": "acetylcholine",
+   "ign_hz": 1.7711428571428571,
+   "share": 0.002490685775572051
+  },
+  {
+   "cell_type": "M_lPNm11D",
+   "n": 11,
+   "super_class": "central",
+   "nt_pred": "acetylcholine",
+   "ign_hz": 44.472727272727276,
+   "share": 0.0024529103059335693
+  },
+  {
+   "cell_type": "ORN_DA4m",
+   "n": 40,
+   "super_class": "sensory",
+   "nt_pred": "serotonin",
+   "ign_hz": 11.89,
+   "share": 0.002387275156217081
+  },
+  {
+   "cell_type": "PAM01",
+   "n": 41,
+   "super_class": "central",
+   "nt_pred": "dopamine",
+   "ign_hz": 11.090731707317074,
+   "share": 0.0022835824684501057
+  },
+  {
+   "cell_type": "ORN_DC1",
+   "n": 39,
+   "super_class": "sensory",
+   "nt_pred": "acetylcholine",
+   "ign_hz": 11.431794871794873,
+   "share": 0.0022395580986072114
+  },
+  {
+   "cell_type": "DL2v_adPN",
+   "n": 8,
+   "super_class": "central",
+   "nt_pred": "acetylcholine",
+   "ign_hz": 54.61,
+   "share": 0.0021911074244528577
+  },
+  {
+   "cell_type": "DL2d_adPN",
+   "n": 10,
+   "super_class": "central",
+   "nt_pred": "acetylcholine",
+   "ign_hz": 42.968,
+   "share": 0.00215433004304147
+  },
+  {
+   "cell_type": "HRN_VP1l",
+   "n": 13,
+   "super_class": "sensory",
+   "nt_pred": "acetylcholine",
+   "ign_hz": 32.37538461538462,
+   "share": 0.0021110433905838187
+  },
+  {
+   "cell_type": "LHPV4g1",
+   "n": 11,
+   "super_class": "central",
+   "nt_pred": "glutamate",
+   "ign_hz": 37.57818181818182,
+   "share": 0.002073159433094566
+  },
+  {
+   "cell_type": "lLN2F_b",
+   "n": 4,
+   "super_class": "central",
+   "nt_pred": "gaba",
+   "ign_hz": 101.86,
+   "share": 0.0020334311821422054
+  }
+ ],
+ "pre_onset": [
+  {
+   "super_class": "central",
+   "cell_class": null,
+   "len": 362
+  },
+  {
+   "super_class": "central",
+   "cell_class": "ALLN",
+   "len": 226
+  },
+  {
+   "super_class": "central",
+   "cell_class": "ALPN",
+   "len": 215
+  },
+  {
+   "super_class": "descending",
+   "cell_class": null,
+   "len": 32
+  },
+  {
+   "super_class": "central",
+   "cell_class": "LHLN",
+   "len": 30
+  },
+  {
+   "super_class": "central",
+   "cell_class": "CX",
+   "len": 22
+  },
+  {
+   "super_class": "optic",
+   "cell_class": "ME",
+   "len": 14
+  },
+  {
+   "super_class": "central",
+   "cell_class": "DAN",
+   "len": 11
+  },
+  {
+   "super_class": "central",
+   "cell_class": "MBON",
+   "len": 8
+  },
+  {
+   "super_class": "central",
+   "cell_class": "ALON",
+   "len": 8
+  },
+  {
+   "super_class": "visual_centrifugal",
+   "cell_class": null,
+   "len": 7
+  },
+  {
+   "super_class": "central",
+   "cell_class": "LHCENT",
+   "len": 5
+  },
+  {
+   "super_class": "visual_projection",
+   "cell_class": null,
+   "len": 4
+  },
+  {
+   "super_class": "ascending",
+   "cell_class": "AN",
+   "len": 3
+  },
+  {
+   "super_class": "sensory",
+   "cell_class": "thermosensory",
+   "len": 2
+  }
+ ],
+ "concentration": {
+  "0.001": 0.038697789950596806,
+  "0.01": 0.2276427477716052,
+  "0.05": 0.6291852280338696,
+  "0.2": 1.0047850085412102
+ }
+}

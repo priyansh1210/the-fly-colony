@@ -1,0 +1,134 @@
+[
+ {
+  "w": 0.68,
+  "action": "base",
+  "ignited": 13,
+  "central_hz": 8.3,
+  "central_median_hz": 0.0,
+  "kc_hz": 21.6,
+  "pn_hz": 41.7,
+  "ln_hz": 64.6,
+  "runaway": 0
+ },
+ {
+  "w": 0.68,
+  "action": "silence_ALLN_sign+1",
+  "ignited": 0,
+  "central_hz": 0.19,
+  "central_median_hz": 0.0,
+  "kc_hz": 0.0,
+  "pn_hz": 0.01,
+  "ln_hz": 0.04,
+  "runaway": 0
+ },
+ {
+  "w": 0.68,
+  "action": "silence_ALLN_gabaglu_sign+1",
+  "ignited": 0,
+  "central_hz": 0.15,
+  "central_median_hz": 0.0,
+  "kc_hz": 0.0,
+  "pn_hz": 0.0,
+  "ln_hz": 0.02,
+  "runaway": 0
+ },
+ {
+  "w": 0.68,
+  "action": "silence_ALLN_DA_5HT",
+  "ignited": 0,
+  "central_hz": 0.16,
+  "central_median_hz": 0.0,
+  "kc_hz": 0.0,
+  "pn_hz": 0.01,
+  "ln_hz": 0.03,
+  "runaway": 0
+ },
+ {
+  "w": 0.68,
+  "action": "resign_ALLN_by_transmitter",
+  "ignited": 0,
+  "central_hz": 0.18,
+  "central_median_hz": 0.0,
+  "kc_hz": 0.0,
+  "pn_hz": 0.01,
+  "ln_hz": 0.04,
+  "runaway": 0
+ },
+ {
+  "w": 0.68,
+  "action": "resign_all_by_transmitter",
+  "ignited": 0,
+  "central_hz": 0.08,
+  "central_median_hz": 0.0,
+  "kc_hz": 0.0,
+  "pn_hz": 0.0,
+  "ln_hz": 0.01,
+  "runaway": 0
+ },
+ {
+  "w": 1.5,
+  "action": "base",
+  "ignited": 24,
+  "central_hz": 23.84,
+  "central_median_hz": 2.4583333333333335,
+  "kc_hz": 59.35,
+  "pn_hz": 104.11,
+  "ln_hz": 157.91,
+  "runaway": 0
+ },
+ {
+  "w": 1.5,
+  "action": "silence_ALLN_sign+1",
+  "ignited": 24,
+  "central_hz": 2.46,
+  "central_median_hz": 1.375,
+  "kc_hz": 0.29,
+  "pn_hz": 1.47,
+  "ln_hz": 2.36,
+  "runaway": 0
+ },
+ {
+  "w": 1.5,
+  "action": "silence_ALLN_gabaglu_sign+1",
+  "ignited": 24,
+  "central_hz": 21.04,
+  "central_median_hz": 2.2916666666666665,
+  "kc_hz": 51.44,
+  "pn_hz": 85.65,
+  "ln_hz": 135.03,
+  "runaway": 0
+ },
+ {
+  "w": 1.5,
+  "action": "silence_ALLN_DA_5HT",
+  "ignited": 24,
+  "central_hz": 5.46,
+  "central_median_hz": 1.25,
+  "kc_hz": 1.03,
+  "pn_hz": 22.76,
+  "ln_hz": 73.93,
+  "runaway": 0
+ },
+ {
+  "w": 1.5,
+  "action": "resign_ALLN_by_transmitter",
+  "ignited": 24,
+  "central_hz": 17.68,
+  "central_median_hz": 2.0833333333333335,
+  "kc_hz": 41.37,
+  "pn_hz": 67.34,
+  "ln_hz": 113.14,
+  "runaway": 0
+ },
+ {
+  "w": 1.5,
+  "action": "resign_all_by_transmitter",
+  "ignited": 24,
+  "central_hz": 17.42,
+  "central_median_hz": 2.0,
+  "kc_hz": 41.42,
+  "pn_hz": 67.4,
+  "ln_hz": 113.33,
+  "runaway": 0
+ }
+]

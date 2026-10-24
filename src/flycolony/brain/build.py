@@ -108,11 +108,13 @@ def topology(
     """One shared copy per (template, device, variant) (BRAIN-R-002)."""
     scale = weight_scale(template, reg)
     extra = tuple(reg.get("brain.graded.extra_cell_types")) if graded else ()
+    pairs = tuple(reg.get("brain.electrical.excitatory_pairs")) if graded else ()
+    cap = float(reg.get("brain.syn.max_synapses")) if graded else None
     taus = flyvis_time_constants() if graded else {}
     scale_key = (
         scale if isinstance(scale, float) else (reg.get("conn.norm.male_mode"), scale.tobytes())
     )
-    key = (template.template_id, str(device), w_syn, scale_key, graded, extra, weights)
+    key = (template.template_id, str(device), w_syn, scale_key, graded, extra, pairs, cap, weights)
     if key not in _TOPOLOGY_CACHE:
         _TOPOLOGY_CACHE[key] = build_topology(
             template,
@@ -123,6 +125,8 @@ def topology(
             weight_scale=scale,
             extra_graded=extra,
             graded_tau_ms=taus,
+            electrical_pairs=pairs,
+            max_synapses=cap,
         )
     return _TOPOLOGY_CACHE[key]
 
@@ -150,20 +154,42 @@ def plastic_sets(
     return out
 
 
-def output_groups(template: BrainTemplate) -> dict[str, np.ndarray]:
-    """DN/motor groups from the I/O map, plus neurosecretory cells by type (BRAIN-R-017)."""
+def output_groups(
+    template: BrainTemplate, split_sides: tuple[str, ...] = ()
+) -> dict[str, np.ndarray]:
+    """DN/motor groups from the I/O map, plus neurosecretory cells by type (BRAIN-R-017).
+
+    Groups named in `split_sides` are published per side (`<name>.L`, `<name>.R`), as the motor
+    layer needs for left/right commands (005). Descending neurons in no group are published as
+    `descending.unmapped`: simulated and observed, driving nothing (MOTOR-R-004).
+    """
     io = json.loads((template.path / "iomap.json").read_text(encoding="utf-8"))
+    side = dict(template.neurons.select("neuron_id", "side").iter_rows())
     groups: dict[str, np.ndarray] = {}
     used: set[int] = set()
     for e in io["entries"]:
         if e["kind"] == "motor" and e["neuron_ids"]:
-            groups[e["name"]] = np.asarray(e["neuron_ids"], dtype=np.int64)
+            ids = np.asarray(e["neuron_ids"], dtype=np.int64)
+            if e["name"] in split_sides:
+                for sd in ("L", "R"):
+                    part = np.asarray(
+                        [i for i in ids.tolist() if side.get(i) == sd], dtype=np.int64
+                    )
+                    if part.size:
+                        groups[f"{e['name']}.{sd}"] = part
+            else:
+                groups[e["name"]] = ids
             used |= set(e["neuron_ids"])
     ns = template.neurons.filter(pl.col("is_neurosecretory")).select("neuron_id", "cell_type")
     for (ctype,), part in ns.group_by("cell_type", maintain_order=True):
         ids = [i for i in part["neuron_id"].to_list() if i not in used]
         if ids:
             groups[f"neurosecretory.{ctype}"] = np.asarray(sorted(ids), dtype=np.int64)
+            used |= set(ids)
+    dn = template.neurons.filter(pl.col("is_descending"))["neuron_id"].to_list()
+    rest = sorted(i for i in dn if i not in used)
+    if rest:
+        groups["descending.unmapped"] = np.asarray(rest, dtype=np.int64)
     return groups
 
 
@@ -172,7 +198,11 @@ def setup_brain(
     device: torch.device,
     cfg: ColonyConfig,
     reg: Registry,
+    *,
+    split_sides: tuple[str, ...] = (),
 ) -> BrainSetup:
+    """Everything needed to build brain batches for a template. `split_sides` names output
+    groups published per side (the motor layer's left/right commands)."""
     bc = cfg.brain
     reference = bc.mode == "reference"
     choice = resolve_dt(bc, template.path, reg)
@@ -186,6 +216,8 @@ def setup_brain(
             "physics": cfg.schedule.physics_ms,
             "senses": cfg.schedule.senses_ms,
             "vision": cfg.schedule.vision_ms,
+            "fields": cfg.schedule.fields_ms,
+            "physio": cfg.schedule.physio_ms,
         },
     )
     return BrainSetup(
@@ -195,7 +227,7 @@ def setup_brain(
         choice=choice,
         schedule=sched,
         plastic_sets=[] if reference else plastic_sets(template, device),
-        output_groups=output_groups(template),
+        output_groups=output_groups(template, split_sides),
         modulated=not reference,
     )
 

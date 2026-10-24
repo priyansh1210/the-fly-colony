@@ -1,0 +1,50 @@
+# Food and media types (spec 003, WORLD-R-020..026). Tastants in mol/L of the liquid layer;
+# emissions in odor amount units per second (the unit the ORN half-activation concentrations in
+# config/params/senses.yaml are expressed in). Stage durations are life-clock (fly) hours.
+# Values without a citation are ASSUMPTIONs, calibrated in Phase 4 against the food-choice data.
+version: 1
+types:
+  fruit:
+    description: Generic soft fruit (banana-like) going through ripening and fermentation.
+    ripening_ramp_fly_h: 6
+    stages:
+      unripe:
+        duration_fly_h: 24
+        composition: {sucrose: 0.05}
+        emission: {isoamyl_acetate: 0.02}
+        citation: ASSUMPTION
+      ripe:
+        duration_fly_h: 48
+        composition: {sucrose: 0.3, protein: 0.002}
+        emission: {isoamyl_acetate: 0.2, ethyl_acetate: 0.1, phenylethanol: 0.05}
+        citation: "ASSUMPTION; ester profile of ripe banana after Zhu et al. 2003 J Exp Biol 206:4129"
+      fermenting:
+        duration_fly_h: 72
+        composition: {sucrose: 0.15, ethanol: 0.5, protein: 0.01}
+        emission: {ethanol: 1.0, acetic_acid: 0.3, ethyl_acetate: 0.3, acetoin: 0.1, co2: 0.5}
+        citation: "ASSUMPTION; yeast fermentation volatiles after Becher et al. 2012 Funct Ecol 26:822"
+      rotting:
+        duration_fly_h: 48
+        composition: {sucrose: 0.02, bitter: 0.002, protein: 0.005}
+        emission: {acetic_acid: 0.5, ammonia: 0.3, geosmin: 0.05}
+        citation: "ASSUMPTION; geosmin as a mould cue after Stensmyr et al. 2012 Cell 151:1345"
+  sucrose_100mM:
+    description: Gate medium, 100 mM sucrose drop (standard PER assay concentration).
+    stages:
+      ripe: {composition: {sucrose: 0.1}, citation: "Moon S.J. et al. (2006) Curr Biol 16:1812"}
+  sucrose_bitter:
+    description: Gate medium, 100 mM sucrose + 10 mM caffeine-equivalent bitter.
+    stages:
+      ripe:
+        composition: {sucrose: 0.1, bitter: 0.01}
+        citation: "Moon S.J. et al. (2006) Curr Biol 16:1812; Meunier N. et al. (2003) J Neurobiol 56:139"
+  water:
+    description: Pure water drop (gate control; water springs).
+    stages:
+      ripe: {humidity_source: 0.9, citation: "Cameron P. et al. (2010) PNAS 107:2"}
+  vinegar_source:
+    description: Apple-cider-vinegar-like odor source for the plume gate (cotton plug, no tastants).
+    stages:
+      ripe:
+        emission: {acetic_acid: 2.0, ethyl_acetate: 0.5, acetoin: 0.5, phenylethanol: 0.2}
+        citation: "ASSUMPTION; ACV headspace after Semmelhack & Wang 2009 Nature 459:218"

@@ -228,6 +228,26 @@ def test_graded_coupling_and_dynamics(tmp_path, registry):
     assert int(b.last[0, 3]) < 0
 
 
+def test_graded_update_is_independent_of_chunking(tmp_path, registry, monkeypatch):
+    """Fly chunks of the graded update give bit-identical coupling (fixed-point integer sums)."""
+    from flycolony.brain import engine
+
+    p = params(registry)
+    edges = [(0, 1, 10.0), (0, 2, -3.0), (3, 1, 7.0), (3, 2, 2.0), (2, 1, 5.0)]
+    tpl = tiny_template(tmp_path, edges, 4, graded=(0, 3))
+    b = batch(tpl, p, graded=True)
+    for i in range(5):
+        b.add(FlyBrainSpec(f"f{i}", i + 1))
+    b.u[:, 0] = torch.linspace(1.0, 9.0, 5) + p.graded_v_thresh - p.v_rest
+    b.u[:, 3] = torch.linspace(4.0, 0.5, 5) + p.graded_v_thresh - p.v_rest
+    held = []
+    for chunk in (1 << 30, 1):  # all flies at once; one fly per chunk
+        monkeypatch.setattr(engine, "GRADED_CHUNK_BYTES", chunk)
+        b._update_graded()
+        held.append(b.graded_in.clone())
+    assert torch.equal(held[0], held[1]) and bool((held[0] != 0).any())
+
+
 # --- T-BRAIN-U-007: output rates ----------------------------------------------------------
 
 
@@ -456,6 +476,39 @@ def test_graded_time_constants_per_type(tmp_path, registry):  # BRAIN-R-014 (fly
     assert float(b.e_m[2]) == pytest.approx(math.exp(-0.1 / p.tau_m), rel=1e-6)  # spiking C2
 
 
+def test_electrical_pairs_drop_only_excitatory_chemical_edges(
+    tmp_path, registry
+):  # 002 gap junctions
+    from dataclasses import replace
+
+    import polars as pl
+
+    from flycolony.brain.topology import build_topology
+
+    p = params(registry)
+    # 0 excitatory LN, 1 inhibitory LN, 2 PN, 3 other
+    edges = [(0, 2, 5.0), (0, 1, 4.0), (1, 2, -3.0), (0, 3, 2.0), (3, 2, 1.0)]
+    tpl = tiny_template(tmp_path, edges, 4)
+    tpl = replace(
+        tpl,
+        neurons=tpl.neurons.with_columns(
+            pl.Series("cell_class", ["ALLN", "ALLN", "ALPN", None]),
+            pl.Series("sign", [1, -1, 1, 1], dtype=pl.Int8),
+        ),
+    )
+    cpu = torch.device("cpu")  # device-ok: test
+    base = build_topology(tpl, cpu, w_per_synapse=p.w_syn, graded=False)
+    cut = build_topology(
+        tpl, cpu, w_per_synapse=p.w_syn, graded=False, electrical_pairs=("ALLN>ALPN",)
+    )
+    changed = (base.weight != cut.weight).nonzero().flatten().tolist()
+    pre = np.repeat(np.arange(4), np.diff(tpl.edges["indptr"]))
+    assert [(int(pre[i]), int(tpl.edges["indices"][i])) for i in changed] == [(0, 2)]
+    assert float(cut.weight[changed[0]]) == 0.0
+    with pytest.raises(ValueError, match="PRE_CLASS>POST_CLASS"):
+        build_topology(tpl, cpu, w_per_synapse=p.w_syn, graded=False, electrical_pairs=("ALLN",))
+
+
 def test_agreement_excludes_driven_neurons():  # BRAIN-R-081 metric
     from flycolony.brain.assays import agreement
 
@@ -534,3 +587,110 @@ def test_batch_with_modulation_is_freed_without_gc(tmp_path, registry):
         assert ref() is None and m.batch is None
     finally:
         gc.enable()
+
+
+def test_sensory_layout_drives_rates_independently_of_batch(tmp_path, registry):  # 004 §2
+    from flycolony.brain.engine import BrainInputError
+
+    tpl = tiny_template(tmp_path, [(0, 2, 5.0), (1, 2, 5.0)], 4, sensory=(0, 1, 3))
+    p = params(registry)
+
+    def run(flies):
+        b = batch(tpl, p)
+        b.attach_senses(np.array([0, 1]), np.array([3]))
+        for f in flies:
+            b.add(FlyBrainSpec(f, 7 if f == "a" else 9))
+        counts = torch.zeros(len(flies), 4)
+
+        def tap(bb, t, spikes):
+            counts.view(-1).index_add_(0, spikes.cpu(), torch.ones(spikes.numel()))
+
+        b.taps.append(tap)
+        rates = torch.zeros(len(flies), 2)
+        rates[:, 0] = 200.0  # neuron 0 driven, neuron 1 silent
+        b.set_senses(rates)
+        b.run(4000)
+        return b, counts
+
+    b1, c1 = run(["a"])
+    _b2, c2 = run(["a", "b"])
+    assert c1[0, 0] > 0 and c1[0, 1] == 0
+    assert torch.equal(c1[0], c2[0])  # fly a's input events do not depend on fly b
+    with pytest.raises(BrainInputError):
+        b1.attach_senses(np.array([2]), np.array([]))  # neuron 2 is not sensory
+    with pytest.raises(BrainInputError):
+        b1.set_senses(torch.zeros(1, 3))
+
+
+def test_photoreceptor_input_depolarises_and_checkpoints(tmp_path, registry):  # 004 §2
+    tpl = tiny_template(tmp_path, [], 2, sensory=(0, 1), graded=(0,))
+    p = params(registry)
+    b = batch(tpl, p)
+    b.attach_senses(np.array([1]), np.array([0]))
+    b.add(FlyBrainSpec("a", 1))
+    b.set_senses(torch.zeros(1, 1), torch.full((1, 1), 4.0))
+    b.run(4000)
+    assert float(b.potential("a")[0]) == pytest.approx(p.v_rest + 4.0, abs=0.05)
+    tensors, meta = b.state_dict()
+    c = batch(tpl, p)
+    c.load_state_dict(tensors, meta)
+    b.run(50)
+    c.run(50)
+    assert torch.equal(b.u, c.u) and torch.equal(c.photo_in, b.photo_in)
+
+
+def test_short_term_depression_scales_spikes_and_recovers(tmp_path, registry):
+    """Presynaptic depression (brain.syn.depression.*): exact recovery, off in reference mode."""
+    tpl = tiny_template(tmp_path, [(0, 1, 1.0), (2, 1, 1.0)], 3)
+    keep, tau = 0.78, 893.0
+    p = params(registry, depression_keep=keep, depression_tau_rec=tau)
+    b = batch(tpl, p)
+    b.add(FlyBrainSpec("x", 2))
+    b.add(FlyBrainSpec("a", 1))
+    sent = []
+    deliver = b._deliver
+    b._deliver = lambda flat, eff: (
+        sent.extend(zip(flat.tolist(), eff.tolist(), strict=True)),
+        deliver(flat, eff),
+    )
+    gap = 50  # steps between spikes of neuron 0 (> refractory)
+    for _ in range(3):
+        fire(b, "a", [0])
+        b.run(gap)
+    a = b.slot("a")
+    effs = [e for f, e in sent if f == a * b.n]
+    elapsed = gap * b.dt
+    a1 = 1 - (1 - keep) * math.exp(-elapsed / tau)
+    a2 = 1 - (1 - keep * a1) * math.exp(-elapsed / tau)
+    assert effs == pytest.approx([1.0, a1, a2], rel=1e-6)
+    # Mid-queue checkpoint: queued efficacies and resources survive a round trip.
+    fire(b, "a", [0, 2])
+    b.step()
+    tensors, meta = b.state_dict()
+    c = batch(tpl, p)
+    c.load_state_dict(tensors, meta)
+    b.remove("x")
+    c.remove("x")
+    b.run(30)
+    c.run(30)
+    assert state_hash(b) == state_hash(c)
+    assert float(b.res[0, 0]) < keep
+    # Reference parameters have no depression: every spike has efficacy 1.
+    r = batch(tpl, params(registry))
+    r.add(FlyBrainSpec("a", 1))
+    for _ in range(3):
+        fire(r, "a", [0])
+        r.run(gap)
+    assert float(r.res[0, 0]) == 1.0
+
+
+def test_max_synapses_caps_connection_strength_keeping_sign(tmp_path, registry):
+    from flycolony.brain.topology import build_topology
+
+    p = params(registry)
+    tpl = tiny_template(tmp_path, [(0, 1, 451.0), (1, 0, -300.0), (0, 2, 40.0)], 3)
+    cpu = torch.device("cpu")  # device-ok: test
+    topo = build_topology(tpl, cpu, w_per_synapse=p.w_syn, graded=False, max_synapses=100.0)
+    assert topo.weight.tolist() == pytest.approx(
+        [100 * p.w_syn, 40 * p.w_syn, -100 * p.w_syn], rel=1e-6
+    )

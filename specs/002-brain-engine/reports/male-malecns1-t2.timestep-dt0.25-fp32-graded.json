@@ -2,8 +2,8 @@
   "assays": {
     "jon_ce": {
       "agreement": {
-        "n_responsive": 60848,
-        "pearson": 0.9985845407302664,
+        "n_responsive": 49531,
+        "pearson": 0.9991620072925455,
         "top_k": 50,
         "top_k_overlap": 0.98
       },
@@ -13,7 +13,7 @@
           "other_hz": 0.0,
           "pass": true,
           "readout": "abn1",
-          "value_hz": 66.23333333333333,
+          "value_hz": 64.06666666666666,
           "vs": "baseline"
         }
       ],
@@ -23,7 +23,7 @@
           "other_hz": 0.0,
           "pass": true,
           "readout": "abn1",
-          "value_hz": 67.43333333333334,
+          "value_hz": 64.96666666666667,
           "vs": "baseline"
         }
       ],
@@ -32,10 +32,10 @@
     },
     "sugar": {
       "agreement": {
-        "n_responsive": 61406,
-        "pearson": 0.9984433666931181,
+        "n_responsive": 50505,
+        "pearson": 0.9991356994874607,
         "top_k": 50,
-        "top_k_overlap": 0.98
+        "top_k_overlap": 0.96
       },
       "expect_candidate": [
         {
@@ -43,7 +43,7 @@
           "other_hz": 0.0,
           "pass": true,
           "readout": "mn9",
-          "value_hz": 42.4,
+          "value_hz": 20.433333333333334,
           "vs": "baseline"
         }
       ],
@@ -53,7 +53,7 @@
           "other_hz": 0.0,
           "pass": true,
           "readout": "mn9",
-          "value_hz": 44.766666666666666,
+          "value_hz": 18.2,
           "vs": "baseline"
         }
       ],
@@ -62,28 +62,28 @@
     },
     "sugar_bitter": {
       "agreement": {
-        "n_responsive": 61199,
-        "pearson": 0.9986691790385209,
+        "n_responsive": 50019,
+        "pearson": 0.9989898761666629,
         "top_k": 50,
         "top_k_overlap": 0.98
       },
       "expect_candidate": [
         {
           "op": "<",
-          "other_hz": 42.4,
+          "other_hz": 20.433333333333334,
           "pass": true,
           "readout": "mn9",
-          "value_hz": 18.9,
+          "value_hz": 1.4666666666666666,
           "vs": "sugar"
         }
       ],
       "expect_reference_dt": [
         {
           "op": "<",
-          "other_hz": 44.766666666666666,
+          "other_hz": 18.2,
           "pass": true,
           "readout": "mn9",
-          "value_hz": 33.766666666666666,
+          "value_hz": 2.2666666666666666,
           "vs": "sugar"
         }
       ],
@@ -92,8 +92,8 @@
     },
     "water": {
       "agreement": {
-        "n_responsive": 61460,
-        "pearson": 0.9986556296646645,
+        "n_responsive": 50593,
+        "pearson": 0.9986822727175996,
         "top_k": 50,
         "top_k_overlap": 0.98
       },
@@ -103,7 +103,7 @@
           "other_hz": 0.0,
           "pass": true,
           "readout": "mn9",
-          "value_hz": 39.2,
+          "value_hz": 34.93333333333333,
           "vs": "baseline"
         }
       ],
@@ -113,7 +113,7 @@
           "other_hz": 0.0,
           "pass": true,
           "readout": "mn9",
-          "value_hz": 41.46666666666667,
+          "value_hz": 24.53333333333333,
           "vs": "baseline"
         }
       ],
@@ -132,10 +132,10 @@
     "water"
   ],
   "model": "production (background noise, neuromodulation, plastic sets)",
-  "model_hash": "91bfcb55864d8f60a3a5b5f35fd14b3557f48d9d7faa6fcf653280c555b95348",
+  "model_hash": "33384e6981ae06d216a6de395f59126fcd3505ac5ba7708b76e20ab36c58c14b",
   "name": "timestep-dt0.25-fp32-graded",
   "passed": true,
-  "pipeline_version": "153ee52cb657-dirty",
+  "pipeline_version": "8a29d10f11df",
   "reference_dt_ms": 0.1,
   "template_id": "male-malecns1-t2",
   "thresholds": {
