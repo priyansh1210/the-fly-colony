@@ -1,0 +1,377 @@
+<meta charset="utf-8">
+<title>Fly Colony Phase 2 Gates</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; scoreboard first, then each gate as a figure with its numbers, then the diagnosis. */
+:root {
+  --bg: #f7f8f7;
+  --surface: #ffffff;
+  --ink: #141816;
+  --ink-2: #4a524e;
+  --ink-3: #7a837e;
+  --rule: #dde2df;
+  --accent: #0e6b5c;
+  --s1: #2a78d6;   /* condition */
+  --s2: #eb6834;   /* control */
+  --pass: #1d7a3a; --pass-bg: #e3f3e7;
+  --fail: #b8322f; --fail-bg: #fbe7e6;
+  --block: #8a6100; --block-bg: #fbf0d6;
+  --run: #2a5fa8; --run-bg: #e3ecf8;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111413; --surface: #181c1a; --ink: #eef1ef; --ink-2: #b9c1bc; --ink-3: #87908b;
+    --rule: #2b312e; --accent: #4fc2ad; --s1: #3987e5; --s2: #d95926;
+    --pass: #6fcf8a; --pass-bg: #18301f; --fail: #ef8784; --fail-bg: #3a1c1b;
+    --block: #e5b84e; --block-bg: #352a10; --run: #8fb5ec; --run-bg: #1b2738;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111413; --surface: #181c1a; --ink: #eef1ef; --ink-2: #b9c1bc; --ink-3: #87908b;
+  --rule: #2b312e; --accent: #4fc2ad; --s1: #3987e5; --s2: #d95926;
+  --pass: #6fcf8a; --pass-bg: #18301f; --fail: #ef8784; --fail-bg: #3a1c1b;
+  --block: #e5b84e; --block-bg: #352a10; --run: #8fb5ec; --run-bg: #1b2738;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.6 var(--body); }
+.wrap { max-width: 980px; margin: 0 auto; padding-block: 40px 80px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 56px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; line-height: 1.15; }
+h1 { font-size: clamp(30px, 5vw, 44px); font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 26px; font-weight: 700; }
+h3 { font-size: 19px; font-weight: 600; }
+p { margin: 0; max-width: 68ch; }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.muted { color: var(--ink-2); }
+.small { font-size: 13px; color: var(--ink-3); }
+code, .mono { font-family: var(--mono); font-size: 0.88em; }
+section { display: grid; gap: 18px; min-width: 0; }
+header { display: grid; gap: 14px; }
+.lede { font-size: 17px; color: var(--ink-2); max-width: 70ch; }
+
+.board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 640px) { .board { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 14px; display: grid; gap: 6px; align-content: start; }
+.tile .name { font-weight: 600; }
+.tile .id { font: 12px var(--mono); color: var(--ink-3); }
+.tile .num { font: 500 13px var(--mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font: 600 12px/1 var(--mono); letter-spacing: 0.04em;
+  padding: 5px 8px; border-radius: 999px; width: fit-content; }
+.chip.pass { color: var(--pass); background: var(--pass-bg); }
+.chip.fail { color: var(--fail); background: var(--fail-bg); }
+.chip.blocked { color: var(--block); background: var(--block-bg); }
+.chip.pending, .chip.running { color: var(--run); background: var(--run-bg); }
+
+.callout { border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; display: grid; gap: 8px; }
+.gate { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 22px; display: grid; gap: 16px; min-width: 0; }
+.gate-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+.fact { display: grid; gap: 2px; }
+.fact .k { font: 500 11px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
+.fact .v { font: 500 15px var(--mono); font-variant-numeric: tabular-nums; }
+.figure { position: relative; min-width: 0; }
+.figure svg { display: block; width: 100%; height: auto; overflow: visible; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font: 12px/1.4 var(--mono);
+  padding: 6px 8px; border-radius: 6px; white-space: nowrap; transform: translate(-50%, calc(-100% - 10px)); }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font: 500 11px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
+td.n, th.n { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+tr.hl td { background: color-mix(in srgb, var(--accent) 9%, transparent); }
+ol, ul { margin: 0; padding-left: 20px; display: grid; gap: 8px; max-width: 70ch; }
+details summary { cursor: pointer; color: var(--accent); font-weight: 500; }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: no-preference) { .dot { transition: r .12s; } }
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Fly Colony · Phase 2 · spec 005 M7–M10 · 20–21 Oct 2026</div>
+  <h1>Phase 2 gate run</h1>
+  <p class="lede">The embodied fly ran its first full set of emergence gates: a real connectome brain (FAFB 783, about 139,000 neurons) closed in a loop with senses, a body and a world. Every trial started from world stimuli only. No neuron was stimulated, and nothing was tuned per gate. This page reports every result, including the failures, and what caused them.</p>
+  <div class="board" id="board"></div>
+</header>
+
+<section>
+  <div class="eyebrow">Summary</div>
+  <h2>What passed, what failed, and why</h2>
+  <div class="callout">
+    <p><strong>The machinery works.</strong> The loop runs 2.1–2.3× faster with bit-identical results. Driving each mapped descending-neuron group directly produces its movement in 20 of 20 flies for all 8 groups. With the motor output clamped, nothing moves in 50 of 50 trials.</p>
+    <p><strong>The behaviors do not emerge yet.</strong> Hungry flies on sugar extend the proboscis about four times more than controls, but rarely far enough to drink. Bitter cuts that extension by about 70%, but the feeding criterion cannot register it. In the plume, flies barely walk at all. At night under sleep pressure flies go almost still, but brief twitches break every bout before it counts as sleep.</p>
+    <p><strong>One global cause dominates.</strong> The production brain's background noise keeps inhibitory interneurons tonically active. Switching it off restores the sugar response of the motor neuron MN9 from 22 Hz to 82 Hz (reference model: 78 Hz). A second cause is in the taste layer: a sucrose drop drives only 9 of the 20 sugar neurons the reference model uses.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Gates</div>
+  <h2>Every gate, every trial</h2>
+  <p class="muted">Each dot is one trial: one fly with its own seed, in its own world. Blue is the stimulus condition, orange the matched control. Hover a dot for its seed and value. Statistics are one-sided at α = 0.01 with 50 flies per arm.</p>
+  <div id="gates" style="display:grid; gap:20px"></div>
+</section>
+
+<section>
+  <div class="eyebrow">Diagnosis</div>
+  <h2>Why sugar does not reach the proboscis</h2>
+  <p>The Phase-1 sugar assay drives the 20 sugar neurons of Shiu et al. (2024) at 150 Hz and reads MN9, the proboscis-extension motor neuron. The production model differs from the validated reference model in four global ways. Each was switched off in turn (8 flies per configuration).</p>
+  <div class="gate">
+    <h3>MN9 rate under the same 150 Hz sugar input</h3>
+    <div class="legend"><span><i class="sw" style="background:var(--s1)"></i>background noise off</span><span><i class="sw" style="background:var(--s2)"></i>background noise on</span><span><i class="sw" style="background:var(--ink-3); border-radius:0; width:2px; height:12px"></i>reference model, 78 Hz</span></div>
+    <div class="figure" id="ablation"></div>
+    <p class="muted">Background noise alone moves MN9 by 55–60 Hz in either direction. Graded optic-lobe units and neuromodulation change nothing; the coarser 0.5 ms timestep costs a little.</p>
+  </div>
+  <div class="gate">
+    <h3>The taste layer drives fewer sugar neurons</h3>
+    <p>The closed-loop sugar channel maps receptor neurons by their FlyWire sub-class. Of the 20 sugar neurons the reference model drives, only the 9 LB3c cells are in it. A sucrose drop also makes them fire at about 35–70 Hz after adaptation, not 150 Hz.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Cell type</th><th class="n">Neurons</th><th>FlyWire sub-class</th><th>Channel in our layout</th><th>Fires on sucrose here</th></tr></thead>
+      <tbody>
+        <tr><td>LB3c</td><td class="n">9</td><td>sugar</td><td>sugar</td><td>yes</td></tr>
+        <tr class="hl"><td>LB3b</td><td class="n">2</td><td>sugar/low_salt</td><td>low salt only</td><td>no, likely a layout error</td></tr>
+        <tr><td>LB4b</td><td class="n">4</td><td>putative_attractive</td><td>undriven</td><td>no</td></tr>
+        <tr><td>LB3d</td><td class="n">5</td><td>high_salt/heavy_metal</td><td>high salt</td><td>no</td></tr>
+      </tbody></table></div>
+    <p class="muted">LB3b is annotated as sensing both sugar and low salt, so it should respond to sucrose. LB4b and LB3d are a disagreement between annotation sources rather than a clear bug.</p>
+  </div>
+  <div class="gate">
+    <h3>Sleep is fragmented by twitches</h3>
+    <p>An exploratory check of the sleep protocol (2 flies per arm, 15 s) separates the arms clearly, even though the gate scored zero for both.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Arm</th><th class="n">Time moving</th><th class="n">Longest still stretch</th></tr></thead>
+      <tbody><tr><td>Night + 12 h awake</td><td class="n">1–3%</td><td class="n">1.3 s</td></tr>
+      <tr><td>Day + rested</td><td class="n">29–39%</td><td class="n">0.3–0.4 s</td></tr>
+      <tr class="hl"><td>Needed for one 5 fly-minute bout</td><td class="n">0%</td><td class="n">12.5 s</td></tr></tbody></table></div>
+    <p class="muted">Most twitches are small steering movements. The steering threshold sits at the 99th percentile of resting activity, so noise crosses it about 1% of the time, which matches what is seen here.</p>
+  </div>
+  <div class="gate">
+    <h3>The same inhibition shows up in the open-loop test</h3>
+    <p>Holding each group at a multiple of its spike threshold, most groups respond at 2×. The backward-walking neurons (MDN) need 4× and the Giant Fiber, which triggers escape, fires only at 8×, because the resting network inhibits them. That matters for the looming gate once it can run.</p>
+    <div class="table-wrap"><table id="openloop"></table></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">What was built</div>
+  <h2>Work behind this run</h2>
+  <div class="gate">
+    <h3>Closed-loop speed-up (commit ca5dbb3)</h3>
+    <p>A 600-step, 4-fly trace was recorded before the work and stayed bit-identical after every change.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Flies</th><th class="n">Before (s per neural s)</th><th class="n">After</th><th class="n">Speed-up</th></tr></thead>
+      <tbody><tr><td>2</td><td class="n">54</td><td class="n">27</td><td class="n">2.0×</td></tr>
+      <tr><td>32</td><td class="n">232</td><td class="n">102</td><td class="n">2.3×</td></tr></tbody></table></div>
+    <ul class="muted">
+      <li>Senses went from about 2,250 GPU operations per step to about 100.</li>
+      <li>The brain's optic-lobe coupling update was filling the 20 GB card at 32 flies; it is now chunked and bounded.</li>
+      <li>What remains is launch overhead (about 10 µs per small GPU operation on this driver) and memory traffic. Fused kernels and CUDA graphs are planned for Phase 9.</li>
+    </ul>
+  </div>
+  <div class="gate">
+    <h3>Motor threshold calibration (M8, commit b47140c)</h3>
+    <p>Each movement's threshold was set to the 99th percentile of its group's firing in resting flies, a rule fixed before looking at the data. Under the old thresholds a resting fly was moving <span id="movfrac"></span> of the time.</p>
+    <div class="table-wrap"><table id="calib"></table></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Next</div>
+  <h2>Options from here</h2>
+  <ol>
+    <li><strong>Re-calibrate background noise globally</strong> against a published target for spontaneous firing in the fly central brain. The current value was tuned to a 12 Hz mean. This changes the brain model, so the Phase-1 timestep gate and every Phase-2 gate must be re-run.</li>
+    <li><strong>Fix the LB3b taste mapping</strong> so cells annotated sugar/low_salt respond to sucrose, with the annotation as the citation.</li>
+    <li><strong>Re-run the M8 calibration and all gates</strong> on the corrected model, about 11 GPU-hours.</li>
+    <li><strong>Unblock the looming gate</strong> by downloading the FlyWire "Visual Neuron Columns" file into <code>data/raw/flywire_columns/</code>.</li>
+    <li>If a fix is not justified by the literature, <strong>accept a partial repertoire</strong> and report these results as final, as the project plan allows (§17).</li>
+  </ol>
+  <p class="small">Not allowed by the project rules (CONST-7.3): lowering a threshold for one gate, or changing a pass criterion after seeing the data.</p>
+</section>
+
+<section>
+  <div class="eyebrow">Provenance</div>
+  <h2>Versions</h2>
+  <div class="table-wrap"><table id="versions"></table></div>
+  <p class="small">Full reports, with every seed and trial: <code>specs/005-motor/reports/female-fafb783-t2.&lt;gate&gt;.json</code> on branch <code>phase2/body-senses-motor</code>.</p>
+</section>
+</div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const G = DATA.gates;
+const NS = "http://www.w3.org/2000/svg";
+const META = {
+  feeding: { title: "Sugar → feeding", cond: "Hungry (24 h) + 100 mM sucrose", ctrl: "Sated + water",
+    measure: "max_extension", label: "Peak proboscis extension (0–1)", line: 0.5, lineLabel: "needed to drink",
+    domain: [0, 1], text: "Sugar raises extension about four-fold over the control, but most flies stop below the 0.5 needed to drink. A trial counts only with extension above 0.5 and some liquid ingested." },
+  bitter: { title: "Bitter → rejection", cond: "Hungry + sucrose + bitter", ctrl: "Hungry + sucrose",
+    measure: "max_extension", label: "Peak proboscis extension (0–1)", line: 0.5, lineLabel: "needed to drink",
+    domain: [0, 1], text: "Bitter lowers sugar-driven extension by about 70%, so rejection is emerging in the brain. The gate still fails, because almost no fly feeds in either arm and the pass criterion counts feeding." },
+  plume: { title: "Odor plume → approach", cond: "Vinegar source upwind, 0.3 m/s wind", ctrl: "Same wind, no odor",
+    measure: "min_distance_mm", label: "Closest approach to the source (mm)", line: 15, lineLabel: "reached",
+    domain: [0, 130], text: "Flies start 125 mm downwind and stay there: in 30 s the best fly got 10 mm closer, with or without odor. Locomotion almost never switches on, because forward walking needs its group above 33 Hz." },
+  sleep: { title: "Darkness + pressure → sleep", cond: "Night + 12 h awake", ctrl: "Day + rested",
+    text: "Every fly in both arms scored zero sleep. A follow-up check (2 flies per arm, 15 s, exploratory) shows why: night flies with high sleep pressure moved only 1–3% of the time against 29–39% for rested day flies, so sleep-like quiet is emerging. But brief steering twitches about once a second broke every still stretch, and the longest lasted 1.3 s. One 5-minute sleep bout needs 12.5 s of continuous stillness." },
+  no_self_motion: { title: "No self-driven motion", cond: "Motor output clamped to zero", text: "With every descending output read as zero, no movement switched on and no body moved, in every trial." },
+  looming: { title: "Looming → escape", text: "Needs the FlyWire visual-column map to give each photoreceptor its own direction. Not run." },
+};
+const ORDER = ["feeding", "bitter", "plume", "sleep", "no_self_motion", "looming"];
+
+if (G.looming.status === "pending") G.looming = { status: "blocked", id: "MOTOR-AC-03", reason: "needs the FlyWire visual-column map (004 S8; data/raw/flywire_columns/)" };
+function status(g) {
+  if (g.status === "pending") return ["running", "Running"];
+  if (g.status === "blocked") return ["blocked", "Blocked"];
+  return g.passed ? ["pass", "Pass"] : ["fail", "Fail"];
+}
+function icon(kind) { return { pass: "✓", fail: "✕", blocked: "!", running: "…" }[kind]; }
+function chip(g) { const [k, t] = status(g); return `<span class="chip ${k}">${icon(k)} ${t}</span>`; }
+function pct(x) { return (100 * x).toFixed(0) + "%"; }
+function fmtP(p) { return p < 0.001 ? p.toExponential(1) : p.toFixed(p < 0.1 ? 3 : 2); }
+function headline(name) {
+  const g = G[name], s = g.summary;
+  if (!s) return g.status === "blocked" ? "column map missing" : "in progress";
+  if (s.test === "all") return `${s.successes}/${s.n} at rest`;
+  if (s.condition.successes !== undefined) return `${s.condition.successes}/50 vs ${s.control.successes}/50`;
+  return `median ${s.condition.median.toFixed(1)} vs ${s.control.median.toFixed(1)}`;
+}
+
+// --- scoreboard ---
+document.getElementById("board").innerHTML = ORDER.map(n => {
+  const g = G[n];
+  return `<div class="tile"><span class="name">${META[n].title}</span><span class="id">${g.id || ""}</span>${chip(g)}<span class="num">${headline(n)}</span></div>`;
+}).join("");
+
+// --- dot-strip chart ---
+function strip(el, name) {
+  const m = META[name], g = G[name];
+  const W = 900, rowH = 70, top = 16, left = 120, right = 24, H = top + 2 * rowH + 44;
+  const x = v => left + (Math.min(Math.max(v, m.domain[0]), m.domain[1]) - m.domain[0]) / (m.domain[1] - m.domain[0]) * (W - left - right);
+  const svg = document.createElementNS(NS, "svg");
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", `${m.title}: ${m.label}, condition vs control`);
+  const add = (tag, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; svg.appendChild(e); return e; };
+  const ticks = 5;
+  for (let i = 0; i <= ticks; i++) {
+    const v = m.domain[0] + i * (m.domain[1] - m.domain[0]) / ticks, xx = x(v);
+    add("line", { x1: xx, x2: xx, y1: top, y2: top + 2 * rowH, stroke: "var(--rule)", "stroke-width": 1 });
+    add("text", { x: xx, y: top + 2 * rowH + 18, "text-anchor": "middle", fill: "var(--ink-3)", "font-size": 12, "font-family": "var(--mono)" }, +v.toFixed(2));
+  }
+  add("text", { x: left + (W - left - right) / 2, y: H - 4, "text-anchor": "middle", fill: "var(--ink-2)", "font-size": 13 }, m.label);
+  if (m.line != null) {
+    const xl = x(m.line);
+    add("line", { x1: xl, x2: xl, y1: top - 6, y2: top + 2 * rowH, stroke: "var(--ink-2)", "stroke-width": 1.5, "stroke-dasharray": "4 3" });
+    add("text", { x: xl + 6, y: top + 4, fill: "var(--ink-2)", "font-size": 12 }, m.lineLabel);
+  }
+  const tip = document.createElement("div"); tip.className = "tip"; tip.hidden = true; el.appendChild(tip);
+  [["condition", "var(--s1)", "Condition"], ["control", "var(--s2)", "Control"]].forEach(([arm, col, lab], r) => {
+    const cy = top + r * rowH + rowH / 2;
+    add("text", { x: 0, y: cy + 4, fill: "var(--ink)", "font-size": 13, "font-weight": 600 }, lab);
+    const ts = g.trials.filter(t => t.arm === arm);
+    ts.forEach((t, i) => {
+      const v = t[m.measure];
+      const jitter = ((i * 37) % 21 - 10) * 2.2;
+      const c = add("circle", { cx: x(v), cy: cy + jitter, r: 5, fill: col, "fill-opacity": 0.8, stroke: "var(--surface)", "stroke-width": 1.5, class: "dot", tabindex: 0 });
+      const show = () => {
+        c.setAttribute("r", 7);
+        const box = svg.getBoundingClientRect(), s = box.width / W;
+        tip.style.left = (x(v) * s) + "px"; tip.style.top = ((cy + jitter) * s) + "px";
+        tip.textContent = `${lab} · seed ${t.seed} · ${v.toFixed(3)}`; tip.hidden = false;
+      };
+      const hide = () => { c.setAttribute("r", 5); tip.hidden = true; };
+      c.addEventListener("pointerenter", show); c.addEventListener("pointerleave", hide);
+      c.addEventListener("focus", show); c.addEventListener("blur", hide);
+    });
+  });
+  el.appendChild(svg);
+}
+
+// --- gate cards ---
+const gatesEl = document.getElementById("gates");
+ORDER.forEach(name => {
+  const g = G[name], m = META[name], s = g.summary;
+  const card = document.createElement("article"); card.className = "gate";
+  let facts = "";
+  if (s && s.condition && s.condition.successes !== undefined) {
+    facts = `<div class="facts">
+      <div class="fact"><span class="k">Condition</span><span class="v">${s.condition.successes}/${s.condition.n} · ${pct(s.condition.fraction)}</span><span class="small">${m.cond}</span></div>
+      <div class="fact"><span class="k">Control</span><span class="v">${s.control.successes}/${s.control.n} · ${pct(s.control.fraction)}</span><span class="small">${m.ctrl}</span></div>
+      <div class="fact"><span class="k">Fisher p (one-sided)</span><span class="v">${fmtP(s.p_value)}</span></div>
+      ${s.min_fraction ? `<div class="fact"><span class="k">Also required</span><span class="v">≥ ${pct(s.min_fraction)}</span><span class="small">condition success rate</span></div>` : ""}
+    </div>`;
+  } else if (s && s.condition && s.condition.median !== undefined) {
+    facts = `<div class="facts">
+      <div class="fact"><span class="k">Condition</span><span class="v">median ${s.condition.median.toFixed(1)} · mean ${s.condition.mean.toFixed(1)}</span><span class="small">${m.cond}</span></div>
+      <div class="fact"><span class="k">Control</span><span class="v">median ${s.control.median.toFixed(1)} · mean ${s.control.mean.toFixed(1)}</span><span class="small">${m.ctrl}</span></div>
+      <div class="fact"><span class="k">Mann–Whitney p</span><span class="v">${fmtP(s.p_value)}</span></div>
+    </div>`;
+  } else if (s && s.test === "all") {
+    facts = `<div class="facts"><div class="fact"><span class="k">At rest</span><span class="v">${s.successes}/${s.n}</span><span class="small">${m.cond}</span></div></div>`;
+  }
+  const wall = g.wall_s ? `<span class="small">${(g.wall_s / 60).toFixed(0)} min on the GPU</span>` : "";
+  const text = name === "sleep" && !m.text
+    ? (g.status === "pending" ? "Running at the time of writing; this card fills in when it finishes." : "")
+    : (g.reason ? `Blocked: ${g.reason}.` : m.text);
+  card.innerHTML = `<div class="gate-head"><h3>${m.title}</h3><span class="id small mono">${g.id || ""}</span>${chip(g)}${wall}</div>${facts}<p>${text}</p>`;
+  if (g.trials && m.measure) {
+    const leg = document.createElement("div"); leg.className = "legend";
+    leg.innerHTML = `<span><i class="sw" style="background:var(--s1)"></i>Condition: ${m.cond}</span><span><i class="sw" style="background:var(--s2)"></i>Control: ${m.ctrl}</span>`;
+    const fig = document.createElement("div"); fig.className = "figure";
+    card.appendChild(leg); card.appendChild(fig); gatesEl.appendChild(card); strip(fig, name);
+  } else gatesEl.appendChild(card);
+});
+
+// --- ablation bars ---
+(function () {
+  const el = document.getElementById("ablation"), rows = DATA.ablation;
+  const W = 900, rowH = 30, left = 170, right = 60, top = 8, H = top + rows.length * rowH + 30, max = 90;
+  const x = v => left + v / max * (W - left - right);
+  const svg = document.createElementNS(NS, "svg"); svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  svg.setAttribute("role", "img"); svg.setAttribute("aria-label", "MN9 rate per model configuration");
+  const add = (tag, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; svg.appendChild(e); return e; };
+  for (let v = 0; v <= max; v += 15) {
+    add("line", { x1: x(v), x2: x(v), y1: top, y2: top + rows.length * rowH, stroke: "var(--rule)" });
+    add("text", { x: x(v), y: top + rows.length * rowH + 18, "text-anchor": "middle", fill: "var(--ink-3)", "font-size": 12, "font-family": "var(--mono)" }, v + " Hz");
+  }
+  const tip = document.createElement("div"); tip.className = "tip"; tip.hidden = true; el.appendChild(tip);
+  rows.forEach((r, i) => {
+    const y = top + i * rowH + 5, h = rowH - 10;
+    add("text", { x: 0, y: y + h / 2 + 4, fill: "var(--ink)", "font-size": 13 }, r.config);
+    const b = add("rect", { x: left, y, width: Math.max(2, x(r.mn9_hz) - left), height: h, rx: 4, fill: r.noise ? "var(--s2)" : "var(--s1)", tabindex: 0 });
+    add("text", { x: x(r.mn9_hz) + 6, y: y + h / 2 + 4, fill: "var(--ink-2)", "font-size": 12, "font-family": "var(--mono)" }, r.mn9_hz.toFixed(1));
+    const show = () => { const s = svg.getBoundingClientRect().width / W; tip.style.left = (x(r.mn9_hz) * s) + "px"; tip.style.top = (y * s) + "px";
+      tip.textContent = `${r.config}: noise ${r.noise ? "on" : "off"}, graded ${r.graded ? "on" : "off"}, modulation ${r.modulated ? "on" : "off"}, dt ${r.dt} ms`; tip.hidden = false; };
+    const hide = () => { tip.hidden = true; };
+    b.addEventListener("pointerenter", show); b.addEventListener("pointerleave", hide); b.addEventListener("focus", show); b.addEventListener("blur", hide);
+  });
+  const ref = DATA.ablation.find(r => r.config === "reference").mn9_hz;
+  add("line", { x1: x(ref), x2: x(ref), y1: top - 4, y2: top + rows.length * rowH, stroke: "var(--ink-3)", "stroke-width": 2 });
+  el.appendChild(svg);
+})();
+
+// --- tables ---
+(function () {
+  const ol = DATA.openloop;
+  document.getElementById("openloop").innerHTML = `<thead><tr><th>Group → movement</th><th class="n">Neurons</th><th class="n">2× threshold</th><th class="n">4×</th><th class="n">8× (pass level)</th></tr></thead><tbody>` +
+    ol.map(r => `<tr><td>${r.check.replace("->", "→")}</td><td class="n">${r.n}</td><td class="n">${r.levels["2.0"]}/20</td><td class="n">${r.levels["4.0"]}/20</td><td class="n">${r.levels["8.0"]}/20</td></tr>`).join("") + "</tbody>";
+  const names = { walk_forward: "Walk forward (BDN2)", walk_backward: "Walk backward (MDN)", steer: "Steer (DNa01/02, per side)", escape: "Escape (Giant Fiber)", landing: "Landing", proboscis: "Proboscis extension (MN9)", ingestion: "Ingestion (pharyngeal MNs)", groom_antenna: "Antennal grooming (aDN)" };
+  document.getElementById("calib").innerHTML = `<thead><tr><th>Movement</th><th class="n">Resting mean (Hz)</th><th class="n">99th pct</th><th class="n">Old θ</th><th class="n">New θ</th></tr></thead><tbody>` +
+    Object.entries(DATA.calib).map(([k, v]) => `<tr><td>${names[k] || k}</td><td class="n">${v.mean_hz.toFixed(1)}</td><td class="n">${v.p99_hz.toFixed(1)}</td><td class="n">${v.current_threshold_hz}</td><td class="n">${v.calibrated_threshold_hz ?? "spike-triggered"}</td></tr>`).join("") + "</tbody>";
+  document.getElementById("movfrac").textContent = pct(DATA.moving_fraction);
+  const v = DATA.versions;
+  const rows = [["Template", v.template], ["Pipeline version", v.pipeline_version], ["Brain timestep", v.brain_dt_ms + " ms"], ["Vision mode", v.vision_mode + " (column map missing)"],
+    ["Registry hash", v.registry_hash], ["Brain model hash", v.model_hash], ["Config hash", v.config_hash], ["Gate protocol hash", v.gates_hash]];
+  document.getElementById("versions").innerHTML = "<tbody>" + rows.map(([k, val]) => `<tr><th>${k}</th><td class="mono" style="word-break:break-all">${val}</td></tr>`).join("") + "</tbody>";
+})();
+</script>

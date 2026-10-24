@@ -1,0 +1,82 @@
+[
+ {
+  "config": "production",
+  "noise": true,
+  "graded": true,
+  "modulated": true,
+  "dt": 0.5,
+  "mn9_hz": 22.125
+ },
+ {
+  "config": "reference",
+  "noise": false,
+  "graded": false,
+  "modulated": false,
+  "dt": 0.1,
+  "mn9_hz": 78.25
+ },
+ {
+  "config": "prod - noise",
+  "noise": false,
+  "graded": true,
+  "modulated": true,
+  "dt": 0.5,
+  "mn9_hz": 82.375
+ },
+ {
+  "config": "prod - graded",
+  "noise": true,
+  "graded": false,
+  "modulated": true,
+  "dt": 0.5,
+  "mn9_hz": 22.125
+ },
+ {
+  "config": "prod - modulation",
+  "noise": true,
+  "graded": true,
+  "modulated": false,
+  "dt": 0.5,
+  "mn9_hz": 23.125
+ },
+ {
+  "config": "prod @ dt 0.1",
+  "noise": true,
+  "graded": true,
+  "modulated": true,
+  "dt": 0.1,
+  "mn9_hz": 32.125
+ },
+ {
+  "config": "ref + noise",
+  "noise": true,
+  "graded": false,
+  "modulated": false,
+  "dt": 0.1,
+  "mn9_hz": 26.75
+ },
+ {
+  "config": "ref + graded",
+  "noise": false,
+  "graded": true,
+  "modulated": false,
+  "dt": 0.1,
+  "mn9_hz": 78.25
+ },
+ {
+  "config": "ref + modulation",
+  "noise": false,
+  "graded": false,
+  "modulated": true,
+  "dt": 0.1,
+  "mn9_hz": 78.25
+ },
+ {
+  "config": "ref @ prod dt",
+  "noise": false,
+  "graded": false,
+  "modulated": false,
+  "dt": 0.5,
+  "mn9_hz": 82.375
+ }
+]
